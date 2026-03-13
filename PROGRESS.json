@@ -1,0 +1,110 @@
+{
+  "project": "Portfolio-TUI",
+  "description": "Fallout Pip-Boy 스타일의 터미널 UI 포트폴리오 웹사이트",
+  "theme": "Fallout Pip-Boy / Terminal UI",
+  "lastUpdated": "2026-03-13T18:15:00+09:00",
+  
+  "techStack": {
+    "framework": "React 19 + Vite",
+    "styling": "Tailwind CSS 4.x + Custom CSS",
+    "animation": "Framer Motion",
+    "icons": "Lucide React",
+    "fonts": "JetBrains Mono"
+  },
+
+  "fileStructure": {
+    "src/components/Terminal.jsx": "부팅 시퀀스 및 인증 화면",
+    "src/components/Terminal.css": "터미널 스타일",
+    "src/components/MainPortfolio.jsx": "메인 포트폴리오 (STAT/DATA 탭)",
+    "src/components/MainPortfolio.css": "포트폴리오 스타일 + 모달",
+    "src/index.css": "글로벌 스타일 (CRT 효과, 애니메이션)",
+    "src/App.jsx": "페이지 전환 로직"
+  },
+
+  "currentStatus": {
+    "completedPhases": [1, 2],
+    "currentPhase": 3,
+    "nextTask": "3.1 - Create hidden admin login interface"
+  },
+
+  "history": [
+    {
+      "date": "2026-03-13",
+      "session": "Phase 1 & 2 완료",
+      "changes": [
+        "CRT 효과 구현 (스캔라인, 플리커, 글로우)",
+        "터미널 부팅 시퀀스 with NOTNULL ASCII 아트",
+        "인증 로직 (alena) + 랜덤 에러 메시지",
+        "화면 전환 글리치 효과",
+        "Pip-Boy 탭 네비게이션 (STAT/DATA)",
+        "프로젝트 카드 + 상세 모달 팝업"
+      ]
+    }
+  ],
+
+  "phases": [
+    {
+      "phase": 1,
+      "name": "Title Page & Authentication",
+      "status": "completed",
+      "completedDate": "2026-03-13",
+      "tasks": [
+        { "id": 1.1, "task": "Set up global CSS for CRT effects (Scanlines, flicker)", "status": "completed" },
+        { "id": 1.2, "task": "Create Terminal component for title page", "status": "completed" },
+        { "id": 1.3, "task": "Implement boot-up sequence with ASCII art", "status": "completed" },
+        { "id": 1.4, "task": "Implement typing animation for system messages", "status": "completed" },
+        { "id": 1.5, "task": "Create authentication input logic (ACCESS_KEY: alena)", "status": "completed" },
+        { "id": 1.6, "task": "Add screen glitch transition effect", "status": "completed" },
+        { "id": 1.7, "task": "Set up AnimatePresence for page transitions", "status": "completed" },
+        { "id": 1.8, "task": "Add random error messages on failed authentication", "status": "completed" },
+        { "id": 1.9, "task": "Custom ASCII art logo (NOTNULL)", "status": "completed" }
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "Main Portfolio",
+      "status": "completed",
+      "completedDate": "2026-03-13",
+      "tasks": [
+        { "id": 2.1, "task": "Create Pip-Boy tab-style navigation", "status": "completed" },
+        { "id": 2.2, "task": "Build About (STAT) section with skills", "status": "completed" },
+        { "id": 2.3, "task": "Build Projects (DATA) section with TUI cards", "status": "completed" },
+        { "id": 2.4, "task": "Add discreet Admin access button (???)", "status": "completed" },
+        { "id": 2.5, "task": "Implement project detail modal popup", "status": "completed" }
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "Admin Tool",
+      "status": "in_progress",
+      "nextAction": "Admin 로그인 인터페이스 구현부터 시작",
+      "tasks": [
+        { "id": 3.1, "task": "Create hidden admin login interface", "status": "pending", "priority": "high" },
+        { "id": 3.2, "task": "Build admin management dashboard", "status": "pending", "priority": "high" },
+        { "id": 3.3, "task": "Add project CRUD functionality", "status": "pending", "priority": "medium" },
+        { "id": 3.4, "task": "Implement local storage for data persistence", "status": "pending", "priority": "medium" }
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "Polish & Deployment",
+      "status": "pending",
+      "tasks": [
+        { "id": 4.1, "task": "Add terminal sound effects (optional)", "status": "pending" },
+        { "id": 4.2, "task": "Responsive design optimization", "status": "pending" },
+        { "id": 4.3, "task": "Deploy to Vercel", "status": "pending" }
+      ]
+    }
+  ],
+
+  "instructions": {
+    "forNewSession": [
+      "1. PROGRESS.json을 읽어 현재 상태 파악",
+      "2. currentStatus.nextTask에서 다음 작업 확인",
+      "3. phases 배열에서 in_progress인 phase의 pending 작업 진행",
+      "4. 작업 완료 후 PROGRESS.json 업데이트"
+    ],
+    "runCommand": "npm run dev (http://localhost:5173 또는 5174)",
+    "accessKey": "alena"
+  }
+}

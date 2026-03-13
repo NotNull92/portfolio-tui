@@ -1,0 +1,241 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@theme {
+  --color-fallout-green: #00ff41;
+  --color-fallout-dark: #000d02;
+  --color-fallout-dim: #00cc33;
+  --color-fallout-bright: #33ff66;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  background-color: #000d02;
+  color: #00ff41;
+  overflow: hidden;
+}
+
+/* CRT Screen Effect Container */
+.crt-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* CRT Scanlines Overlay */
+.crt-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* CRT Flicker Animation */
+.crt-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 255, 65, 0.02);
+  pointer-events: none;
+  z-index: 999;
+  animation: crt-flicker 0.15s infinite;
+}
+
+@keyframes crt-flicker {
+  0% { opacity: 0.97; }
+  50% { opacity: 1; }
+  100% { opacity: 0.98; }
+}
+
+/* Text Glow Effect */
+.text-glow {
+  text-shadow: 
+    0 0 5px #00ff41,
+    0 0 10px #00ff41,
+    0 0 20px #00ff4180;
+}
+
+.text-glow-strong {
+  text-shadow: 
+    0 0 5px #00ff41,
+    0 0 10px #00ff41,
+    0 0 20px #00ff41,
+    0 0 40px #00ff4180,
+    0 0 80px #00ff4140;
+}
+
+/* Glitch Effect */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+    filter: none;
+  }
+  20% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(90deg);
+  }
+  40% {
+    transform: translate(2px, -2px);
+    filter: hue-rotate(-90deg);
+  }
+  60% {
+    transform: translate(-1px, 1px);
+    filter: none;
+  }
+  80% {
+    transform: translate(1px, -1px);
+    filter: hue-rotate(180deg);
+  }
+  100% {
+    transform: translate(0);
+    filter: none;
+  }
+}
+
+.glitch-active {
+  animation: glitch 0.3s ease-in-out;
+}
+
+/* Screen Glitch Transition */
+@keyframes screen-glitch {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: none;
+  }
+  10% {
+    opacity: 0.8;
+    transform: translateX(-10px);
+    filter: contrast(2) brightness(2);
+  }
+  20% {
+    opacity: 0.6;
+    transform: translateX(10px);
+    filter: contrast(0.5) brightness(0.5);
+  }
+  30% {
+    opacity: 0.9;
+    transform: translateX(-5px);
+    filter: hue-rotate(90deg);
+  }
+  40% {
+    opacity: 0.7;
+    transform: translateX(5px);
+    filter: hue-rotate(-90deg);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(-15px);
+    filter: contrast(3);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateX(15px);
+    filter: brightness(3);
+  }
+  70% {
+    opacity: 0.6;
+    transform: translateX(-8px);
+    filter: invert(1);
+  }
+  80% {
+    opacity: 0.9;
+    transform: translateX(8px);
+    filter: none;
+  }
+  90% {
+    opacity: 0.7;
+    transform: translateX(-3px);
+    filter: contrast(2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+    filter: none;
+  }
+}
+
+.screen-glitch {
+  animation: screen-glitch 0.8s ease-in-out forwards;
+}
+
+/* Terminal Input Styling */
+.terminal-input {
+  background: transparent;
+  border: none;
+  color: #00ff41;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: inherit;
+  outline: none;
+  caret-color: #00ff41;
+  width: 100%;
+}
+
+.terminal-input::placeholder {
+  color: #00ff4180;
+}
+
+/* Cursor Blink Animation */
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* Typing Animation Container */
+.typing-text {
+  display: inline;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000d02;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00ff4180;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff41;
+}
+
+/* Selection Styling */
+::selection {
+  background: #00ff4180;
+  color: #000d02;
+}
