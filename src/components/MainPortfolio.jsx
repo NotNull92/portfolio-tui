@@ -161,6 +161,24 @@ const QuestsTab = () => {
 
   const releasedProjects = [
     {
+      name: 'EOS-RED',
+      description: '6주년 모바일 MMORPG - LIVE 서비스',
+      fullDescription: '6주년을 맞이한 모바일 MMORPG로, 2021년 9월부터 Live 서비스 중인 프로젝트입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2021.09 - 2024.11~(Live)\n• 장르: MMORPG\n• 플랫폼: 모바일\n• 팀 구성: 클라이언트 7 ~ 8인\n• 사용 기술: C#, Unity3D, OSA, UniRx, Dotween 등\n\n[출시 후 성과 지표]\n• MAU: 최대 35,000\n• DAU: 최대 12,000\n• 매출: 최대 400억, 평균 200억\n\n[핵심 기여도]\n• 스텝업 패키지 개발 및 유지 보수: 새로운 BM 시스템 개발로 매출에 기여\n• 상품 1+1 구매 기능 개발 및 유지 보수: 이벤트성 신규 유저 진입을 위한 BM 개발\n• 조건부 팝업 패키지 개발 및 유지 보수: 새로운 BM 시스템 개발\n• 대형/소형 컨텐츠 다수 개발 및 개선\n\n[대표 개발 컨텐츠]\n\n◆ 대형 컨텐츠\n• 길드 경쟁전: 길드원 간 협업 미션 시스템, PVP 경쟁 시스템\n• 길드 경쟁전 전용 PVE 던전: 실시간 협력 던전 시스템\n• 길드 경쟁전 리뉴얼: PVP 중심 경쟁 시스템, 밸런스 조정\n\n◆ BM 시스템\n• 스텝업 상품 시스템: 단계별 구매 유도 BM (매출 30% 기여)\n• 조건부 팝업: 유저 행동 기반 타겟팅 상품 노출 (전환율 45%)\n• 스텝업 패키지 개선: 다단계 구매 시스템 고도화\n\n◆ 시스템 & 편의성\n• 휴면 계정 처리: 유니크 식별자 재사용 시스템 (운영 공수 90% 절감)\n• 캐릭터 즉시 삭제: UniRx 기반 반응형 UI\n• 월드 랭킹 시스템: 서버 부하 85% 감소 최적화\n• VIP 칭호/버프/이펙트: 등급별 차별화 시스템\n• 재화 숫자 표기 개선: UI 가독성 향상\n\n◆ 기타 컨텐츠\n• 길드 추천 시스템: 길드 가입률 30% 증가\n• 보스 던전 리뉴얼: 참여율 35% 증가\n• 콜로세움 개선: 일일 참여율 150% 증가\n• 소울 각인 확장, 펫 레벨 증가, 아이템 획득 세분화 등\n\n[협업 도구]\n• 버전 관리: Git, SVN, Git Fork, Gitea, CDN, Hermes, Jenkins\n• 이슈 트래킹: RedMine\n• 문서화: Notion, Wiki',
+      status: 'RELEASED',
+      tech: ['Unity', 'C#', 'UniRx', 'OSA', 'Dotween', 'Jenkins', 'Git/SVN'],
+      features: [
+        'MAU 35,000 / DAU 12,000 달성',
+        '매출 최대 400억, 평균 200억',
+        '스텝업 패키지 매출 기여 30%',
+        '대형/소형 컨텐츠 18개 이상 개발',
+        'BM 시스템 3종 개발 (스텝업, 조건부팝업, 1+1)',
+        '서버 부하 85% 감소 최적화',
+      ],
+      links: [
+        { label: 'GOOGLE PLAY', url: 'https://play.google.com/store/apps/details?id=com.bluepotiongames.eosm&pcampaignid=web_share' },
+      ],
+    },
+    {
       name: 'FREEDRAW',
       description: 'VR drawing application for MetaQuest 2',
       fullDescription: 'VR을 이용한 드로잉 컨텐츠. 2021년 전북콘텐츠진흥원 국가지원사업에서 86점을 받았으며, NC와 협력해 광주 비엔날레 전시 계약을 체결했다.',
@@ -189,7 +207,7 @@ const QuestsTab = () => {
         'Responsive design',
       ],
       links: [
-        { label: 'LIVE', url: '#' },
+        { label: 'LIVE', url: 'https://portfolio-tui-ten.vercel.app/' },
       ],
     },
   ];

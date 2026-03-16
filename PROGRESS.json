@@ -40,7 +40,7 @@
       {
         "name": "DAILY BREW",
         "description": "A cozy coffee shop simulation game",
-        "progress": 65,
+        "progress": 35,
         "tech": ["Unity", "C#", "2D Graphics", "Pixel Art"],
         "links": "없음 (private 레포, 미출시)"
       }
@@ -57,7 +57,7 @@
         "name": "PORTFOLIO-BLOG",
         "description": "Terminal-style portfolio website",
         "tech": ["React", "Vite", "CSS", "Framer Motion"],
-        "links": ["LIVE"]
+        "link": ["LIVE"]
       }
     ]
   },

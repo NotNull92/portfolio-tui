@@ -383,6 +383,7 @@
   font-size: 14px;
   line-height: 1.6;
   opacity: 0.9;
+  white-space: pre-line;
 }
 
 .modal-tech {
