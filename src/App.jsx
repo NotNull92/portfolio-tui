@@ -6,16 +6,9 @@ import './index.css';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [showAdmin, setShowAdmin] = useState(false);
 
   const handleAuthenticated = () => {
     setIsAuthenticated(true);
-  };
-
-  const handleAdminClick = () => {
-    setShowAdmin(true);
-    // TODO: Phase 3 - Admin Tool Implementation
-    console.log('Admin access clicked');
   };
 
   return (
@@ -29,7 +22,6 @@ function App() {
         ) : (
           <MainPortfolio 
             key="portfolio" 
-            onAdminClick={handleAdminClick}
           />
         )}
       </AnimatePresence>

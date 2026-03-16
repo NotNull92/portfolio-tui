@@ -5,3 +5,186 @@
   background-color: #000d02;
   overflow: hidden;
 }
+
+/* Password Popup Overlay */
+.password-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 13, 2, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+/* Password Popup */
+.password-popup {
+  background: #000d02;
+  border: 1px solid #00ff41;
+  min-width: 300px;
+  max-width: 320px;
+  width: 100%;
+  box-shadow: 
+    0 0 20px rgba(0, 255, 65, 0.2),
+    inset 0 0 30px rgba(0, 255, 65, 0.03);
+}
+
+/* Password Popup Header */
+.password-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #00ff4180;
+  background: rgba(0, 255, 65, 0.05);
+}
+
+.password-popup-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #00ff41;
+}
+
+.password-popup-close {
+  background: transparent;
+  border: 1px solid #00ff4180;
+  color: #00ff41;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.password-popup-close:hover {
+  background: rgba(0, 255, 65, 0.2);
+  border-color: #00ff41;
+}
+
+/* Password Popup Body */
+.password-popup-body {
+  padding: 25px 20px;
+}
+
+.password-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.password-label {
+  font-size: 12px;
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+.password-input {
+  width: 100%;
+  padding: 12px 15px;
+  background: rgba(0, 255, 65, 0.05);
+  border: 1px solid #00ff4180;
+  color: #00ff41;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.password-input::placeholder {
+  color: #00ff4140;
+}
+
+.password-input:focus {
+  border-color: #00ff41;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+}
+
+.password-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Password Error */
+.password-error {
+  color: #ff4444;
+  font-size: 13px;
+  margin-top: 10px;
+  padding: 8px 0;
+}
+
+/* Password Actions */
+.password-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.password-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 15px;
+  background: transparent;
+  border: 1px solid #00ff4180;
+  color: #00ff41;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.password-btn:hover:not(:disabled) {
+  background: rgba(0, 255, 65, 0.1);
+  border-color: #00ff41;
+}
+
+.password-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.password-btn.cancel:hover:not(:disabled) {
+  background: rgba(255, 68, 68, 0.1);
+  border-color: #ff4444;
+  color: #ff4444;
+}
+
+.password-btn.submit {
+  background: rgba(0, 255, 65, 0.05);
+}
+
+.password-btn.submit:hover:not(:disabled) {
+  background: rgba(0, 255, 65, 0.15);
+  border-color: #00ff41;
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+}
+
+/* Password Popup Footer */
+.password-popup-footer {
+  padding: 12px 20px;
+  border-top: 1px solid #00ff4180;
+  font-size: 11px;
+  opacity: 0.5;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .password-popup {
+    min-width: auto;
+  }
+  
+  .password-actions {
+    flex-direction: column;
+  }
+}
