@@ -2,7 +2,7 @@
   "project": "Portfolio-TUI",
   "description": "Fallout Pip-Boy 스타일의 터미널 UI 포트폴리오 웹사이트",
   "theme": "Fallout Pip-Boy / Terminal UI",
-  "lastUpdated": "2026-03-13T18:15:00+09:00",
+  "lastUpdated": "2026-03-16T15:02:00+09:00",
   
   "techStack": {
     "framework": "React 19 + Vite",
@@ -15,8 +15,8 @@
   "fileStructure": {
     "src/components/Terminal.jsx": "부팅 시퀀스 및 인증 화면",
     "src/components/Terminal.css": "터미널 스타일",
-    "src/components/MainPortfolio.jsx": "메인 포트폴리오 (STAT/DATA 탭)",
-    "src/components/MainPortfolio.css": "포트폴리오 스타일 + 모달",
+    "src/components/MainPortfolio.jsx": "메인 포트폴리오 (STAT/LOGS/QUESTS/INVENTORY/CONTACT 탭)",
+    "src/components/MainPortfolio.css": "포트폴리오 스타일 + 모달 + 타임라인 + 인벤토리",
     "src/index.css": "글로벌 스타일 (CRT 효과, 애니메이션)",
     "src/App.jsx": "페이지 전환 로직"
   },
@@ -25,6 +25,52 @@
     "completedPhases": [1, 2],
     "currentPhase": 3,
     "nextTask": "3.1 - Create hidden admin login interface"
+  },
+
+  "tabStructure": {
+    "STAT": "개인 정보 (이름, 역할, 경력, 상태) + 스킬 바",
+    "LOGS": "경력/활동 타임라인 (연도별 이력)",
+    "QUESTS": "프로젝트 (IN PROGRESS / COMPLETED 섹션 분리)",
+    "INVENTORY": "대외활동/수상내역 (아이템 카드 형태, 링크 버튼 포함)",
+    "CONTACT": "연락처 링크 (GitHub, Email, LinkedIn, Blog)"
+  },
+
+  "projects": {
+    "inProgress": [
+      {
+        "name": "DAILY BREW",
+        "description": "A cozy coffee shop simulation game",
+        "progress": 65,
+        "tech": ["Unity", "C#", "2D Graphics", "Pixel Art"],
+        "links": "없음 (private 레포, 미출시)"
+      }
+    ],
+    "completed": [
+      {
+        "name": "FREEDRAW",
+        "description": "VR drawing application for MetaQuest 2",
+        "tech": ["Unity", "C#", "SteamVR", "Oculus Integration", "TCP Socket"],
+        "links": ["STEAM"],
+        "steamUrl": "https://store.steampowered.com/app/1539810/FreeDraw/"
+      },
+      {
+        "name": "PORTFOLIO-BLOG",
+        "description": "Terminal-style portfolio website",
+        "tech": ["React", "Vite", "CSS", "Framer Motion"],
+        "links": ["LIVE"]
+      }
+    ]
+  },
+
+  "inventory": {
+    "activities": [
+      {
+        "year": "2024",
+        "title": "Global Game Jam 2024 Seoul 참가",
+        "type": "GAME JAM",
+        "link": "https://globalgamejam.org/games/2024/mental-robo-2"
+      }
+    ]
   },
 
   "history": [
@@ -38,6 +84,32 @@
         "화면 전환 글리치 효과",
         "Pip-Boy 탭 네비게이션 (STAT/DATA)",
         "프로젝트 카드 + 상세 모달 팝업"
+      ]
+    },
+    {
+      "date": "2026-03-16",
+      "session": "UI 개선 및 탭 구조 확장",
+      "changes": [
+        "DATA 탭을 QUESTS로 이름 변경",
+        "QUESTS: IN PROGRESS / COMPLETED 섹션 분리",
+        "진행률 프로그레스 바 추가 (노란색)",
+        "상태별 색상 구분 (progress: 노란색, released: 녹색)",
+        "LOGS 탭 추가 - 경력/활동 타임라인",
+        "INVENTORY 탭 추가 - 대외활동/수상내역",
+        "CONTACT 탭 추가 - 연락처 링크",
+        "UPTIME 실시간 시간 표시 (HH:MM:SS)",
+        "프로젝트 카드 호버 효과 개선 (borderColor 변경)",
+        "[ CLICK FOR DETAILS ] 하단 고정 (flex 구조)",
+        "DEVILGIRL 프로젝트 제거",
+        "PORTFOLIO-TUI → PORTFOLIO-BLOG로 이름 변경",
+        "DAILY BREW LINKS 제거 (private 레포)",
+        "PORTFOLIO-BLOG LINKS에 LIVE만 유지",
+        "INVENTORY에 2024 Global Game Jam만 유지",
+        "Voltboy 이미지 위치 조정",
+        "옵시디언 frontmatter 양식 수정",
+        "INVENTORY 카드에 링크 버튼 기능 추가",
+        "INVENTORY desc 줄바꿈 적용 (white-space: pre-line)",
+        "FreeDraw 프로젝트 추가 (2021, VR 드로잉 앱)"
       ]
     }
   ],
@@ -64,13 +136,19 @@
       "phase": 2,
       "name": "Main Portfolio",
       "status": "completed",
-      "completedDate": "2026-03-13",
+      "completedDate": "2026-03-16",
       "tasks": [
         { "id": 2.1, "task": "Create Pip-Boy tab-style navigation", "status": "completed" },
         { "id": 2.2, "task": "Build About (STAT) section with skills", "status": "completed" },
-        { "id": 2.3, "task": "Build Projects (DATA) section with TUI cards", "status": "completed" },
+        { "id": 2.3, "task": "Build Projects (QUESTS) section with TUI cards", "status": "completed" },
         { "id": 2.4, "task": "Add discreet Admin access button (???)", "status": "completed" },
-        { "id": 2.5, "task": "Implement project detail modal popup", "status": "completed" }
+        { "id": 2.5, "task": "Implement project detail modal popup", "status": "completed" },
+        { "id": 2.6, "task": "Add LOGS tab - career timeline", "status": "completed" },
+        { "id": 2.7, "task": "Add INVENTORY tab - activities/achievements with links", "status": "completed" },
+        { "id": 2.8, "task": "Add CONTACT tab - contact links", "status": "completed" },
+        { "id": 2.9, "task": "Implement real-time UPTIME display", "status": "completed" },
+        { "id": 2.10, "task": "Project card layout fixes (click hint bottom fixed)", "status": "completed" },
+        { "id": 2.11, "task": "Add FreeDraw project (2021 VR app)", "status": "completed" }
       ]
     },
     {

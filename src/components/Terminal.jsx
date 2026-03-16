@@ -3,6 +3,8 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Terminal.css';
 
+import vaultBoyImg from '../assets/notnull-logo.png';
+
 // ASCII Art for RobCo Boot Sequence
 const ASCII_ART = `
 ███╗   ██╗ ██████╗ ████████╗███╗   ██╗██╗   ██╗██╗     ██╗     
@@ -194,17 +196,31 @@ const Terminal = ({ onAuthenticated }) => {
       exit={{ opacity: 0 }}
     >
       <div className="terminal-content">
-        {/* ASCII Art Logo */}
+        {/* Header Section: ASCII Art + Vault Boy */}
         <AnimatePresence>
           {showAscii && (
-            <motion.pre 
-              className="ascii-art text-glow-strong"
+            <motion.div
+              className="header-section"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              {ASCII_ART}
-            </motion.pre>
+              <pre className="ascii-art text-glow-strong">
+                {ASCII_ART}
+              </pre>
+              <motion.div
+                className="vault-boy-container"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <img 
+                  src={vaultBoyImg} 
+                  alt="Vault Boy" 
+                  className="vault-boy-img"
+                />
+              </motion.div>
+            </motion.div>
           )}
         </AnimatePresence>
 

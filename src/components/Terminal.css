@@ -16,26 +16,37 @@
   padding: 20px;
 }
 
+/* Header Section: ASCII Art + Vault Boy side by side */
+.header-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
 /* ASCII Art Styling */
 .ascii-art {
   font-size: 14px;
   line-height: 1.2;
-  margin-bottom: 30px;
   white-space: pre;
-  overflow-x: auto;
+  margin: 0;
 }
 
 @media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
   .ascii-art {
     font-size: 8px;
-    margin-bottom: 20px;
   }
 }
 
 @media (max-width: 480px) {
   .ascii-art {
     font-size: 6px;
-    margin-bottom: 15px;
   }
 }
 
@@ -100,4 +111,49 @@
 .authenticating {
   font-size: 16px;
   margin-top: 15px;
+}
+
+/* Vault Boy Image */
+.vault-boy-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.vault-boy-img {
+  width: 150px;
+  height: auto;
+  /* CRT 녹색 톤 효과 */
+  filter: 
+    sepia(100%) 
+    hue-rotate(50deg) 
+    saturate(200%) 
+    brightness(0.9)
+    contrast(1.1);
+  /* 글로우 효과 */
+  box-shadow: 
+    0 0 10px rgba(0, 255, 65, 0.5),
+    0 0 20px rgba(0, 255, 65, 0.3),
+    0 0 30px rgba(0, 255, 65, 0.2);
+  /* 살짝 스캔라인 효과 */
+  animation: vault-boy-flicker 0.15s infinite;
+}
+
+@keyframes vault-boy-flicker {
+  0% { opacity: 0.97; }
+  50% { opacity: 1; }
+  100% { opacity: 0.98; }
+}
+
+@media (max-width: 768px) {
+  .vault-boy-img {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .vault-boy-img {
+    width: 80px;
+  }
 }
