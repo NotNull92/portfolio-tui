@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { User, Target, Settings, Clock, Briefcase, Mail } from 'lucide-react';
+import { User, Target, Settings, Clock, Briefcase, Mail, Lock, XCircle, CheckCircle } from 'lucide-react';
 import './MainPortfolio.css';
 
 // Tab components
@@ -133,6 +133,124 @@ const ProjectModal = ({ project, onClose }) => {
         
         <div className="modal-footer">
           <span className="text-glow">{'>'} CLICK OUTSIDE OR [X] TO CLOSE_</span>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// Admin Password Modal
+const AdminPasswordModal = ({ isOpen, onClose, onSuccess }) => {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!password.trim()) {
+      setError('PASSWORD REQUIRED');
+      return;
+    }
+    
+    setIsLoading(true);
+    setError('');
+    
+    // Simulate password check
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // TODO: Replace with actual password verification logic
+    const ADMIN_PASSWORD = 'admin123';
+    
+    if (password === ADMIN_PASSWORD) {
+      onSuccess();
+      handleClose();
+    } else {
+      setError('ACCESS DENIED');
+      setPassword('');
+    }
+    
+    setIsLoading(false);
+  };
+
+  const handleClose = () => {
+    setPassword('');
+    setError('');
+    onClose();
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <motion.div 
+      className="modal-overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={handleClose}
+    >
+      <motion.div 
+        className="modal-content admin-modal"
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        transition={{ type: 'spring', damping: 20 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="modal-header">
+          <span className="modal-title text-glow-strong">
+            <Lock size={16} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+            {'>'} ADMIN ACCESS
+          </span>
+          <button className="modal-close" onClick={handleClose}>[X]</button>
+        </div>
+        
+        <form className="modal-body" onSubmit={handleSubmit}>
+          <div className="modal-section">
+            <span className="modal-label">ENTER PASSWORD:</span>
+            <input
+              type="password"
+              className="admin-password-input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="********"
+              autoFocus
+              disabled={isLoading}
+            />
+          </div>
+          
+          {error && (
+            <motion.div 
+              className="admin-error text-glow"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              {`> ${error}`}
+            </motion.div>
+          )}
+          
+          <div className="admin-actions">
+            <button 
+              type="button" 
+              className="admin-btn cancel"
+              onClick={handleClose}
+              disabled={isLoading}
+            >
+              <XCircle size={14} />
+              <span>CANCEL</span>
+            </button>
+            <button 
+              type="submit" 
+              className="admin-btn submit"
+              disabled={isLoading}
+            >
+              <CheckCircle size={14} />
+              <span>{isLoading ? 'VERIFYING...' : 'SUBMIT'}</span>
+            </button>
+          </div>
+        </form>
+        
+        <div className="modal-footer">
+          <span className="text-glow">{'>'} AUTHORIZATION REQUIRED_</span>
         </div>
       </motion.div>
     </motion.div>
@@ -469,9 +587,10 @@ const ContactTab = () => {
   );
 };
 
-const MainPortfolio = ({ onAdminClick }) => {
+const MainPortfolio = () => {
   const [activeTab, setActiveTab] = useState('stat');
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [showAdminModal, setShowAdminModal] = useState(false);
 
   // 실시간 시간 업데이트
   useEffect(() => {
@@ -489,6 +608,12 @@ const MainPortfolio = ({ onAdminClick }) => {
       minute: '2-digit',
       second: '2-digit'
     });
+  };
+
+  const handleAdminSuccess = () => {
+    // TODO: Phase 3 - Admin Tool Implementation
+    console.log('Admin access granted');
+    // 여기에 관리자 페이지로 이동하거나 관리자 모드 활성화 로직 추가
   };
 
   const tabs = [
@@ -532,7 +657,7 @@ const MainPortfolio = ({ onAdminClick }) => {
           {/* Hidden Admin Button */}
           <button
             className="tab-button admin-button"
-            onClick={onAdminClick}
+            onClick={() => setShowAdminModal(true)}
             aria-label="Admin Access"
           >
             <Settings size={16} />
@@ -555,6 +680,15 @@ const MainPortfolio = ({ onAdminClick }) => {
           <span className="cursor-blink">█</span>
         </div>
       </div>
+
+      {/* Admin Password Modal */}
+      {showAdminModal && (
+        <AdminPasswordModal 
+          isOpen={showAdminModal}
+          onClose={() => setShowAdminModal(false)}
+          onSuccess={handleAdminSuccess}
+        />
+      )}
     </motion.div>
   );
 };
