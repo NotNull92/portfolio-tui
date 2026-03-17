@@ -262,6 +262,21 @@ const QuestsTab = () => {
 
   const inProgressProjects = [
     {
+      name: 'WITCHDICE',
+      description: '주사위 기반 퍼즐형 로그라이크 게임',
+      fullDescription: '스마일게이트 캠퍼스 인디게임 프로토타이핑 챌린지 3기에서 개발 중인 주사위 기반 로그라이크 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2026.03 - 현재\n• 장르: 로그라이크 (주사위 턴제 전투)\n• 플랫폼: Steam / BIC 출품 대상\n• 팀 구성: 인디팀\n• 사용 기술: C#, Unity3D, DOTween, Newtonsoft.JSON\n\n[핵심 기여도]\n• 게임 아키텍처 설계: Stack 기반 Generic StateMachine으로 전체 게임 흐름 관리\n• 맵 시스템 구현 담당: 오픈소스 레퍼런스 기반 절차적 맵 생성 포팅 및 커스터마이징\n• 전투 시스템 리팩터링: 기존 코루틴 하드코딩 구조를 StateMachine 기반으로 재설계\n• 멀티씬 구성 설계 및 구현',
+      status: 'IN PROGRESS',
+      progress: 10,
+      tech: ['Unity', 'C#', 'DOTween', 'Newtonsoft.JSON', 'Git'],
+      features: [
+        '주사위 족보 기반 턴제 전투 로그라이크',
+        'Stack 기반 Generic StateMachine 아키텍처',
+        '절차적 맵 생성 시스템',
+        '멀티씬 구성 및 씬 간 상태 관리',
+        '스마일게이트 캠퍼스 인디게임 프로토타이핑 챌린지 3기 참여',
+      ],
+    },
+    {
       name: 'DAILY BREW',
       description: 'A cozy coffee shop simulation game',
       fullDescription: 'A relaxing coffee shop management simulation where you brew coffee, serve customers, and build your dream café. Features a day-night cycle, customer stories, and cozy atmosphere.',
@@ -326,6 +341,37 @@ const QuestsTab = () => {
       ],
       links: [
         { label: 'LIVE', url: 'https://portfolio-tui-ten.vercel.app/' },
+      ],
+    },
+    {
+      name: 'ZOMBIE KINGDOM',
+      description: '조선시대 컨셉 모바일 슈팅 게임',
+      fullDescription: '오픈소스 프로젝트를 분석하여 리메이크한 모바일 슈팅 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2020.10 - 2020.12\n• 장르: 모바일 슈팅 게임\n• 플랫폼: 모바일\n• 팀 구성: 클라이언트 1인\n• 사용 기술: C#, Unity3D\n\n[핵심 기여도]\n• 오픈소스 프로젝트 분석 및 리메이크\n• 기존 포스트 아포칼립스 컨셉에서 조선시대 컨셉으로 변경\n• UI 전면 수정, 맵 레벨링, 인게임 내 오브젝트 모델링 변경\n• Json을 이용한 다국어 지원 기능 추가\n• 구글 애드몹, 인앱결제 추가 및 스토어 출시\n\n[출시 후 성과]\n• 전북콘텐츠진흥원 국가지원사업 지원금: 50,000,000\n\n[협업 도구]\n• 버전 관리: Unity Collaborate, Trello\n• 이슈 트래킹: Notion\n• 문서화: Hwp, Word',
+      status: 'RELEASED',
+      tech: ['Unity', 'C#', 'Google AdMob', 'IAP', 'JSON'],
+      features: [
+        '오픈소스 리메이크 (1인 개발)',
+        '조선시대 컨셉 변경',
+        '다국어 지원 시스템',
+        '구글 애드몹 & 인앱결제',
+        '전북콘텐츠진흥원 지원금 5천만원',
+      ],
+    },
+    {
+      name: 'ACTION GOLF',
+      description: '자이로 센서 기반 모바일 골프 게임',
+      fullDescription: '자이로 센서를 이용한 모바일 골프 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2021.01 - 2021.04\n• 장르: 자이로 센서를 이용한 모바일 골프 게임\n• 플랫폼: 모바일\n• 팀 구성: 클라이언트 2인\n• 사용 기술: C#, Unity3D, 아두이노, Bluetooth Plugin\n\n[핵심 기여도]\n• UI 코드 개선 및 리뉴얼\n• 상점 시스템 추가\n• 블루투스 센서 연결 및 데이터 전송 코드 개선 및 최적화\n\n[팀 내 역할]\n• 메인 개발자에게 프로젝트를 넘겨받아 작업 진행\n\n[협업 도구]\n• 버전 관리: Unity Collaborate, Trello\n• 이슈 트래킹: Notion\n• 문서화: Notion',
+      status: 'RELEASED',
+      tech: ['Unity', 'C#', 'Arduino', 'Bluetooth Plugin', 'Gyro Sensor'],
+      features: [
+        '자이로 센서 기반 골프 스윙',
+        'UI 코드 개선 및 리뉴얼',
+        '상점 시스템 구현',
+        '블루투스 센서 연결 최적화',
+        '전북콘텐츠진흥원 국가지원사업',
+      ],
+      links: [
+        { label: 'VIDEO', url: 'https://drive.google.com/file/d/1m1fkNzGY1tKGw5mvhPq-CL2nKHApZ5TD/view' },
       ],
     },
   ];

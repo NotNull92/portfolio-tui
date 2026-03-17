@@ -238,13 +238,6 @@
 }
 
 /* Project Progress Bar */
-.project-progress {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-
 .progress-bar {
   flex: 1;
   height: 6px;
@@ -279,15 +272,29 @@
 /* Project Card Clickable */
 .project-card.clickable {
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-tech {
+  flex-shrink: 0;
+}
+
+.project-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 15px;
+  margin-top: auto;
 }
 
 .project-click-hint {
   font-size: 11px;
-  margin-top: auto;
-  padding-top: 15px;
+  padding-top: 10px;
   text-align: center;
   opacity: 0.5;
   transition: opacity 0.3s ease;
+  margin-top: auto;
 }
 
 .project-card.clickable:hover .project-click-hint {
