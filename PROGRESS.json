@@ -2,7 +2,7 @@
   "project": "Portfolio-TUI",
   "description": "Fallout Pip-Boy 스타일의 터미널 UI 포트폴리오 웹사이트",
   "theme": "Fallout Pip-Boy / Terminal UI",
-  "lastUpdated": "2026-03-17T12:06:00+09:00",
+  "lastUpdated": "2026-03-17T16:28:00+09:00",
   
   "techStack": {
     "framework": "React 19 + Vite",
@@ -38,9 +38,16 @@
   "projects": {
     "inProgress": [
       {
+        "name": "WITCHDICE",
+        "description": "스마일게이트 캠퍼스 인디게임 프로토타이핑 챌린지 3기 주사위 기반 로그라이크 게임",
+        "progress": 10,
+        "tech": ["Unity", "C#", "DOTween", "Newtonsoft.JSON", "Git"],
+        "links": "없음 (미출시, BIC 출품 예정)"
+      },
+      {
         "name": "DAILY BREW",
         "description": "A cozy coffee shop simulation game",
-        "progress": 35,
+        "progress": 65,
         "tech": ["Unity", "C#", "2D Graphics", "Pixel Art"],
         "links": "없음 (private 레포, 미출시)"
       }
@@ -135,6 +142,29 @@
         "입력 필드 배경 및 테두리 빨간색 테마",
         "버튼 hover 효과 빨간색 glow 적용",
         "modal-header, modal-footer 빨간색 테마 오버라이드"
+      ]
+    },
+    {
+      "date": "2026-03-17",
+      "session": "프로젝트 추가 - WitchDice",
+      "changes": [
+        "WITCHDICE 프로젝트 카드 추가 (IN PROGRESS)",
+        "스마일게이트 캠퍼스 인디게임 프로토타이핑 챌린지 3기 주사위 기반 로그라이크 게임",
+        "개발 기간: 2026.03 - 현재",
+        "진행률 10% (노란색 프로그레스 바)",
+        "기술 스택: Unity, C#, DOTween, Newtonsoft.JSON, Git",
+        "핵심 기여도 상세 설명 추가 (StateMachine, 절차적 맵 생성 등)"
+      ]
+    },
+    {
+      "date": "2026-03-17",
+      "session": "프로젝트 카드 레이아웃 개선",
+      "changes": [
+        "프로젝트 카드 프로그레스바 하단 고정",
+        "[ CLICK FOR DETAILS ] 바로 위에 위치하도록 수정",
+        ".project-card.clickable flex 구조 변경",
+        ".project-tech에 flex: 1 적용으로 가변 영역 확보",
+        ".project-progress에 margin-top: auto 적용"
       ]
     }
   ],
