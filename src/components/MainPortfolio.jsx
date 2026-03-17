@@ -199,7 +199,7 @@ const AdminPasswordModal = ({ isOpen, onClose, onSuccess }) => {
         <div className="modal-header">
           <span className="modal-title text-glow-strong">
             <Lock size={16} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
-            {'>'} ADMIN ACCESS
+            {'>'} DO NOT ACCESS HERE
           </span>
           <button className="modal-close" onClick={handleClose}>[X]</button>
         </div>
