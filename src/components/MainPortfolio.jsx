@@ -201,7 +201,6 @@ const AdminPasswordModal = ({ isOpen, onClose, onSuccess }) => {
             <Lock size={16} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
             {'>'} DO NOT ACCESS HERE
           </span>
-          <button className="modal-close" onClick={handleClose}>[X]</button>
         </div>
         
         <form className="modal-body" onSubmit={handleSubmit}>
