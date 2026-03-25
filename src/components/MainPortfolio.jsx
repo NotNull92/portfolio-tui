@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { User, Target, Settings, Clock, Briefcase, Mail, Lock, XCircle, CheckCircle } from 'lucide-react';
 import './MainPortfolio.css';
 
@@ -263,11 +263,12 @@ const QuestsTab = () => {
     {
       name: 'WITCHDICE',
       description: '주사위 기반 퍼즐형 로그라이크 게임',
-      fullDescription: '스마일게이트 캠퍼스 인디게임 프로토타이핑 챌린지 3기에서 개발 중인 주사위 기반 로그라이크 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2026.03 - 현재\n• 장르: 로그라이크 (주사위 턴제 전투)\n• 플랫폼: Steam / BIC 출품 대상\n• 팀 구성: 인디팀\n• 사용 기술: C#, Unity3D, DOTween, Newtonsoft.JSON\n\n[핵심 기여도]\n• 게임 아키텍처 설계: Stack 기반 Generic StateMachine으로 전체 게임 흐름 관리\n• 맵 시스템 구현 담당: 오픈소스 레퍼런스 기반 절차적 맵 생성 포팅 및 커스터마이징\n• 전투 시스템 리팩터링: 기존 코루틴 하드코딩 구조를 StateMachine 기반으로 재설계\n• 멀티씬 구성 설계 및 구현',
+      fullDescription: '스마일게이트 캠퍼스 인디게임 프로토타이핑 챌린지 3기에서 개발 중인 주사위 기반 로그라이크 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2026.03 - 현재\n• 장르: 로그라이크 (주사위 턴제 전투)\n• 플랫폼: Steam / BIC 출품 대상\n• 팀 구성: 인디팀\n• 역할: Lead Developer\n• 사용 기술: C#, Unity3D, DOTween, Newtonsoft.JSON\n\n[핵심 기여도]\n• 게임 아키텍처 설계: Stack 기반 Generic StateMachine으로 전체 게임 흐름 관리\n• 맵 시스템 구현 담당: 오픈소스 레퍼런스 기반 절차적 맵 생성 포팅 및 커스터마이징\n• 전투 시스템 리팩터링: 기존 코루틴 하드코딩 구조를 StateMachine 기반으로 재설계\n• 멀티씬 구성 설계 및 구현',
       status: 'IN PROGRESS',
       progress: 10,
       tech: ['Unity', 'C#', 'DOTween', 'Newtonsoft.JSON', 'Git'],
       features: [
+        'Lead Developer 역할 수행',
         '주사위 족보 기반 턴제 전투 로그라이크',
         'Stack 기반 Generic StateMachine 아키텍처',
         '절차적 맵 생성 시스템',
@@ -632,12 +633,11 @@ const ContactTab = () => {
   );
 };
 
-const MainPortfolio = () => {
+const MainPortfolio = ({ onAdminMode }) => {
   const [activeTab, setActiveTab] = useState('stat');
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showAdminModal, setShowAdminModal] = useState(false);
 
-  // 실시간 시간 업데이트
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -645,7 +645,6 @@ const MainPortfolio = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // 시간 포맷팅 (HH:MM:SS)
   const formatTime = (date) => {
     return date.toLocaleTimeString('en-US', {
       hour12: false,
@@ -656,9 +655,8 @@ const MainPortfolio = () => {
   };
 
   const handleAdminSuccess = () => {
-    // TODO: Phase 3 - Admin Tool Implementation
-    console.log('Admin access granted');
-    // 여기에 관리자 페이지로 이동하거나 관리자 모드 활성화 로직 추가
+    setShowAdminModal(false);
+    onAdminMode?.();
   };
 
   const tabs = [
@@ -712,11 +710,13 @@ const MainPortfolio = () => {
 
         {/* Tab Content */}
         <div className="tab-container">
-          {activeTab === 'stat' && <StatTab />}
-          {activeTab === 'logs' && <LogsTab />}
-          {activeTab === 'quests' && <QuestsTab />}
-          {activeTab === 'inventory' && <InventoryTab />}
-          {activeTab === 'contact' && <ContactTab />}
+          <AnimatePresence mode="wait">
+            {activeTab === 'stat' && <motion.div key="stat" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><StatTab /></motion.div>}
+            {activeTab === 'logs' && <motion.div key="logs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><LogsTab /></motion.div>}
+            {activeTab === 'quests' && <motion.div key="quests" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><QuestsTab /></motion.div>}
+            {activeTab === 'inventory' && <motion.div key="inventory" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><InventoryTab /></motion.div>}
+            {activeTab === 'contact' && <motion.div key="contact" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><ContactTab /></motion.div>}
+          </AnimatePresence>
         </div>
 
         {/* Footer */}

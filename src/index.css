@@ -14,9 +14,14 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html, body, #root, .app {
   height: 100%;
   width: 100%;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
 }
 
 body {
@@ -31,6 +36,8 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* CRT Scanlines Overlay */
@@ -215,23 +222,23 @@ body {
   display: inline;
 }
 
-/* Scrollbar Styling */
+/* Scrollbar Styling - Hidden but functional */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #000d02;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #00ff4180;
+  background: transparent;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00ff41;
+  background: transparent;
 }
 
 /* Selection Styling */

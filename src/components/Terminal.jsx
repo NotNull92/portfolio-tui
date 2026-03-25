@@ -1,4 +1,3 @@
-{/* eslint-disable no-unused-vars */}
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Terminal.css';
