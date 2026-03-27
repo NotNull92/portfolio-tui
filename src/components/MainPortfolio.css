@@ -243,7 +243,7 @@
   font-size: 11px;
   padding: 4px 10px;
   border: 1px dashed #00ff4160;
-  opacity: 0.8;
+  color: #88ddaa;
 }
 
 /* Project Progress Bar */
@@ -328,7 +328,7 @@
 
 /* Modal Content */
 .modal-content {
-  background: #000d02;
+  background: #020804;
   border: 2px solid #00ff41;
   max-width: 600px;
   width: 100%;
@@ -352,6 +352,7 @@
 .modal-title {
   font-size: 16px;
   font-weight: 600;
+  color: #33ff66;
 }
 
 .modal-close {
@@ -386,7 +387,7 @@
 .modal-label {
   display: block;
   font-size: 12px;
-  opacity: 0.7;
+  color: #66aa88;
   margin-bottom: 8px;
   letter-spacing: 1px;
 }
@@ -394,12 +395,13 @@
 .modal-value {
   font-size: 16px;
   font-weight: 500;
+  color: #33ff66;
 }
 
 .modal-description {
-  font-size: 14px;
-  line-height: 1.6;
-  opacity: 0.9;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #aaccbb;
   white-space: pre-line;
 }
 
@@ -416,10 +418,11 @@
 }
 
 .modal-features li {
-  font-size: 14px;
+  font-size: 13px;
   padding: 5px 0;
   padding-left: 20px;
   position: relative;
+  color: #99ddbb;
 }
 
 .modal-features li::before {
@@ -454,7 +457,7 @@
   padding: 15px 20px;
   border-top: 1px solid #00ff4180;
   font-size: 12px;
-  opacity: 0.6;
+  color: #66aa88;
 }
 
 /* Logs Timeline */

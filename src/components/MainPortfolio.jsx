@@ -262,18 +262,57 @@ const QuestsTab = () => {
   const inProgressProjects = [
     {
       name: 'WITCHDICE',
-      description: '주사위 기반 퍼즐형 로그라이크 게임',
-      fullDescription: '스마일게이트 캠퍼스 인디게임 프로토타이핑 챌린지 3기에서 개발 중인 주사위 기반 로그라이크 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2026.03 - 현재\n• 장르: 로그라이크 (주사위 턴제 전투)\n• 플랫폼: Steam / BIC 출품 대상\n• 팀 구성: 인디팀\n• 역할: Lead Developer\n• 사용 기술: C#, Unity3D, DOTween, Newtonsoft.JSON\n\n[핵심 기여도]\n• 게임 아키텍처 설계: Stack 기반 Generic StateMachine으로 전체 게임 흐름 관리\n• 맵 시스템 구현 담당: 오픈소스 레퍼런스 기반 절차적 맵 생성 포팅 및 커스터마이징\n• 전투 시스템 리팩터링: 기존 코루틴 하드코딩 구조를 StateMachine 기반으로 재설계\n• 멀티씬 구성 설계 및 구현',
+      description: '주사위 기반 턴제 전투 로그라이크',
+      fullDescription: `스마일게이트 캠퍼스 인디게임 프로토타이핑 챌린지 3기 참여작.
+6인 인디팀에서 리드 개발자로 클라이언트 아키텍처 설계부터 핵심 시스템 구현까지 전담.
+
+[프로젝트 개요]
+• 개발 기간: 2026.03 - 현재
+• 장르: 로그라이크 (주사위 턴제 전투)
+• 플랫폼: Steam / BIC 출품 대상
+• 팀 구성: 6인 (기획 1, PM 1, 아트 1, 사운드 1, 개발 2)
+• 역할: 리드 개발자 — 아키텍처 설계, 기술 의사결정, 코드 리뷰, 일감 분배
+• 사용 기술: C#, Unity3D, DOTween, Newtonsoft.JSON, Git
+
+[역할 및 리더십]
+• 기획서를 바탕으로 개발 스펙 문서를 작성하고, PM과 조율하여 일감을 분배
+• StateMachine 도입 시 팀원에게 왜 이 구조가 유지보수와 확장에 유리한지 설명하고 설득하는 과정을 주도
+• 코드 리뷰를 통해 팀 코드 품질 관리 및 컨벤션 통일
+
+[핵심 기여도]
+
+1. 게임 아키텍처 재설계 — 코루틴 하드코딩 → Stack 기반 StateMachine
+   - 문제: 기존에는 BattleScene 하나에 코루틴으로 하드코딩된 상태. 새로운 상태 추가나 흐름 변경 시 전체 코드를 추적해야 하는 구조
+   - 판단: 게임의 장르(로그라이크)와 진행 방식(맵 탐색 → 전투 → 보상 루프)을 분석하고, Push/Pop 방식의 Stack 기반 Generic StateMachine이 가장 적합하다고 판단하여 팀에 제안 및 도입 결정
+   - 결과: Title → Map → Battle 게임 루프를 상태 머신으로 관리, 전투 내부도 6개 SubState(Ready/Roll/Attack/Result/Reward/End)로 분리. 새로운 상태 추가 시 기존 코드 수정 없이 State 클래스 하나만 추가하면 되는 구조 확보
+
+2. 절차적 맵 생성 시스템 — 오픈소스 포팅 + 프로젝트 맞춤 커스터마이징
+   - 문제: 레퍼런스 Repo는 Slay the Spire 방식의 완전 랜덤 맵 생성이었으나, 우리 게임은 시작 노드 표기가 필요하고, 구간(레이어)마다 노드 랜덤 풀을 다르게 구성해야 하는 기획 요구사항이 있었음
+   - 해결: 레이어 단위로 노드 풀을 분리하는 구조로 재설계하고, MapConfig ScriptableObject에 구간별 설정을 노출
+   - 추가: 기획자가 Unity Editor에서 직접 맵 구성을 시뮬레이션할 수 있도록 커스텀 에디터(MapManagerInspector)를 제작하여 기획-개발 간 이터레이션 단축
+
+3. 멀티씬 비동기 전환 시스템
+   - SceneTransitionManager를 설계하여 비동기 씬 로드 + DOTween FadeIn/Out 연출 통합
+   - GameContext를 씬 간 공유 컨텍스트로 설계, 씬 전환 시 상태 유실 없이 플레이어 진행 데이터를 유지
+
+4. 몬스터 데이터 시스템
+   - EnemyData ScriptableObject + MonsterPool로 등급별(Minor/Elite/Boss) 풀링 구축
+   - 기획자가 ScriptableObject 에셋만 추가하면 코드 수정 없이 몬스터 확장 가능
+   - DOTween 기반 Enemy 등장/공격/피격 애니메이션 연출 구현
+
+5. UI 시스템 및 데이터 아키텍처
+   - PlayerStats를 Single Source of Truth로 리팩토링, MainHUD와 실시간 바인딩
+   - 전투 중 맵 진행 상황을 확인할 수 있는 MapOverlayUI 시스템 구현
+   - RestSite 노드 구현 시 싱글턴 의존성을 제거하고 이벤트 기반으로 전환`,
       status: 'IN PROGRESS',
-      progress: 10,
-      tech: ['Unity', 'C#', 'DOTween', 'Newtonsoft.JSON', 'Git'],
+      progress: 30,
+      tech: ['Unity', 'C#', 'DOTween', 'Newtonsoft.JSON', 'Git', 'ScriptableObject', 'Custom Editor', 'UGUI', 'StateMachine'],
       features: [
-        'Lead Developer 역할 수행',
-        '주사위 족보 기반 턴제 전투 로그라이크',
         'Stack 기반 Generic StateMachine 아키텍처',
-        '절차적 맵 생성 시스템',
-        '멀티씬 구성 및 씬 간 상태 관리',
-        '스마일게이트 캠퍼스 인디게임 프로토타이핑 챌린지 3기 참여',
+        '레이어별 노드 풀 분리 절차적 맵 생성 + 커스텀 에디터',
+        'ScriptableObject 데이터 드리븐 설계로 기획자 자율 확장',
+        '멀티씬 비동기 로드 + DOTween 씬 전환 연출',
+        '스마일게이트 캠퍼스 인디게임 프로토타이핑 챌린지 3기',
       ],
     },
     {
