@@ -38,6 +38,13 @@
   "projects": {
     "inProgress": [
       {
+        "name": "NoMoreRolls",
+        "description": "언더테일의 도덕적 전투 선택을 주사위 족보 메카닉으로 번역한 1인 개발 로그라이크",
+        "progress": 40,
+        "tech": ["Unity", "C#", "DOTween", "Odin Inspector", "UniTask", "OMEGA(Ω)", "Git", "Obsidian"],
+        "links": "[COMING SOON]"
+      },
+      {
         "name": "DAILY BREW",
         "description": "A cozy coffee shop simulation game",
         "progress": 65,

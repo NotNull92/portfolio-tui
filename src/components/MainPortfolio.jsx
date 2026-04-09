@@ -261,6 +261,71 @@ const QuestsTab = () => {
 
   const inProgressProjects = [
     {
+      name: 'NoMoreRolls',
+      description: '언더테일의 도덕적 전투 선택을 주사위 족보 메카닉으로 번역한 1인 개발 로그라이크',
+      fullDescription: `"언더테일의 도덕적 전투 선택을 주사위 족보 메카닉으로 번역한 1인 개발 로그라이크"입니다. 적과 전투(Fight)하거나 대화(Talk)하는 이중 루트 시스템이 핵심이며, 10체 고유 영혼의 트라우마를 기믹이라는 게임적 장치로 표현합니다.
+
+[프로젝트 개요]
+• 개발 기간: 2026.04 ~ 진행 중
+• 장르: 로그라이크 (주사위 기반 전투 + 서사 분기)
+• 플랫폼: Steam (PC), BIC 출품 대상
+• 팀 구성: 1인 개발
+• 사용 기술: C#, Unity, DOTween, Odin Inspector, UniTask
+
+[핵심 기여도]
+• 전체 게임 디자인 문서(GDD) 23개 섹션 작성 및 유지
+• 아키텍처 설계: 2씬(State 전환 기반) + 통합 ParlorScene 구조
+• 전투 시스템: 10종 족보 판정 + 데미지/공감 이중 계산 시스템
+• Fight/Talk 대칭 루트: 동일 주사위-족보 루프에서 공격/공감으로 분기
+• 적 기믹 시스템: 트라우마를 게임 메커니즘으로 번역 (9종 GimmickType)
+• 복도 진행 시스템: 22노드 고정 경로 + 루트 비율 기반 시각 변화
+• Talk 조건 판정: 적별 고유 퍼즐 (GimmickType 기반 7종 switch)
+• 크로스런 메타 시스템: 회차별 타이틀 변화 + True Ending 루트
+
+[대표 개발 컨텐츠]
+
+◆ 핵심 시스템
+• PedigreeManager: 10종 족보 판정 (HighCard ~ MonoRoll) + 데미지 계산
+• TalkManager: 공감 계산 + 감정 게이지 + 적별 조건 판정 + 대화 선택지
+• ParlorManager + CorridorState: 22노드 복도 진행 + DOTween 스크롤/페이드 연출
+• BattleManager SubSM: 11개 State 기반 턴제 전투 (Intro → RouteSelect → Dice → Hand → Resolve → TurnEnd)
+• DiceSlotManager: 5슬롯 장착/교체/보관함 시스템 (덱빌딩 → 슬롯 시스템으로 전환)
+
+◆ UI/연출
+• CombatUIController: 전투 UI 통합 컨트롤러 (족보 선택, 리롤, 루트 선택, 결과)
+• PlayerAttackDirector: 3Phase 공격 연출 (팝업 → 아이콘 비행 → 피격 플래시)
+• EmotionGaugeUI: 감정 게이지 하트 DOTween 연출
+• DoorSlotUI: 문 상태별 스프라이트 + Pulse 애니메이션 + 동료 표시
+• RouteSelectUI: Fight/Talk 루트 선택 + 적 대사 표시
+
+◆ 메타 시스템
+• CrossRunSaveManager: JSON 기반 크로스런 영속 저장
+• MetaEventSystem: 회차별 타이틀 로고/부제 변화 + Dealer 대사 타이핑 연출
+• True Ending 루트: Fight+Talk 양쪽 엔딩 달성 시 해금
+
+◆ 설계 문서
+• GDD 23개 섹션 (개요, 세계관, 캐릭터, 전투, Talk, 기믹, 조우 구조, 엔딩 등)
+• Unity Docs 5종 (scene-overview, title/parlor hierarchy, title/parlor dev-spec)
+• 밸런스 시뮬레이션 (10,000턴 기반 족보/데미지/공감 수치 확정)
+• 인라인 체크리스트 (프로토타입 구동 기준)
+
+[협업 도구]
+• 버전 관리: Git (GitHub)
+• 문서화: Obsidian (Second Brain Vault)
+• AI 파트너: OMEGA(Ω) (오피) — 전략, 태스크 분해, 문서 관리`,
+      status: 'IN PROGRESS',
+      progress: 40,
+      tech: ['Unity', 'C#', 'DOTween', 'Odin Inspector', 'UniTask', 'OMEGA(Ω)', 'Git', 'Obsidian'],
+      features: [
+        'Fight/Talk 이중 루트: 동일 족보가 공격/감정으로 의미 분기',
+        '10체 고유 영혼 + 트라우마 기믹 9종',
+        '22노드 고정 복도 + 루트 비율 기반 시각 변화',
+        '10종 주사위 족보 (HighCard ~ MonoRoll)',
+        '크로스런 메타 시스템 + True Ending',
+        '1인 전체 설계/개발 (GDD 23섹션 + 전체 구현)',
+      ],
+    },
+    {
       name: 'DAILY BREW',
       description: 'A cozy coffee shop simulation game',
       fullDescription: 'A relaxing coffee shop management simulation where you brew coffee, serve customers, and build your dream café. Features a day-night cycle, customer stories, and cozy atmosphere.',
