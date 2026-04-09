@@ -38,13 +38,6 @@
   "projects": {
     "inProgress": [
       {
-        "name": "WITCHDICE",
-        "description": "스마일게이트 캠퍼스 인디게임 프로토타이핑 챌린지 3기 주사위 기반 로그라이크 게임",
-        "progress": 10,
-        "tech": ["Unity", "C#", "DOTween", "Newtonsoft.JSON", "Git"],
-        "links": "없음 (미출시, BIC 출품 예정)"
-      },
-      {
         "name": "DAILY BREW",
         "description": "A cozy coffee shop simulation game",
         "progress": 65,
@@ -144,18 +137,7 @@
         "modal-header, modal-footer 빨간색 테마 오버라이드"
       ]
     },
-    {
-      "date": "2026-03-17",
-      "session": "프로젝트 추가 - WitchDice",
-      "changes": [
-        "WITCHDICE 프로젝트 카드 추가 (IN PROGRESS)",
-        "스마일게이트 캠퍼스 인디게임 프로토타이핑 챌린지 3기 주사위 기반 로그라이크 게임",
-        "개발 기간: 2026.03 - 현재",
-        "진행률 10% (노란색 프로그레스 바)",
-        "기술 스택: Unity, C#, DOTween, Newtonsoft.JSON, Git",
-        "핵심 기여도 상세 설명 추가 (StateMachine, 절차적 맵 생성 등)"
-      ]
-    },
+
     {
       "date": "2026-03-17",
       "session": "프로젝트 카드 레이아웃 개선",
