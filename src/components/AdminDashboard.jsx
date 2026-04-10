@@ -8,7 +8,8 @@ const STORAGE_KEY = 'portfolio_projects';
 const DEFAULT_PROJECTS = [
   { id: 1, name: 'NoMoreRolls', status: 'IN_PROGRESS', description: '주사위 족보 기반 1인 개발 로그라이크' },
   { id: 2, name: 'DAILY BREW', status: 'IN_PROGRESS', description: '카페 시뮬레이션' },
-  { id: 3, name: 'EOS-RED', status: 'DONE', description: '모바일 MMORPG' },
+  { id: 3, name: 'MENTAL ROBO', status: 'DONE', description: '리듬 코미디 로봇 스탠드업 (GGJ 2024)' },
+  { id: 4, name: 'EOS-RED', status: 'DONE', description: '모바일 MMORPG' },
 ];
 
 const loadProjects = () => {
