@@ -54,6 +54,14 @@
     ],
     "completed": [
       {
+        "name": "MENTAL ROBO",
+        "description": "리듬 입력과 토크 쇼를 결합한 코미디 로봇 스탠드업 게임 (GGJ 2024)",
+        "tech": ["Unity", "C#", "Git", "GitHub"],
+        "links": ["GITHUB", "GGJ"],
+        "githubUrl": "https://github.com/MrBadToast/GGJ2024",
+        "ggjUrl": "https://globalgamejam.org/games/2024/mental-robo-2"
+      },
+      {
         "name": "FREEDRAW",
         "description": "VR drawing application for MetaQuest 2",
         "tech": ["Unity", "C#", "SteamVR", "Oculus Integration", "TCP Socket"],
