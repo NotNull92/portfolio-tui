@@ -24,7 +24,7 @@
   "currentStatus": {
     "completedPhases": [1, 2],
     "currentPhase": 3,
-    "nextTask": "3.2 - Build admin management dashboard"
+    "nextTask": "3.1 - Responsive design optimization"
   },
 
   "tabStructure": {
@@ -127,31 +127,6 @@
         "FreeDraw 프로젝트 추가 (2021, VR 드로잉 앱)"
       ]
     },
-    {
-      "date": "2026-03-16",
-      "session": "Phase 3.1 - Admin 로그인 인터페이스",
-      "changes": [
-        "AdminPasswordModal 컴포넌트 구현 (MainPortfolio.jsx)",
-        "ProjectModal과 동일한 스타일의 모달 팝업",
-        "비밀번호 입력 필드 + 에러 메시지 표시",
-        "CANCEL / SUBMIT 버튼 (아이콘 포함)",
-        "framer-motion 애니메이션 적용",
-        "Admin 모달 전용 스타일 추가 (MainPortfolio.css)",
-        "showAdminModal 상태로 모달 표시 관리",
-        "[ ??? ] 버튼 클릭 시 모달 오픈"
-      ]
-    },
-    {
-      "date": "2026-03-17",
-      "session": "Phase 3.1 - Admin 모달 스타일 개선",
-      "changes": [
-        "AdminPasswordModal 색상 테마 빨간색으로 변경",
-        "모달 테두리, 그림자, 글자 색상 #ff4444 적용",
-        "입력 필드 배경 및 테두리 빨간색 테마",
-        "버튼 hover 효과 빨간색 glow 적용",
-        "modal-header, modal-footer 빨간색 테마 오버라이드"
-      ]
-    },
 
     {
       "date": "2026-03-17",
@@ -193,36 +168,23 @@
         { "id": 2.1, "task": "Create Pip-Boy tab-style navigation", "status": "completed" },
         { "id": 2.2, "task": "Build About (STAT) section with skills", "status": "completed" },
         { "id": 2.3, "task": "Build Projects (QUESTS) section with TUI cards", "status": "completed" },
-        { "id": 2.4, "task": "Add discreet Admin access button (???)", "status": "completed" },
-        { "id": 2.5, "task": "Implement project detail modal popup", "status": "completed" },
-        { "id": 2.6, "task": "Add LOGS tab - career timeline", "status": "completed" },
-        { "id": 2.7, "task": "Add INVENTORY tab - activities/achievements with links", "status": "completed" },
-        { "id": 2.8, "task": "Add CONTACT tab - contact links", "status": "completed" },
-        { "id": 2.9, "task": "Implement real-time UPTIME display", "status": "completed" },
-        { "id": 2.10, "task": "Project card layout fixes (click hint bottom fixed)", "status": "completed" },
-        { "id": 2.11, "task": "Add FreeDraw project (2021 VR app)", "status": "completed" }
+        { "id": 2.4, "task": "Implement project detail modal popup", "status": "completed" },
+        { "id": 2.5, "task": "Add LOGS tab - career timeline", "status": "completed" },
+        { "id": 2.6, "task": "Add INVENTORY tab - activities/achievements with links", "status": "completed" },
+        { "id": 2.7, "task": "Add CONTACT tab - contact links", "status": "completed" },
+        { "id": 2.8, "task": "Implement real-time UPTIME display", "status": "completed" },
+        { "id": 2.9, "task": "Project card layout fixes (click hint bottom fixed)", "status": "completed" },
+        { "id": 2.10, "task": "Add FreeDraw project (2021 VR app)", "status": "completed" }
       ]
     },
     {
       "phase": 3,
-      "name": "Admin Tool",
-      "status": "in_progress",
-      "nextAction": "Admin 대시보드 구현",
-      "tasks": [
-        { "id": 3.1, "task": "Create hidden admin login interface", "status": "completed", "priority": "high", "completedDate": "2026-03-16" },
-        { "id": 3.2, "task": "Build admin management dashboard", "status": "pending", "priority": "high" },
-        { "id": 3.3, "task": "Add project CRUD functionality", "status": "pending", "priority": "medium" },
-        { "id": 3.4, "task": "Implement local storage for data persistence", "status": "pending", "priority": "medium" }
-      ]
-    },
-    {
-      "phase": 4,
       "name": "Polish & Deployment",
-      "status": "pending",
+      "status": "in_progress",
       "tasks": [
-        { "id": 4.1, "task": "Add terminal sound effects (optional)", "status": "pending" },
-        { "id": 4.2, "task": "Responsive design optimization", "status": "pending" },
-        { "id": 4.3, "task": "Deploy to Vercel", "status": "pending" }
+        { "id": 3.1, "task": "Responsive design optimization", "status": "pending" },
+        { "id": 3.2, "task": "Add terminal sound effects (optional)", "status": "pending" },
+        { "id": 3.3, "task": "Deploy to Vercel", "status": "pending" }
       ]
     }
   ],
@@ -235,6 +197,7 @@
       "4. 작업 완료 후 PROGRESS.json 업데이트"
     ],
     "runCommand": "npm run dev (http://localhost:5173 또는 5174)",
-    "accessKey": "alena"
+    "accessKey": "alena",
+    "accessKeyIntent": "화면에 노출되는 의도된 입장 기믹이며 보안 경계나 관리자 인증이 아니다. Admin/editing 기능은 보안 이슈로 폐기되었으므로 재도입하지 않는다."
   }
 }
