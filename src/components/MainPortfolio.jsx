@@ -3,6 +3,76 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { User, Target, Clock, Briefcase, Mail } from 'lucide-react';
 import './MainPortfolio.css';
 
+// GitHub 링크에서 owner/repo 추출
+const parseGithubRepo = (project) => {
+  if (!project?.links) return null;
+  const gh = project.links.find((l) => /github\.com\/[^/]+\/[^/]+/.test(l.url));
+  if (!gh) return null;
+  const m = gh.url.match(/github\.com\/([^/]+)\/([^/?#]+)/);
+  if (!m) return null;
+  return `${m[1]}/${m[2].replace(/\.git$/, '')}`;
+};
+
+// GitHub 공개 API로 star/fork 수를 실시간 조회 (localStorage 10분 캐시)
+const GithubStats = ({ repo, variant = 'card' }) => {
+  const [stats, setStats] = useState(null);
+
+  useEffect(() => {
+    if (!repo) return;
+    let cancelled = false;
+    const cacheKey = `gh-stats:${repo}`;
+    const TTL = 10 * 60 * 1000; // 10분
+
+    const readCache = () => {
+      try {
+        return JSON.parse(localStorage.getItem(cacheKey));
+      } catch {
+        return null;
+      }
+    };
+
+    const cached = readCache();
+    if (cached && Date.now() - cached.t < TTL) {
+      setStats({ stars: cached.stars, forks: cached.forks });
+      return;
+    }
+
+    fetch(`https://api.github.com/repos/${repo}`)
+      .then((r) => {
+        if (!r.ok) throw new Error(`GitHub API ${r.status}`);
+        return r.json();
+      })
+      .then((data) => {
+        if (cancelled) return;
+        const next = { stars: data.stargazers_count, forks: data.forks_count };
+        setStats(next);
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify({ ...next, t: Date.now() }));
+        } catch {
+          /* localStorage 사용 불가 시 무시 */
+        }
+      })
+      .catch(() => {
+        // 실패(rate limit 등) 시 만료된 캐시라도 표시
+        if (cancelled) return;
+        if (cached) setStats({ stars: cached.stars, forks: cached.forks });
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [repo]);
+
+  if (!repo || !stats) return null;
+
+  return (
+    <div className={`repo-stats ${variant}`}>
+      <span className="repo-stat" title="Stars">★ {stats.stars}</span>
+      <span className="repo-stat" title="Forks">⑂ {stats.forks}</span>
+    </div>
+  );
+};
+
 // Tab components
 const StatTab = () => {
   return (
@@ -91,7 +161,14 @@ const ProjectModal = ({ project, onClose }) => {
               {project.status}
             </span>
           </div>
-          
+
+          {parseGithubRepo(project) && (
+            <div className="modal-section">
+              <span className="modal-label">REPO STATS:</span>
+              <GithubStats repo={parseGithubRepo(project)} variant="modal" />
+            </div>
+          )}
+
           <div className="modal-section">
             <span className="modal-label">DESCRIPTION:</span>
             <p className="modal-description">{project.fullDescription || project.description}</p>
@@ -225,6 +302,111 @@ const QuestsTab = () => {
   ];
 
   const releasedProjects = [
+    {
+      name: 'HERA-AGENT-UNITY',
+      description: 'AI 코딩 에이전트가 라이브 Unity 에디터를 제어하는 저토큰(Low-token) CLI',
+      fullDescription: `"AI 코딩 에이전트가 실행 중인 Unity 에디터를 직접 제어하는 저토큰 CLI"입니다. Codex, Claude, Cursor, Copilot 등의 에이전트가 MCP 서버나 Python 없이, 셸 명령만으로 라이브 Unity 에디터를 조사하고 변경할 수 있게 합니다.
+
+[프로젝트 개요]
+• 개발 기간: 2026.05 ~ 진행 중
+• 최신 릴리스: v0.0.38 (2026.07.06)
+• 유형: 개발자 도구 (Go CLI + Unity 패키지)
+• 라이선스: MIT (오픈소스)
+• 플랫폼: Windows / macOS / Linux
+• 사용 기술: Go, C#, Unity Editor API, PowerShell
+
+[핵심 개념]
+에이전트는 오래된 학습 데이터로 추측하지 않고, 실제 에디터에 직접 물어봅니다.
+AI agent → hera-agent-unity → Unity Editor
+
+[대표 기능]
+• status: 실행 중인 Unity 프로젝트/버전/포트/상태 조회
+• exec: 로드된 프로젝트 안에서 C# 코드 실행
+• console: 실제 Unity 콘솔 에러 읽기
+• editor play --wait: Play Mode 진입 및 대기
+• GameObject 생성/편집을 Unity API로 안전하게 수행
+• Input QA: Unity EventSystem을 통한 uGUI 클릭/서브밋/스크롤/드래그 검증
+• 빌드한 UI를 실제 Unity UI 오브젝트로 생성 후 결과 캡처
+
+[저토큰 최적화]
+• list --compact ≈93 토큰, find_gameobjects --ids ≈49~55 토큰 수준으로 벤치마크
+• Unity 2022.3 / 2023.2 / 6000.x 다중 버전 검증
+• MCP 설정·Python 서버 없이 셸 명령만으로 동작
+
+[협업 도구]
+• 버전 관리: Git (GitHub)
+• 릴리스: GitHub Releases (v0.0.38)`,
+      status: 'RELEASED',
+      tech: ['Go', 'C#', 'Unity Editor', 'CLI', 'PowerShell', 'MIT'],
+      features: [
+        'AI 에이전트용 라이브 Unity 에디터 제어 CLI',
+        'MCP/Python 서버 없이 셸 명령만으로 동작',
+        'C# 실행 · 콘솔 읽기 · Play Mode · UI 생성',
+        'EventSystem 기반 UI 입력 QA (Input QA)',
+        '저토큰 최적화 (list --compact ≈93 토큰)',
+        'Unity 2022.3 ~ 6000.x 다중 버전 검증',
+      ],
+      links: [
+        { label: 'GITHUB', url: 'https://github.com/NotNull92/hera-agent-unity' },
+        { label: 'RELEASES', url: 'https://github.com/NotNull92/hera-agent-unity/releases' },
+        { label: 'YOUTUBE', url: 'https://www.youtube.com/@IndieAlchemist' },
+      ],
+    },
+    {
+      name: 'HERA-AGENT-GODOT',
+      description: 'AI 에이전트가 라이브 Godot 4.7+ 에디터를 제어하는 저토큰 CLI (Godot Asset Store 업로드 완료)',
+      fullDescription: `"AI 코딩 에이전트에게 라이브 Godot 에디터의 눈·손·증거를 제공하는 저토큰 CLI"입니다. hera-agent-unity의 형제 프로젝트로, 같은 저토큰·셸 네이티브 철학을 Godot 전용으로 새로 설계했습니다(포팅이 아님).
+
+[프로젝트 개요]
+• 개발 기간: 2026.06 ~ 진행 중
+• 최신 릴리스: v0.6.0 (2026.07.06, Godot Asset Store 업로드 완료)
+• 유형: 개발자 도구 (Go CLI + Godot 애드온)
+• 라이선스: MIT (오픈소스)
+• 대상: Godot 4.7+ 표준 빌드
+• 사용 기술: Go 1.25+, GDScript, EditorPlugin, HTTP RPC
+
+[제품 아이덴티티]
+• live editor truth (라이브 에디터의 진실)
+• low-token control (저토큰 제어)
+• proof-first QA (증거 우선 QA)
+
+[동작 방식]
+Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GDScript)
+• CLI(Go): 에디터를 탐색하고 명령당 1개의 compact JSON 요청 전송
+• 애드온(GDScript): localhost HTTP 서버를 띄우고 EditorInterface로 메인 스레드에서 실행
+
+[대표 기능]
+• 노드 트리 읽기/쓰기 (node get --prop/--props, 편집)
+• GDScript 평가(eval), 씬 실행/정지(run/stop)
+• 런타임 UI 검사: game ui tree --path/--depth/--fields/--type/--text
+• Game Feel UI Mode (Beta) + EditorSettings 영속화
+• QA 워크플로우: game qa discover, 실행 가능한 체크 기반 QA 판정
+• batch / smoke / screenshot / diagnostics 등 다양한 명령 지원
+
+[저토큰(측정 기반)]
+• 턴당 상주 툴 스키마 0 토큰 (MCP 서버는 약 4k~31k 토큰)
+• status ≈48 토큰, node get ≈186 토큰 수준의 compact JSON 응답
+
+[협업 도구]
+• 버전 관리: Git (GitHub)
+• 배포: GitHub Releases + Godot Asset Store`,
+      status: 'RELEASED',
+      tech: ['Go', 'GDScript', 'Godot 4.7+', 'EditorPlugin', 'CLI', 'MIT'],
+      features: [
+        'AI 에이전트용 라이브 Godot 에디터 제어 CLI',
+        'Go CLI + GDScript 애드온 (HTTP RPC 구조)',
+        '노드 트리 읽기/쓰기 · GDScript eval · 씬 실행',
+        'Game Feel UI Mode (Beta) + 증거 우선 QA',
+        '저토큰: 턴당 툴 스키마 0, status ≈48 토큰',
+        'Godot Asset Store 업로드 완료 (v0.6.0)',
+      ],
+      links: [
+        { label: 'GITHUB', url: 'https://github.com/NotNull92/hera-agent-godot' },
+        { label: 'RELEASES', url: 'https://github.com/NotNull92/hera-agent-godot/releases' },
+        { label: 'ASSET STORE', url: 'https://store.godotengine.org/asset/notnull92/hera-agent-godot/' },
+        { label: 'YOUTUBE', url: 'https://www.youtube.com/@IndieAlchemist' },
+      ],
+    },
     {
       name: 'MENTAL ROBO',
       description: '리듬 입력과 토크 쇼를 결합한 코미디 로봇 스탠드업 게임 (GGJ 2024)',
@@ -391,6 +573,9 @@ const QuestsTab = () => {
           <span className="progress-text">{project.progress}%</span>
         </div>
       )}
+      {parseGithubRepo(project) && (
+        <GithubStats repo={parseGithubRepo(project)} variant="card" />
+      )}
       <div className="project-click-hint text-glow">{'[ CLICK FOR DETAILS ]'}</div>
     </motion.div>
   );
@@ -429,6 +614,8 @@ const LogsTab = () => {
     {
       year: '2026',
       events: [
+        { date: '06', title: 'HERA-AGENT-GODOT 개발', desc: 'AI 에이전트용 라이브 Godot 에디터 제어 CLI 개발 (v0.6.0, Godot Asset Store 업로드)' },
+        { date: '05', title: 'HERA-AGENT-UNITY 개발', desc: 'AI 에이전트용 라이브 Unity 에디터 제어 저토큰 CLI 개발 (오픈소스, MIT)' },
         { date: '03', title: 'PORTFOLIO-BLOG 개발', desc: '터미널 스타일 포트폴리오 웹사이트 개발' },
         { date: '01', title: 'DAILY BREW 사이드 프로젝트 시작', desc: '카페 시뮬레이션 게임 개발 시작' },
       ]

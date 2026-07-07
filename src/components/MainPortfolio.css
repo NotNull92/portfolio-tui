@@ -217,6 +217,37 @@
   color: #00ff41;
 }
 
+.repo-stats {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  color: #66aa88;
+  letter-spacing: 0.5px;
+}
+
+.repo-stats.card {
+  justify-content: center;
+  margin-top: auto;
+  padding-top: 15px;
+}
+
+/* 통계가 있으면 click-hint는 통계 바로 아래로 (하단 고정은 통계가 담당) */
+.repo-stats.card + .project-click-hint {
+  margin-top: 8px;
+}
+
+.repo-stats.modal {
+  font-size: 15px;
+  color: #00ff41;
+}
+
+.repo-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
 .project-description {
   font-size: 13px;
   opacity: 0.8;
