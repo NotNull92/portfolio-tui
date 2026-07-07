@@ -67,8 +67,8 @@ const GithubStats = ({ repo, variant = 'card' }) => {
 
   return (
     <div className={`repo-stats ${variant}`}>
-      <span className="repo-stat" title="Stars">★ {stats.stars}</span>
-      <span className="repo-stat" title="Forks">⑂ {stats.forks}</span>
+      <span className="repo-stat" title="Stars"><span className="repo-stat-icon">★</span> {stats.stars}</span>
+      <span className="repo-stat" title="Forks"><span className="repo-stat-icon">⑂</span> {stats.forks}</span>
     </div>
   );
 };

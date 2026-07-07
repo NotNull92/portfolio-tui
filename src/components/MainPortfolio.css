@@ -248,6 +248,11 @@
   white-space: nowrap;
 }
 
+.repo-stat-icon {
+  font-size: 1.5em;
+  line-height: 1;
+}
+
 .project-description {
   font-size: 13px;
   opacity: 0.8;
