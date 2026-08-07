@@ -12,6 +12,7 @@ import nmrTalkImg from '../assets/projects/nomorerolls-talk.webp';
 import heraUnityLogo from '../assets/projects/hera-unity-logo.webp';
 import heraGodotLogo from '../assets/projects/hera-godot-logo.webp';
 import hebeLogo from '../assets/projects/hebe-logo.webp';
+import workforgeLogo from '../assets/projects/workforge-logo.webp';
 import mrTitleImg from '../assets/projects/mentalrobo-title.webp';
 import mrTopicImg from '../assets/projects/mentalrobo-topic.webp';
 import mrRhythmImg from '../assets/projects/mentalrobo-rhythm.webp';
@@ -811,6 +812,9 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       status: 'RELEASED',
       category: ['TOOL'],
       tags: ['OPEN SOURCE'],
+      media: [
+        { src: workforgeLogo, alt: 'workforge-mcp 로고', kind: 'logo' },
+      ],
       tech: ['TypeScript', 'Node.js', 'PowerShell', 'MCP', 'Windows', 'MIT'],
       features: [
         'ChatGPT ↔ Windows 워크스테이션 MCP 게이트웨이',
