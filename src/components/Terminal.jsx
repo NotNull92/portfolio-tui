@@ -23,7 +23,7 @@ const BOOT_MESSAGES = [
   { text: '> LOADING UNITY RUNTIME... 5 YEARS OF FIELD DATA FOUND', delay: 150 },
   { text: '> MOUNTING LIVE-SERVICE RECORDS... MAU 35K VERIFIED', delay: 120 },
   { text: '> SYNCING SIDE PROJECTS... 3 AI DEV TOOLS ONLINE', delay: 130 },
-  { text: '> CALIBRATING DICE... NOMOREROLLS IN DEVELOPMENT', delay: 100 },
+  { text: '> CALIBRATING DICE... NOMOREROLLS PROTOTYPE COMPLETE', delay: 100 },
   { text: '', delay: 150 },
   { text: '> ALL SYSTEMS NOMINAL. WELCOME, VISITOR.', delay: 100 },
   { text: '', delay: 200 },

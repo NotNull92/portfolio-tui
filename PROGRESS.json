@@ -43,16 +43,20 @@
       {
         "name": "NoMoreRolls",
         "description": "언더테일의 도덕적 전투 선택을 주사위 족보 메카닉으로 번역한 1인 개발 로그라이크",
-        "progress": 40,
+        "status": "프로토타입 완료 (2026.08)",
+        "progress": 55,
         "tech": ["Unity", "C#", "DOTween", "Odin Inspector", "UniTask", "OMEGA(Ω)", "Git", "Obsidian"],
-        "links": "[COMING SOON]"
+        "videoUrl": "https://youtu.be/kqOMakdCoEc"
       },
       {
-        "name": "DAILY BREW",
-        "description": "A cozy coffee shop simulation game",
-        "progress": 65,
-        "tech": ["Unity", "C#", "2D Graphics", "Pixel Art"],
-        "links": "없음 (private 레포, 미출시)"
+        "name": "RINGVERSE: KARVAS COMMAND",
+        "codename": "Inventoria (레포/폴더/네임스페이스는 코드명 유지)",
+        "description": "그리드 인벤토리 빌드 × 거점 디펜스 융합 모바일 라이브서비스 게임 (1인 개발)",
+        "progress": 45,
+        "tech": ["Unity 6", "C#", "UI Toolkit", "Addressables", "Odin Inspector", "HSM", "hera-agent-unity"],
+        "localPath": "C:/Users/PC/Desktop/Cowork/Inventoria",
+        "links": "없음 (private 레포, 미출시)",
+        "note": "정식 타이틀은 Docs/01_Design/title_intro_flow_v1.md §1.1 에서 확정 (2026-07-21)"
       }
     ],
     "completed": [
@@ -117,6 +121,21 @@
   },
 
   "history": [
+    {
+      "date": "2026-08-07",
+      "session": "진행 중 프로젝트 개편 (RingVerse 추가 · DAILY BREW 제거 · NoMoreRolls 갱신)",
+      "changes": [
+        "RINGVERSE: KARVAS COMMAND 신규 추가 — 로컬 Inventoria 프로젝트 실데이터 기반",
+        "정식 타이틀은 Inventoria(코드명)가 아닌 'RingVerse: Karvas Command' — title_intro_flow_v1.md §1.1 확정값 사용",
+        "RingVerse 상세: 체스판 5×5 포탑 배치, 영웅 5인 대칭 로스터, 스킬 체인, D-day/AP 로비, 랫 킹 보스",
+        "RingVerse 엔지니어링: 어셈블리 4분할, 2씬+HSM, uGUI→UI Toolkit 전환, 결정론 RNG 격리, 문서 정본 30여 종",
+        "RingVerse는 자체 개발 hera-agent-unity를 UPM 의존성으로 실투입 (도그푸딩 스토리)",
+        "NoMoreRolls: 프로토타입 완료 반영, status 'PROTOTYPE DONE', 플레이 영상 링크 추가 (youtu.be/kqOMakdCoEc)",
+        "DAILY BREW 카드 및 LOGS 항목 제거",
+        "LOGS에 NoMoreRolls 착수(04)/프로토 완료(08), RingVerse 착수(06) 항목 추가",
+        "부팅 문구·마퀴를 RingVerse / NoMoreRolls 프로토 완료 기준으로 갱신"
+      ]
+    },
     {
       "date": "2026-08-07",
       "session": "GitHub 레포 실데이터 동기화 (hera x2 최신화 + hebe 신규 추가)",

@@ -324,11 +324,13 @@ const QuestsTab = () => {
   const inProgressProjects = [
     {
       name: 'NoMoreRolls',
-      description: '언더테일의 도덕적 전투 선택을 주사위 족보 메카닉으로 번역한 1인 개발 로그라이크',
+      description: '언더테일의 도덕적 전투 선택을 주사위 족보 메카닉으로 번역한 1인 개발 로그라이크 (프로토타입 완료)',
       fullDescription: `"언더테일의 도덕적 전투 선택을 주사위 족보 메카닉으로 번역한 1인 개발 로그라이크"입니다. 적과 전투(Fight)하거나 대화(Talk)하는 이중 루트 시스템이 핵심이며, 10체 고유 영혼의 트라우마를 기믹이라는 게임적 장치로 표현합니다.
 
+▶ 프로토타입 플레이 영상: https://youtu.be/kqOMakdCoEc
+
 [프로젝트 개요]
-• 개발 기간: 2026.04 ~ 진행 중
+• 개발 기간: 2026.04 ~ 진행 중 (프로토타입 완료)
 • 장르: 로그라이크 (주사위 기반 전투 + 서사 분기)
 • 플랫폼: Steam (PC), BIC 출품 대상
 • 팀 구성: 1인 개발
@@ -375,30 +377,73 @@ const QuestsTab = () => {
 • 버전 관리: Git (GitHub)
 • 문서화: Obsidian (Second Brain Vault)
 • AI 파트너: OMEGA(Ω) (오피) — 전략, 태스크 분해, 문서 관리`,
-      status: 'IN PROGRESS',
-      progress: 40,
+      status: 'PROTOTYPE DONE',
+      progress: 55,
       tech: ['Unity', 'C#', 'DOTween', 'Odin Inspector', 'UniTask', 'OMEGA(Ω)', 'Git', 'Obsidian'],
       features: [
+        '프로토타입 완료 — 플레이 영상 공개',
         'Fight/Talk 이중 루트: 동일 족보가 공격/감정으로 의미 분기',
         '10체 고유 영혼 + 트라우마 기믹 9종',
         '22노드 고정 복도 + 루트 비율 기반 시각 변화',
         '10종 주사위 족보 (HighCard ~ MonoRoll)',
-        '크로스런 메타 시스템 + True Ending',
         '1인 전체 설계/개발 (GDD 23섹션 + 전체 구현)',
+      ],
+      links: [
+        { label: 'PLAY VIDEO', url: 'https://youtu.be/kqOMakdCoEc' },
       ],
     },
     {
-      name: 'DAILY BREW',
-      description: 'A cozy coffee shop simulation game',
-      fullDescription: 'A relaxing coffee shop management simulation where you brew coffee, serve customers, and build your dream café. Features a day-night cycle, customer stories, and cozy atmosphere.',
+      name: 'RINGVERSE: KARVAS COMMAND',
+      description: '그리드 인벤토리 빌드 × 거점 디펜스 융합 모바일 게임 (1인 개발, 프로젝트 코드명 Inventoria)',
+      fullDescription: `"그리드 인벤토리 빌드 × 거점 디펜스"를 융합한 모바일 라이브서비스 게임입니다. 체스판에 포탑을 배치하고, 각 포탑에 영웅을 파일럿으로 얹고, 포탑 내부 그리드에 아이템을 어떻게 배치·조합하느냐가 곧 전투력이 됩니다.
+
+태그라인: "뿌리의 끝, 세계의 가장자리 — 여기가 카르바스다."
+
+[프로젝트 개요]
+• 개발 기간: 2026.06 ~ 진행 중 (커밋 747개)
+• 정식 타이틀: RingVerse: Karvas Command (코드명 Inventoria)
+• 장르: 그리드 빌드 × 거점 디펜스 (모바일 라이브서비스)
+• 플랫폼: 모바일 (Android / iOS), PC 빌드 병행
+• 팀 구성: 1인 개발 (기획·설계·구현 전담)
+• 사용 기술: Unity 6, C#, UI Toolkit, Addressables, Odin Inspector, Input System
+
+[핵심 설계]
+• 체스판 5×5 포탑 배치 + 포탑 내부 그리드 아이템 조합 = 전투력
+• 영웅 5인 완전 대칭 로스터 (제이아·세인·솔·오빗·그롬)
+  — 고정 열 지정형 패시브 + 스킬 체인 액티브
+• 처치 쿼터 사이클 → 1-of-3 픽 (상점 / 팀 포탑 / 파워픽)
+• 전투 = 자동 토대(3면 스웜·커버리지·화력↔방어 저울) + 이산 개입(스킬·픽)
+• 무각본 보스, 승리 = 최종보스(랫 킹) 처치 / 패배 = 성벽 HP 0
+• 로비 = 성 내부 허브 (D-5 카운트다운 + AP 3 소비 모델)
+• 모험가 길드 = 비주얼 노벨식 다공간 허브 (고용 → 우호도 → 영구 영입)
+
+[아키텍처 / 엔지니어링]
+• 어셈블리 분리: Game.Core / Game.Combat / Game.UI / Game.Editor
+• 2씬(TitleScene → GameScene) + GameScene 내부 HSM 상태 머신
+• uGUI → UI Toolkit 전면 전환 완료 (2026.08)
+• 결정론 보장: 전투/상점 RNG를 별도 시드로 격리해 헤드리스 재현 검증
+• 데이터 주도 설계: 인트로 카드·포탑 카탈로그 18종·스킬 모듈 24종을
+  코드 수정 없이 데이터 교체만으로 확장 가능하도록 구성
+
+[세계관]
+엔드하임 대륙 바르카르 변경권, 오크 부족들이 피난로를 지키기 위해 세운
+마지막 방어선 "카르바스 성채". 뿌리가 마르고 균열에서 쥐 떼가 쏟아진다.
+
+[문서 · 협업]
+• 설계 정본 문서 30여 종 운영 (GDD + 주제별 정본 맵 + 의사결정 이력)
+• 문서 우선 개발: 정본 맵으로 구 문서 재해석을 차단하는 규칙 체계
+• 자체 개발한 hera-agent-unity를 UPM 의존성으로 실제 투입 (도그푸딩)
+• 버전 관리: Git (GitHub)`,
       status: 'IN PROGRESS',
-      progress: 65,
-      tech: ['Unity', 'C#', '2D Graphics', 'Pixel Art'],
+      progress: 45,
+      tech: ['Unity 6', 'C#', 'UI Toolkit', 'Addressables', 'Odin Inspector', 'HSM', 'hera-agent-unity'],
       features: [
-        'Coffee brewing mini-games',
-        'Customer relationship system',
-        'Café customization',
-        'Story-driven events',
+        '그리드 빌드 × 거점 디펜스 융합 (체스판 5×5 포탑 배치)',
+        '영웅 5인 대칭 로스터 + 스킬 체인 시스템',
+        'uGUI → UI Toolkit 전면 전환 완료',
+        '결정론 RNG 격리 + 헤드리스 재현 검증',
+        '설계 정본 문서 30여 종 운영 (문서 우선 개발)',
+        '자체 AI 툴(hera-agent-unity) 실전 투입 · 1인 개발',
       ],
     },
   ];
@@ -806,12 +851,14 @@ const LogsTab = () => {
     {
       year: '2026',
       events: [
+        { date: '08', title: 'NoMoreRolls 프로토타입 완료', desc: '주사위 족보 전투 + Fight/Talk 이중 루트 프로토타입 완성, 플레이 영상 공개' },
         { date: '08', title: 'HEBE-AGENT-UNITY 공개', desc: 'Hera의 경량 실행 에디션 오픈소스 공개 (v0.0.1) — warm exec 240ms, cold 대비 6.08배 단축 벤치마크' },
         { date: '07', title: 'HERA-AGENT-GODOT v1.0.0 릴리스', desc: '안정 CLI 계약 + SemVer 채택, UI 테마 QA·스크린샷 diff 추가, Homebrew tap 배포' },
+        { date: '06', title: 'RINGVERSE: KARVAS COMMAND 개발 시작', desc: '그리드 빌드 × 거점 디펜스 융합 모바일 게임 1인 개발 (코드명 Inventoria)' },
         { date: '06', title: 'HERA-AGENT-GODOT 개발 시작', desc: 'AI 에이전트용 라이브 Godot 에디터 제어 CLI 개발 (Godot Asset Store 등록)' },
         { date: '05', title: 'HERA-AGENT-UNITY 개발 시작', desc: 'AI 에이전트용 라이브 Unity 에디터 제어 저토큰 CLI 개발 (오픈소스, Apache-2.0) — Stars 22' },
+        { date: '04', title: 'NoMoreRolls 개발 시작', desc: '언더테일의 도덕적 선택을 주사위 족보로 번역한 1인 개발 로그라이크 착수' },
         { date: '03', title: 'PORTFOLIO-BLOG 개발', desc: '터미널 스타일 포트폴리오 웹사이트 개발' },
-        { date: '01', title: 'DAILY BREW 사이드 프로젝트 시작', desc: '카페 시뮬레이션 게임 개발 시작' },
       ]
     },
     {
@@ -999,7 +1046,7 @@ const ContactTab = () => {
 };
 
 const MARQUEE_TEXT =
-  'UNITY DEVELOPER ▸ 5 YEARS EXPERIENCE ▸ NOMOREROLLS IN DEVELOPMENT ▸ HERA-AGENT UNITY / GODOT ▸ HEBE-AGENT-UNITY ▸ GITHUB.COM/NOTNULL92 ▸ OPEN FOR TRANSMISSION ▸ ';
+  'UNITY DEVELOPER ▸ 5 YEARS EXPERIENCE ▸ RINGVERSE: KARVAS COMMAND ▸ NOMOREROLLS PROTOTYPE COMPLETE ▸ HERA-AGENT UNITY / GODOT ▸ HEBE-AGENT-UNITY ▸ GITHUB.COM/NOTNULL92 ▸ OPEN FOR TRANSMISSION ▸ ';
 
 const formatTime = (date) =>
   date.toLocaleTimeString('en-US', {
