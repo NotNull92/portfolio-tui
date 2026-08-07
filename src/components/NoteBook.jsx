@@ -136,8 +136,13 @@ const NoteBook = ({ note, onClose }) => {
           >
             ◀
           </button>
-          <span className="book-pageno">
-            {spread + 1} / {layout.spreads}
+          <span className="book-pagebox">
+            <span className="book-pageno">
+              {spread + 1} / {layout.spreads}
+            </span>
+            {layout.spreads > 1 && (
+              <span className="book-navhint">← → 방향키로도 넘길 수 있습니다</span>
+            )}
           </span>
           <button
             className="book-arrow"

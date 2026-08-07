@@ -44,7 +44,8 @@
     "howToAdd": "NOTES 배열 맨 앞에 { id, title, type, date, excerpt, body } 추가. 배열 순서 = 표시 순서",
     "types": "ARTICLE | POEM | PHILOSOPHY | THOUGHT (NOTE_TYPES 에서 라벨·색 정의)",
     "bodyFormat": "빈 줄 하나가 문단 구분. 길이 제한 없음 — 길면 책이 자동으로 페이지 분할",
-    "sampleEntries": "about-this-archive, sample-long-form 두 개는 형식 확인용이므로 교체/삭제 가능"
+    "sampleEntries": "about-this-archive 1편만 남아 있다. 교체/삭제 가능",
+    "usageHint": "조작 안내는 본문에 쓰지 않는다 — 목록 하단 .notes-hint(전체 안내)와 책 하단 .book-navhint(2장 이상일 때만)에 UI로 배치돼 있다"
   },
 
   "projects": {

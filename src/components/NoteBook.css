@@ -254,11 +254,31 @@
   cursor: default;
 }
 
+.book-pagebox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
 .book-pageno {
   font-size: 11px;
   letter-spacing: 2px;
   color: #66aa88;
   font-variant-numeric: tabular-nums;
+}
+
+.book-navhint {
+  font-size: 9.5px;
+  letter-spacing: 1px;
+  color: #66aa88;
+  opacity: 0.55;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .book-navhint { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
