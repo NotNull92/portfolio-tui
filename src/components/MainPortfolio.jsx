@@ -203,7 +203,8 @@ const StatTab = () => {
     { label: 'NAME:', value: 'YOUNGJUN JI (NOTNULL)' },
     { label: 'ROLE:', value: 'UNITY DEVELOPER' },
     { label: 'EXPERIENCE:', value: '5 YEARS' },
-    { label: 'STATUS:', value: 'ACTIVE', color: '#00ff41' },
+    { label: 'COMPANY:', value: '블루포션게임즈 (EOS RED)' },
+    { label: 'STATUS:', value: '재직중 · EMPLOYED', color: '#00ff41' },
   ];
 
   return (
@@ -924,7 +925,7 @@ const LogsTab = () => {
     {
       year: '2021',
       events: [
-        { date: '09', title: '블루포션 게임즈 입사', desc: 'Unity 개발 - 에오스 레드 모바일 MMORPG 게임 컨텐츠 개발(LIVE 서비스)' },
+        { date: '09', title: '블루포션 게임즈 입사 (현재 재직중)', desc: 'Unity 개발 - 에오스 레드 모바일 MMORPG 컨텐츠·BM 개발, 2021.09 ~ 현재까지 LIVE 서비스 참여' },
       ]
     },
     {
