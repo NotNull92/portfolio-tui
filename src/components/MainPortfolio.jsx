@@ -4,6 +4,7 @@ import { User, Target, Clock, Briefcase, Mail } from 'lucide-react';
 import ScrambleText from './effects/ScrambleText';
 import AsciiRain from './effects/AsciiRain';
 import vaultBoyImg from '../assets/notnull-logo.png';
+import ringverseTitleImg from '../assets/projects/ringverse-title.webp';
 import './MainPortfolio.css';
 
 // 섹션 헤더 (스크램블 리빌)
@@ -436,6 +437,9 @@ const QuestsTab = () => {
 • 버전 관리: Git (GitHub)`,
       status: 'IN PROGRESS',
       progress: 45,
+      media: [
+        { src: ringverseTitleImg, alt: 'RingVerse: Karvas Command 타이틀 화면 — 카르바스 성채와 쥐 떼 벌판' },
+      ],
       tech: ['Unity 6', 'C#', 'UI Toolkit', 'Addressables', 'Odin Inspector', 'HSM', 'hera-agent-unity'],
       features: [
         '그리드 빌드 × 거점 디펜스 융합 (체스판 5×5 포탑 배치)',

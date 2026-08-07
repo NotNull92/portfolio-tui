@@ -390,8 +390,22 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  /* CRT 그린 톤 통일감 */
-  filter: sepia(30%) hue-rotate(40deg) saturate(130%);
+  transition: filter 0.35s ease;
+}
+
+/* 카드에서는 터미널 톤에 맞춰 살짝만 눌러두고, 호버 시 원본 색을 되살린다
+   (스크린샷 자체가 포트폴리오의 증거물이므로 색을 죽이지 않는다) */
+.project-media.card img {
+  filter: sepia(22%) hue-rotate(18deg) saturate(115%) brightness(0.92);
+}
+
+.project-card.clickable:hover .project-media.card img {
+  filter: none;
+}
+
+/* 모달 = 상세 확인용이므로 항상 원본 그대로 */
+.project-media.modal img {
+  filter: none;
 }
 
 .project-media.placeholder {
