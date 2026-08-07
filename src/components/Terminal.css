@@ -1,5 +1,6 @@
 /* Terminal Container */
 .terminal-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,6 +15,8 @@
   width: 100%;
   max-width: 800px;
   padding: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Header Section: ASCII Art + Vault Boy side by side */
@@ -113,6 +116,15 @@
   margin-top: 15px;
 }
 
+/* Skip Hint */
+.skip-hint {
+  margin-top: 14px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  opacity: 0.4;
+  animation: cursor-blink 1.6s step-end infinite;
+}
+
 /* Vault Boy Image */
 .vault-boy-container {
   display: flex;
@@ -124,19 +136,20 @@
 .vault-boy-img {
   width: 150px;
   height: auto;
-  /* CRT 녹색 톤 효과 */
-  filter: 
-    sepia(100%) 
-    hue-rotate(50deg) 
-    saturate(200%) 
-    brightness(0.9)
-    contrast(1.1);
+  /* CRT 녹색 톤 효과 — 원본 이미지가 어두워 밝기를 끌어올린다 */
+  filter:
+    sepia(100%)
+    hue-rotate(50deg)
+    saturate(200%)
+    brightness(1.45)
+    contrast(1.15);
   /* 글로우 효과 */
   box-shadow: 
     0 0 10px rgba(0, 255, 65, 0.5),
     0 0 20px rgba(0, 255, 65, 0.3),
     0 0 30px rgba(0, 255, 65, 0.2);
   /* 살짝 스캔라인 효과 */
+  will-change: opacity;
   animation: vault-boy-flicker 0.15s infinite;
 }
 

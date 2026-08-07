@@ -1,11 +1,15 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=VT323&display=swap');
 
 @theme {
   --color-fallout-green: #00ff41;
   --color-fallout-dark: #000d02;
   --color-fallout-dim: #00cc33;
   --color-fallout-bright: #33ff66;
+}
+
+:root {
+  --font-display: 'VT323', 'JetBrains Mono', monospace;
 }
 
 * {
@@ -26,7 +30,14 @@ html, body, #root, .app {
 
 body {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
+  /* CRT 중앙 인광 글로우 — 화면 중심이 살짝 밝은 브라운관 느낌 */
   background-color: #000d02;
+  background-image: radial-gradient(
+    ellipse 120% 90% at 50% 35%,
+    #001c09 0%,
+    #000d02 55%,
+    #000702 100%
+  );
   color: #00ff41;
   overflow: hidden;
 }
@@ -70,6 +81,7 @@ body {
   background: rgba(0, 255, 65, 0.02);
   pointer-events: none;
   z-index: 999;
+  will-change: opacity;
   animation: crt-flicker 0.15s infinite;
 }
 
@@ -79,16 +91,113 @@ body {
   100% { opacity: 0.98; }
 }
 
+/* CRT Global FX Layers (App 레벨에서 1회 렌더) */
+/* 브라운관 베젤 프레임 — 라운드 코너 밖을 검게 칠해 곡면 스크린 느낌 */
+.crt-frame {
+  position: fixed;
+  inset: 0;
+  border-radius: 22px;
+  box-shadow:
+    0 0 0 60px #010401,
+    inset 0 0 90px rgba(0, 0, 0, 0.55),
+    inset 0 0 3px rgba(0, 255, 65, 0.18);
+  pointer-events: none;
+  z-index: 1004;
+}
+
+.crt-vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.28) 82%,
+    rgba(0, 0, 0, 0.62) 100%
+  );
+  pointer-events: none;
+  z-index: 1001;
+}
+
+.crt-sweep {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  top: -140px;
+  will-change: transform;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 255, 65, 0.045) 45%,
+    rgba(0, 255, 65, 0.09) 50%,
+    rgba(0, 255, 65, 0.045) 55%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: 1002;
+  animation: crt-sweep 9s linear infinite;
+}
+
+@keyframes crt-sweep {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(calc(100vh + 280px)); }
+}
+
+/* mix-blend-mode는 전체 화면 재합성을 유발하므로 사용하지 않는다 (성능) */
+.crt-noise {
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 1003;
+}
+
+/* 마우스를 따라다니는 인광 글로우 */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 255, 65, 0.07),
+    rgba(0, 255, 65, 0.025) 45%,
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 5;
+  will-change: transform;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* ASCII 레인 캔버스 (부모 relative 필요) */
+.ascii-rain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform; /* 자체 레이어로 분리해 위 콘텐츠 리페인트 방지 */
+}
+
 /* Text Glow Effect */
 .text-glow {
-  text-shadow: 
+  text-shadow:
     0 0 5px #00ff41,
     0 0 10px #00ff41,
     0 0 20px #00ff4180;
 }
 
+/* 강한 글로우 + 미세한 색수차(chromatic aberration) */
 .text-glow-strong {
-  text-shadow: 
+  text-shadow:
+    -1px 0 rgba(255, 0, 80, 0.28),
+    1px 0 rgba(0, 180, 255, 0.28),
     0 0 5px #00ff41,
     0 0 10px #00ff41,
     0 0 20px #00ff41,
@@ -188,6 +297,7 @@ body {
 }
 
 .screen-glitch {
+  will-change: transform, filter, opacity;
   animation: screen-glitch 0.8s ease-in-out forwards;
 }
 
@@ -222,23 +332,114 @@ body {
   display: inline;
 }
 
-/* Scrollbar Styling - Hidden but functional */
+/* 에러 셰이크 */
+@keyframes shake-x {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-8px); }
+  30% { transform: translateX(8px); }
+  45% { transform: translateX(-5px); }
+  60% { transform: translateX(5px); }
+  75% { transform: translateX(-2px); }
+}
+
+.shake {
+  animation: shake-x 0.4s ease-in-out;
+}
+
+/* 네온 펄스 보더 — box-shadow 직접 애니메이션 대신
+   고정 글로우 레이어의 opacity만 애니메이션 (compositor 처리, 리페인트 없음) */
+.neon-pulse {
+  position: relative;
+}
+
+.neon-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid #00ff41;
+  box-shadow:
+    0 0 16px rgba(0, 255, 65, 0.4),
+    inset 0 0 20px rgba(0, 255, 65, 0.1);
+  opacity: 0.2;
+  pointer-events: none;
+  will-change: opacity;
+  animation: neon-pulse-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes neon-pulse-glow {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* TUI 코너 브래킷 (hover 시 확장/점등) */
+.tui-corners {
+  position: relative;
+}
+
+.tui-corners::before,
+.tui-corners::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  opacity: 0.35;
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+
+.tui-corners::before {
+  top: 5px;
+  left: 5px;
+  border-top: 2px solid #00ff41;
+  border-left: 2px solid #00ff41;
+}
+
+.tui-corners::after {
+  bottom: 5px;
+  right: 5px;
+  border-bottom: 2px solid #00ff41;
+  border-right: 2px solid #00ff41;
+}
+
+.tui-corners:hover::before,
+.tui-corners:hover::after {
+  width: 24px;
+  height: 24px;
+  opacity: 1;
+}
+
+/* Scrollbar Styling - 은은한 phosphor 스크롤바 */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(0, 255, 65, 0.04);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: transparent;
+  background: rgba(0, 255, 65, 0.22);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: transparent;
+  background: rgba(0, 255, 65, 0.4);
+}
+
+/* Reduced Motion: 무거운 장식 애니메이션 비활성화 */
+@media (prefers-reduced-motion: reduce) {
+  .crt-container::after,
+  .crt-sweep,
+  .crt-noise,
+  .neon-pulse::after,
+  .marquee-track,
+  .vault-boy-img {
+    animation: none !important;
+  }
+  .cursor-glow {
+    display: none;
+  }
 }
 
 /* Selection Styling */

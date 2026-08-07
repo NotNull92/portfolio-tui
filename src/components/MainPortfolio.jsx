@@ -1,7 +1,65 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Target, Clock, Briefcase, Mail } from 'lucide-react';
+import ScrambleText from './effects/ScrambleText';
+import AsciiRain from './effects/AsciiRain';
+import vaultBoyImg from '../assets/notnull-logo.png';
 import './MainPortfolio.css';
+
+// 섹션 헤더 (스크램블 리빌)
+const SectionHeader = ({ title, style }) => (
+  <div className="section-header" style={style}>
+    <span className="text-glow">
+      <ScrambleText text={`> ${title}`} duration={600} rescrambleOnHover />
+    </span>
+  </div>
+);
+
+// 프로젝트 카드 스포트라이트 (마우스 위치를 CSS 변수로 전달)
+// - rAF 스로틀: mousemove는 프레임보다 자주 발생할 수 있다
+// - 좌표는 WeakMap에 보관 (dataset 어트리뷰트 churn 방지)
+const spotlightState = new WeakMap();
+
+const handleCardMouseMove = (e) => {
+  const el = e.currentTarget;
+  let s = spotlightState.get(el);
+  if (!s) {
+    s = { raf: 0 };
+    spotlightState.set(el, s);
+  }
+  s.x = e.clientX;
+  s.y = e.clientY;
+  if (s.raf) return;
+  s.raf = requestAnimationFrame(() => {
+    s.raf = 0;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty('--mx', `${s.x - rect.left}px`);
+    el.style.setProperty('--my', `${s.y - rect.top}px`);
+  });
+};
+
+const handleCardMouseLeave = (e) => {
+  e.currentTarget.style.setProperty('--mx', '-999px');
+  e.currentTarget.style.setProperty('--my', '-999px');
+};
+
+// 프로젝트 미디어 (스크린샷/GIF) — media 배열이 비어 있으면 TUI 스타일 더미 프레임 표시
+// 실제 자료가 준비되면 프로젝트 데이터에 media: [{ src, alt }] 를 추가하면 된다
+const ProjectMedia = ({ media, name, variant = 'card' }) => {
+  if (media && media.length > 0) {
+    return (
+      <div className={`project-media ${variant}`}>
+        <img src={media[0].src} alt={media[0].alt || name} loading="lazy" />
+      </div>
+    );
+  }
+  return (
+    <div className={`project-media placeholder ${variant}`}>
+      <span className="media-nosignal">NO SIGNAL</span>
+      <span className="media-hint">[ MEDIA INCOMING ]</span>
+    </div>
+  );
+};
 
 // GitHub 링크에서 owner/repo 추출
 const parseGithubRepo = (project) => {
@@ -13,29 +71,31 @@ const parseGithubRepo = (project) => {
   return `${m[1]}/${m[2].replace(/\.git$/, '')}`;
 };
 
+// GitHub star/fork localStorage 캐시 (10분 TTL)
+const GH_TTL = 10 * 60 * 1000;
+
+const readGhCache = (repo) => {
+  try {
+    return JSON.parse(localStorage.getItem(`gh-stats:${repo}`));
+  } catch {
+    return null;
+  }
+};
+
 // GitHub 공개 API로 star/fork 수를 실시간 조회 (localStorage 10분 캐시)
 const GithubStats = ({ repo, variant = 'card' }) => {
-  const [stats, setStats] = useState(null);
+  // 만료된 캐시라도 우선 표시하고, 신선하지 않으면 아래 effect에서 갱신
+  const [stats, setStats] = useState(() => {
+    if (!repo) return null;
+    const cached = readGhCache(repo);
+    return cached ? { stars: cached.stars, forks: cached.forks } : null;
+  });
 
   useEffect(() => {
     if (!repo) return;
+    const cached = readGhCache(repo);
+    if (cached && Date.now() - cached.t < GH_TTL) return;
     let cancelled = false;
-    const cacheKey = `gh-stats:${repo}`;
-    const TTL = 10 * 60 * 1000; // 10분
-
-    const readCache = () => {
-      try {
-        return JSON.parse(localStorage.getItem(cacheKey));
-      } catch {
-        return null;
-      }
-    };
-
-    const cached = readCache();
-    if (cached && Date.now() - cached.t < TTL) {
-      setStats({ stars: cached.stars, forks: cached.forks });
-      return;
-    }
 
     fetch(`https://api.github.com/repos/${repo}`)
       .then((r) => {
@@ -47,15 +107,13 @@ const GithubStats = ({ repo, variant = 'card' }) => {
         const next = { stars: data.stargazers_count, forks: data.forks_count };
         setStats(next);
         try {
-          localStorage.setItem(cacheKey, JSON.stringify({ ...next, t: Date.now() }));
+          localStorage.setItem(`gh-stats:${repo}`, JSON.stringify({ ...next, t: Date.now() }));
         } catch {
           /* localStorage 사용 불가 시 무시 */
         }
       })
       .catch(() => {
-        // 실패(rate limit 등) 시 만료된 캐시라도 표시
-        if (cancelled) return;
-        if (cached) setStats({ stars: cached.stars, forks: cached.forks });
+        /* 실패(rate limit 등) 시 초기 상태의 만료 캐시가 그대로 유지됨 */
       });
 
     return () => {
@@ -73,53 +131,90 @@ const GithubStats = ({ repo, variant = 'card' }) => {
   );
 };
 
+// Pip-Boy 스타일 세그먼트 스킬 바 — 임의 % 대신 근거(note)를 함께 표기
+const SkillBar = ({ name, pct, note, delay = 0 }) => {
+  const total = 24;
+  const filled = Math.round((pct / 100) * total);
+  return (
+    <div className="skill-bar">
+      <div className="skill-head">
+        <span className="skill-name">{name}</span>
+        <span className="skill-note">{note}</span>
+      </div>
+      <div className="skill-segments">
+        {Array.from({ length: total }, (_, i) => (
+          <span
+            key={i}
+            className={`seg ${i < filled ? 'on' : ''}`}
+            style={{ '--i': i + delay }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 // Tab components
 const StatTab = () => {
+  const personalData = [
+    { label: 'NAME:', value: 'YOUNGJUN JI (NOTNULL)' },
+    { label: 'ROLE:', value: 'UNITY DEVELOPER' },
+    { label: 'EXPERIENCE:', value: '5 YEARS' },
+    { label: 'STATUS:', value: 'ACTIVE', color: '#00ff41' },
+  ];
+
   return (
     <div className="tab-content">
-      <div className="section-header">
-        <span className="text-glow">{'>'} PERSONAL DATA</span>
+      <SectionHeader title="PERSONAL DATA" />
+      <div className="stat-pitch text-glow">
+        라이브 MMORPG 콘텐츠·BM 개발 3년, 1인 게임 개발, AI 개발툴 오픈소스까지 —
+        만든 것으로 증명하는 Unity 개발자입니다.
       </div>
-      <div className="data-grid">
-        <div className="data-row">
-          <span className="label">NAME:</span>
-          <span className="value text-glow">YOUNGJUN JI (NOTNULL)</span>
+      <div className="stat-layout">
+        <div className="data-grid">
+          {personalData.map((row, i) => (
+            <div className="data-row" key={row.label}>
+              <span className="label">{row.label}</span>
+              <span
+                className="value text-glow"
+                style={row.color ? { color: row.color } : undefined}
+              >
+                <ScrambleText text={row.value} duration={550} delay={150 + i * 120} />
+              </span>
+            </div>
+          ))}
         </div>
-        <div className="data-row">
-          <span className="label">ROLE:</span>
-          <span className="value text-glow">UNITY DEVELOPER</span>
-        </div>
-        <div className="data-row">
-          <span className="label">EXPERIENCE:</span>
-          <span className="value text-glow">5 YEARS</span>
-        </div>
-        <div className="data-row">
-          <span className="label">STATUS:</span>
-          <span className="value text-glow" style={{ color: '#00ff41' }}>ACTIVE</span>
+        <div className="stat-portrait tui-corners">
+          <img src={vaultBoyImg} alt="NOTNULL vault boy portrait" className="stat-portrait-img" />
+          <span className="stat-portrait-label">ID: NOTNULL-92</span>
         </div>
       </div>
-      <div className="section-header" style={{ marginTop: '30px' }}>
-        <span className="text-glow">{'>'} SKILLS</span>
-      </div>
+      <SectionHeader title="SKILLS" style={{ marginTop: '30px' }} />
       <div className="skills-container">
-        <div className="skill-bar">
-          <span className="skill-name">UNITY / C#</span>
-          <div className="skill-progress">
-            <div className="skill-fill" style={{ width: '90%' }}></div>
-          </div>
-        </div>
-        <div className="skill-bar">
-          <span className="skill-name">GIT / SVN </span>
-          <div className="skill-progress">
-            <div className="skill-fill" style={{ width: '90%' }}></div>
-          </div>
-        </div>
-        <div className="skill-bar">
-          <span className="skill-name">redmine</span>
-          <div className="skill-progress">
-            <div className="skill-fill" style={{ width: '100%' }}></div>
-          </div>
-        </div>
+        <SkillBar
+          name="UNITY / C#"
+          pct={95}
+          note="5 YRS · 라이브 MMORPG 3년 · 출시작 4종"
+          delay={0}
+        />
+        <SkillBar
+          name="게임플레이 / BM 시스템"
+          pct={85}
+          note="길드전·BM 3종 개발 · 매출 기여 30%"
+          delay={6}
+        />
+        <SkillBar
+          name="TOOLING (GO / GDSCRIPT)"
+          pct={70}
+          note="hera-agent Unity·Godot 오픈소스"
+          delay={12}
+        />
+        <SkillBar
+          name="GIT / SVN / JENKINS"
+          pct={80}
+          note="라이브 브랜치 운영 · CI 빌드 배포"
+          delay={18}
+        />
       </div>
     </div>
   );
@@ -136,16 +231,18 @@ const ProjectModal = ({ project, onClose }) => {
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
-      <motion.div 
+      <motion.div
         className="modal-content"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.8, opacity: 0 }}
-        transition={{ type: 'spring', damping: 20 }}
+        initial={{ scaleY: 0.02, scaleX: 1.08, opacity: 0.5 }}
+        animate={{ scaleY: 1, scaleX: 1, opacity: 1 }}
+        exit={{ scaleY: 0.02, scaleX: 1.08, opacity: 0 }}
+        transition={{ duration: 0.3, ease: [0.19, 1, 0.22, 1] }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal-header">
-          <span className="modal-title text-glow-strong">{'>'} PROJECT DETAILS</span>
+          <span className="modal-title text-glow-strong">
+            <ScrambleText text={`> ${project.name}`} duration={600} delay={200} />
+          </span>
           <button className="modal-close" onClick={onClose}>[X]</button>
         </div>
         
@@ -168,6 +265,11 @@ const ProjectModal = ({ project, onClose }) => {
               <GithubStats repo={parseGithubRepo(project)} variant="modal" />
             </div>
           )}
+
+          <div className="modal-section">
+            <span className="modal-label">MEDIA:</span>
+            <ProjectMedia media={project.media} name={project.name} variant="modal" />
+          </div>
 
           <div className="modal-section">
             <span className="modal-label">DESCRIPTION:</span>
@@ -543,19 +645,23 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
   ];
 
   const renderProjectCard = (project, index) => (
-    <motion.div 
+    <motion.div
       key={index}
-      className="project-card clickable"
+      className="project-card clickable tui-corners spotlight-card"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.2 }}
+      transition={{ delay: index * 0.12 }}
       onClick={() => setSelectedProject(project)}
-      whileHover={{ borderColor: '#00ff41' }}
+      onMouseMove={handleCardMouseMove}
+      onMouseLeave={handleCardMouseLeave}
       whileTap={{ scale: 0.99 }}
     >
+      <span className="card-spotlight" aria-hidden="true" />
+      <ProjectMedia media={project.media} name={project.name} variant="card" />
       <div className="project-header">
         <span className="project-name text-glow">{project.name}</span>
         <span className={`project-status ${project.status === 'RELEASED' ? 'released' : 'progress'}`}>
+          <span className="status-led" />
           {project.status}
         </span>
       </div>
@@ -567,8 +673,13 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       </div>
       {project.progress && (
         <div className="project-progress">
-          <div className="progress-bar">
-            <div className="progress-fill" style={{ width: `${project.progress}%` }}></div>
+          <div className="mini-segments">
+            {Array.from({ length: 20 }, (_, i) => (
+              <span
+                key={i}
+                className={`mseg ${i < Math.round(project.progress / 5) ? 'on' : ''}`}
+              />
+            ))}
           </div>
           <span className="progress-text">{project.progress}%</span>
         </div>
@@ -583,17 +694,13 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
   return (
     <div className="tab-content">
       {/* In Progress Section */}
-      <div className="section-header">
-        <span className="text-glow">{'>'} QUESTS IN PROGRESS</span>
-      </div>
+      <SectionHeader title="QUESTS IN PROGRESS" />
       <div className="projects-grid">
         {inProgressProjects.map((project, index) => renderProjectCard(project, index))}
       </div>
 
       {/* Released Section */}
-      <div className="section-header" style={{ marginTop: '30px' }}>
-        <span className="text-glow">{'>'} COMPLETED QUESTS</span>
-      </div>
+      <SectionHeader title="COMPLETED QUESTS" style={{ marginTop: '30px' }} />
       <div className="projects-grid">
         {releasedProjects.map((project, index) => renderProjectCard(project, index))}
       </div>
@@ -649,9 +756,7 @@ const LogsTab = () => {
 
   return (
     <div className="tab-content">
-      <div className="section-header">
-        <span className="text-glow">{'>'} ACTIVITY LOGS</span>
-      </div>
+      <SectionHeader title="ACTIVITY LOGS" />
       <div className="logs-timeline">
         {logs.map((yearGroup, idx) => (
           <div key={idx} className="log-year-group">
@@ -703,9 +808,7 @@ const InventoryTab = () => {
 
   return (
     <div className="tab-content">
-      <div className="section-header">
-        <span className="text-glow">{'>'} ACTIVITIES & ACHIEVEMENTS</span>
-      </div>
+      <SectionHeader title="ACTIVITIES & ACHIEVEMENTS" />
       <div className="inventory-grid">
         {activities.map((item, idx) => (
           <motion.div 
@@ -769,13 +872,17 @@ const ContactTab = () => {
       url: 'https://velog.io/@not_null_92',
       icon: '[::]'
     },
+    {
+      label: 'RESUME',
+      value: 'PDF 준비 중 — 메일로 요청해 주세요',
+      url: 'mailto:fatiger92@gmail.com?subject=%5BResume%20Request%5D%20Portfolio%20방문',
+      icon: '[▼]'
+    },
   ];
 
   return (
     <div className="tab-content">
-      <div className="section-header">
-        <span className="text-glow">{'>'} CONTACT TRANSMISSION</span>
-      </div>
+      <SectionHeader title="CONTACT TRANSMISSION" />
       <div className="contact-list">
         {contacts.map((contact, idx) => (
           <motion.a
@@ -804,9 +911,20 @@ const ContactTab = () => {
   );
 };
 
-const MainPortfolio = () => {
-  const [activeTab, setActiveTab] = useState('stat');
-  const [currentTime, setCurrentTime] = useState(new Date());
+const MARQUEE_TEXT =
+  'UNITY DEVELOPER ▸ 5 YEARS EXPERIENCE ▸ NOMOREROLLS IN DEVELOPMENT ▸ HERA-AGENT-UNITY / GODOT ▸ GITHUB.COM/NOTNULL92 ▸ OPEN FOR TRANSMISSION ▸ ';
+
+const formatTime = (date) =>
+  date.toLocaleTimeString('en-US', {
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
+
+// 1초마다 이 컴포넌트만 리렌더 (MainPortfolio 전체 트리 리렌더 방지)
+const UptimeClock = () => {
+  const [currentTime, setCurrentTime] = useState(() => new Date());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -815,22 +933,31 @@ const MainPortfolio = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const formatTime = (date) => {
-    return date.toLocaleTimeString('en-US', {
-      hour12: false,
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    });
-  };
+  return <span className="uptime-display">{formatTime(currentTime)}</span>;
+};
 
-  const tabs = [
-    { id: 'stat', label: 'STAT', icon: User },
-    { id: 'logs', label: 'LOGS', icon: Clock },
-    { id: 'quests', label: 'QUESTS', icon: Target },
-    { id: 'inventory', label: 'INVENTORY', icon: Briefcase },
-    { id: 'contact', label: 'CONTACT', icon: Mail },
-  ];
+const TABS = [
+  { id: 'stat', label: 'STAT', icon: User },
+  { id: 'logs', label: 'LOGS', icon: Clock },
+  { id: 'quests', label: 'QUESTS', icon: Target },
+  { id: 'inventory', label: 'INVENTORY', icon: Briefcase },
+  { id: 'contact', label: 'CONTACT', icon: Mail },
+];
+
+const MainPortfolio = () => {
+  const [activeTab, setActiveTab] = useState('stat');
+  const tabs = TABS;
+
+  // 숫자키 1~5로 탭 전환
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      const idx = Number(e.key) - 1;
+      if (idx >= 0 && idx < TABS.length) setActiveTab(TABS[idx].id);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   return (
     <motion.div 
@@ -839,25 +966,46 @@ const MainPortfolio = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
+      <AsciiRain opacity={0.12} />
       <div className="portfolio-content">
-        {/* Header */}
+        {/* Header — 시스템 상태바 */}
         <div className="portfolio-header">
           <div className="header-title text-glow-strong">
-            {'>'} PORTFOLIO TERMINAL v1.0
+            <ScrambleText text="> PORTFOLIO TERMINAL v2.0" duration={800} rescrambleOnHover />
           </div>
-          <div className="header-status text-glow">
-            STATUS: ONLINE | UPTIME: {formatTime(currentTime)}
+          <div className="header-readouts text-glow">
+            <span className="readout">
+              <span className="readout-label">USER</span> GUEST
+            </span>
+            <span className="readout">
+              <span className="readout-label">MEM</span> 64K OK
+            </span>
+            <span className="readout">
+              <span className="readout-label">STATUS</span>{' '}
+              <span className="status-online">ONLINE</span>
+            </span>
+            <span className="readout">
+              <span className="readout-label">UPTIME</span> <UptimeClock />
+            </span>
           </div>
         </div>
 
         {/* Tab Navigation */}
         <div className="tab-navigation">
-          {tabs.map((tab) => (
+          {tabs.map((tab, i) => (
             <button
               key={tab.id}
               className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => setActiveTab(tab.id)}
             >
+              {activeTab === tab.id && (
+                <motion.span
+                  layoutId="tab-active"
+                  className="tab-active-bg"
+                  transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                />
+              )}
+              <span className="tab-fkey">{i + 1}</span>
               <tab.icon size={16} />
               <span>[ {tab.label} ]</span>
             </button>
@@ -877,8 +1025,14 @@ const MainPortfolio = () => {
 
         {/* Footer */}
         <div className="portfolio-footer">
-          <span className="text-glow">{'>'} SYSTEM READY_</span>
+          <span className="text-glow footer-ready">{'>'} SYSTEM READY_</span>
           <span className="cursor-blink">█</span>
+          <div className="footer-marquee" aria-hidden="true">
+            <div className="marquee-track">
+              <span>{MARQUEE_TEXT}</span>
+              <span>{MARQUEE_TEXT}</span>
+            </div>
+          </div>
         </div>
       </div>
 

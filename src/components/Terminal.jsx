@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ScrambleText from './effects/ScrambleText';
+import AsciiRain from './effects/AsciiRain';
 import './Terminal.css';
 
 import vaultBoyImg from '../assets/notnull-logo.png';
@@ -16,15 +18,14 @@ const ASCII_ART = `
 
 const BOOT_MESSAGES = [
   { text: 'INDIE ALCHEMIST COMPANY (TM) TERMLINK PROTOCOL', delay: 100 },
-  { text: 'ENTER PASSWORD NOW', delay: 80 },
   { text: '', delay: 200 },
   { text: '> INITIALIZING MAIN SYSTEM...', delay: 150 },
-  { text: '> FEEDING SEMI-BROKEN PROMPTS TO LLM...', delay: 150 },
-  { text: '> GENERATING CODE I DON\'T FULLY UNDERSTAND... OK', delay: 120 },
-  { text: '> MOUNTING VIBE-DRIVEN ARCHITECTURE... FINGERS CROSSED', delay: 130 },
-  { text: '> PRAYING THE AI DOESN\'T HALLUCINATE AT SCALE... DONE', delay: 100 },
+  { text: '> LOADING UNITY RUNTIME... 5 YEARS OF FIELD DATA FOUND', delay: 150 },
+  { text: '> MOUNTING LIVE-SERVICE RECORDS... MAU 35K VERIFIED', delay: 120 },
+  { text: '> SYNCING SIDE PROJECTS... 2 AI DEV TOOLS ONLINE', delay: 130 },
+  { text: '> CALIBRATING DICE... NOMOREROLLS IN DEVELOPMENT', delay: 100 },
   { text: '', delay: 150 },
-  { text: '> ANYWAY MAIN SYSTEM READY', delay: 100 },
+  { text: '> ALL SYSTEMS NOMINAL. WELCOME, VISITOR.', delay: 100 },
   { text: '', delay: 200 },
 ];
 
@@ -70,30 +71,33 @@ const useTypingEffect = (text, speed = 30, startDelay = 0) => {
 const TypedLine = ({ text, delay, onComplete, isActive }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [isComplete, setIsComplete] = useState(false);
+  // 활성화 후 1회만 타이핑 (onComplete 참조 변경으로 인한 재타이핑 방지)
+  const startedRef = useRef(false);
 
   useEffect(() => {
-    if (!isActive) return;
-    
-    setDisplayedText('');
-    setIsComplete(false);
-    
+    if (!isActive || startedRef.current) return;
+    startedRef.current = true;
+
+    let intervalId;
     const timeout = setTimeout(() => {
       let currentIndex = 0;
-      const intervalId = setInterval(() => {
+      // 16ms에 2자씩 = 8ms/자 체감 속도 유지하면서 setState 횟수는 절반
+      intervalId = setInterval(() => {
         if (currentIndex < text.length) {
-          setDisplayedText(text.slice(0, currentIndex + 1));
-          currentIndex++;
+          currentIndex = Math.min(currentIndex + 2, text.length);
+          setDisplayedText(text.slice(0, currentIndex));
         } else {
           setIsComplete(true);
           clearInterval(intervalId);
           onComplete?.();
         }
-      }, 25);
-
-      return () => clearInterval(intervalId);
+      }, 16);
     }, delay);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(intervalId);
+    };
   }, [text, delay, isActive, onComplete]);
 
   if (!isActive) return null;
@@ -113,16 +117,34 @@ const Terminal = ({ onAuthenticated }) => {
   const [showAscii, setShowAscii] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
   const [error, setError] = useState('');
+  const [errorKey, setErrorKey] = useState(0);
   const [glitch, setGlitch] = useState(false);
+  const [skipped, setSkipped] = useState(false);
   const inputRef = useRef(null);
 
   // Show ASCII art first
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowAscii(true);
-    }, 500);
+    }, 150);
     return () => clearTimeout(timer);
   }, []);
+
+  // 부팅 중 아무 키/클릭으로 스킵
+  useEffect(() => {
+    if (phase !== 'boot') return;
+    const skip = () => {
+      setSkipped(true);
+      setShowAscii(true);
+      setCurrentLineIndex(BOOT_MESSAGES.length);
+    };
+    window.addEventListener('keydown', skip);
+    window.addEventListener('mousedown', skip);
+    return () => {
+      window.removeEventListener('keydown', skip);
+      window.removeEventListener('mousedown', skip);
+    };
+  }, [phase]);
 
   // Handle boot sequence completion
   const handleLineComplete = useCallback(() => {
@@ -135,7 +157,7 @@ const Terminal = ({ onAuthenticated }) => {
       setTimeout(() => {
         setShowPrompt(true);
         setPhase('input');
-      }, 300);
+      }, 120);
     }
   }, [currentLineIndex, phase]);
 
@@ -146,9 +168,10 @@ const Terminal = ({ onAuthenticated }) => {
     }
   }, [phase]);
 
-  // Handle authentication
+  // Handle authentication — 빈 입력 + Enter도 입장 허용 (게이트 이탈 방지)
   const handleAuthenticate = useCallback(() => {
-    if (inputValue.toLowerCase() === ACCESS_KEY) {
+    const value = inputValue.trim().toLowerCase();
+    if (value === ACCESS_KEY || value === '') {
       setPhase('authenticating');
       setError('');
       
@@ -163,6 +186,7 @@ const Terminal = ({ onAuthenticated }) => {
     } else {
       const randomError = ERROR_MESSAGES[Math.floor(Math.random() * ERROR_MESSAGES.length)];
       setError(randomError);
+      setErrorKey((k) => k + 1);
       setInputValue('');
       inputRef.current?.focus();
     }
@@ -194,6 +218,7 @@ const Terminal = ({ onAuthenticated }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      <AsciiRain opacity={0.22} />
       <div className="terminal-content">
         {/* Header Section: ASCII Art + Vault Boy */}
         <AnimatePresence>
@@ -205,7 +230,16 @@ const Terminal = ({ onAuthenticated }) => {
               transition={{ duration: 0.5 }}
             >
               <pre className="ascii-art text-glow-strong">
-                {ASCII_ART}
+                {ASCII_ART.split('\n').map((line, i) => (
+                  <ScrambleText
+                    key={i}
+                    tag="div"
+                    text={line || ' '}
+                    charset="█▓▒░╗╚╝║═╔"
+                    duration={750}
+                    delay={i * 90}
+                  />
+                ))}
               </pre>
               <motion.div
                 className="vault-boy-container"
@@ -225,16 +259,27 @@ const Terminal = ({ onAuthenticated }) => {
 
         {/* Boot Messages */}
         <div className="boot-sequence">
-          {BOOT_MESSAGES.slice(0, currentLineIndex + 1).map((msg, index) => (
-            <TypedLine
-              key={index}
-              text={msg.text}
-              delay={index === 0 ? 100 : 50}
-              isActive={showAscii && index <= currentLineIndex}
-              onComplete={index === currentLineIndex ? handleLineComplete : undefined}
-            />
-          ))}
+          {skipped
+            ? BOOT_MESSAGES.map((msg, index) => (
+                <div key={index} className="terminal-line">
+                  <span className="text-glow">{msg.text}</span>
+                </div>
+              ))
+            : BOOT_MESSAGES.slice(0, currentLineIndex + 1).map((msg, index) => (
+                <TypedLine
+                  key={index}
+                  text={msg.text}
+                  delay={index === 0 ? 60 : 30}
+                  isActive={showAscii && index <= currentLineIndex}
+                  onComplete={index === currentLineIndex ? handleLineComplete : undefined}
+                />
+              ))}
         </div>
+
+        {/* Skip Hint */}
+        {phase === 'boot' && showAscii && !skipped && (
+          <div className="skip-hint">[ PRESS ANY KEY TO SKIP ]</div>
+        )}
 
         {/* Input Prompt */}
         <AnimatePresence>
@@ -245,8 +290,8 @@ const Terminal = ({ onAuthenticated }) => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="prompt-line text-glow">
-                {'>'} 입장하려면 명령어를 입력하세요. (ACCESS_KEY: alena)
+              <div className="prompt-line text-glow neon-pulse">
+                {'>'} ENTER 키를 누르면 바로 입장합니다. (또는 ACCESS_KEY: alena)
               </div>
               <div className="input-line">
                 <span className="text-glow">{'>'} </span>
@@ -264,13 +309,19 @@ const Terminal = ({ onAuthenticated }) => {
                 <span className="cursor-blink">█</span>
               </div>
               {error && (
-                <motion.div 
+                <motion.div
+                  key={errorKey}
                   className="error-line text-glow"
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  animate={{ opacity: 1, x: [0, -8, 8, -5, 5, -2, 0] }}
+                  transition={{ x: { duration: 0.4 } }}
                   style={{ color: '#ff3333' }}
                 >
-                  {error}
+                  <ScrambleText
+                    text={error}
+                    charset="!@#$%&*<>/\\"
+                    duration={450}
+                  />
                 </motion.div>
               )}
             </motion.div>

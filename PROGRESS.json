@@ -2,7 +2,7 @@
   "project": "Portfolio-TUI",
   "description": "Fallout Pip-Boy 스타일의 터미널 UI 포트폴리오 웹사이트",
   "theme": "Fallout Pip-Boy / Terminal UI",
-  "lastUpdated": "2026-03-17T16:28:00+09:00",
+  "lastUpdated": "2026-08-06T18:10:00+09:00",
   
   "techStack": {
     "framework": "React 19 + Vite",
@@ -17,8 +17,11 @@
     "src/components/Terminal.css": "터미널 스타일",
     "src/components/MainPortfolio.jsx": "메인 포트폴리오 (STAT/LOGS/QUESTS/INVENTORY/CONTACT 탭)",
     "src/components/MainPortfolio.css": "포트폴리오 스타일 + 모달 + 타임라인 + 인벤토리",
-    "src/index.css": "글로벌 스타일 (CRT 효과, 애니메이션)",
-    "src/App.jsx": "페이지 전환 로직"
+    "src/components/effects/ScrambleText.jsx": "스크램블(디크립트) 텍스트 리빌 이펙트",
+    "src/components/effects/AsciiRain.jsx": "ASCII 레인 캔버스 배경 (~20fps, reduced-motion 대응)",
+    "src/components/effects/CursorGlow.jsx": "마우스 추적 인광 글로우 (pointer:fine 전용)",
+    "src/index.css": "글로벌 스타일 (CRT 효과, 비네트/스윕/노이즈 오버레이, 애니메이션)",
+    "src/App.jsx": "페이지 전환 로직 + 글로벌 CRT FX 레이어"
   },
 
   "currentStatus": {
@@ -90,6 +93,18 @@
 
   "history": [
     {
+      "date": "2026-08-07",
+      "session": "채용 퍼널 개선 (리크루터 관점 피드백 반영)",
+      "changes": [
+        "프로젝트 카드/모달에 16:9 미디어 슬롯 추가 — media 배열이 비면 NO SIGNAL 더미 프레임 표시",
+        "미디어 추가 방법: 프로젝트 데이터에 media: [{ src, alt }] 를 넣으면 자동 렌더 (CRT 그린 필터 적용)",
+        "입장 마찰 제거: 빈 입력 + Enter 입장 허용, 세션 재방문 시 터미널 생략, ?direct URL 즉시 입장",
+        "부팅 문구를 자조 유머 → 성과 기반 엘리베이터 피치로 교체 (5 YRS / MAU 35K / AI TOOLS)",
+        "STAT: 한 줄 피치 추가, 스킬 바를 임의 % → 근거 표기(연차·출시작·매출 기여)로 재설계 (redmine 100% 제거)",
+        "CONTACT: RESUME 슬롯 추가 (PDF 준비 중, mailto 요청 링크)"
+      ]
+    },
+    {
       "date": "2026-03-13",
       "session": "Phase 1 & 2 완료",
       "changes": [
@@ -128,6 +143,38 @@
       ]
     },
 
+    {
+      "date": "2026-08-06",
+      "session": "Originkit 참고 디자인 업그레이드 (TUI 유지 + 이펙트 강화)",
+      "changes": [
+        "effects/ScrambleText: 스크램블 텍스트 리빌 컴포넌트 (섹션 헤더, ASCII 로고, STAT 값, 모달 타이틀, 에러 메시지)",
+        "effects/AsciiRain: 캔버스 ASCII 레인 배경 (터미널 0.22 / 메인 0.12 투명도)",
+        "effects/CursorGlow: 마우스 추적 인광 글로우 (데스크탑 전용)",
+        "CRT 강화: 비네트 + 스캔 스윕 라인 + SVG 노이즈 오버레이 + 색수차(text-glow-strong)",
+        "프로젝트 카드: 마우스 스포트라이트 + TUI 코너 브래킷 확장 효과",
+        "STAT 스킬바: Pip-Boy 세그먼트 바 (순차 점등 애니메이션 + % 표기)",
+        "탭 네비게이션: framer-motion layoutId 슬라이딩 활성 인디케이터",
+        "프로젝트 모달: CRT 파워온(스케일Y + 브라이트니스 플래시) 전환",
+        "푸터: 무한 마퀴 티커 추가",
+        "터미널: 프롬프트 네온 펄스, 에러 셰이크 + 스크램블, 입력 오류 키 보완(errorKey)",
+        "LOGS/CONTACT 호버 마이크로 인터랙션, phosphor 스크롤바, status blink",
+        "prefers-reduced-motion 전체 대응 (스크램블/레인/글로우/스윕 비활성화)",
+        "GithubStats: effect 내 동기 setState 제거 (lazy init으로 lint 오류 해결)",
+        "성능: mix-blend-mode 전면 제거, ScrambleText textContent 직접 갱신(리렌더 0), UptimeClock 분리, 네온 펄스 opacity화, will-change 승격, 스포트라이트 rAF 스로틀",
+        "성능: 모달 backdrop-filter 제거 + 파워온 플래시를 1회성 CSS 애니메이션으로 분리",
+        "부팅 속도: 타이핑 25ms→8ms, 지연 축소 (진입 ~9s→~3s), 아무 키/클릭 스킵 + 힌트 추가",
+        "비주얼 2차: VT323 디스플레이 폰트 (헤더/섹션/타임라인/모달 타이틀)",
+        "비주얼 2차: CRT 베젤 프레임(라운드 스크린) + 배경 인광 radial 글로우",
+        "비주얼 2차: 헤더 시스템 상태바 (USER/MEM/STATUS/UPTIME 리드아웃, v2.0)",
+        "비주얼 2차: 탭 숫자키 1~5 단축키 + 키 힌트 배지",
+        "비주얼 2차: QUESTS 진행률 세그먼트화(앰버), 상태 배지 LED 도트",
+        "비주얼 2차: STAT ID 포트레이트 카드, LOGS 타임라인 노드 마커, CONTACT 2열 그리드, 모달 헤더 스트라이프",
+        "originkit 실물 대조: AsciiRain 헤드+트레일 2톤 구조로 재작성, 볼트보이/포트레이트 필터 밝기 보정(0.9→1.45)",
+        "성능 감사: TypedLine 16ms/2자 배칭 + 1회 실행 가드(재타이핑 버그·인터벌 누수 수정)",
+        "성능 감사: CursorGlow 수렴 시 rAF 정지, 카드 스포트라이트 transform 레이어 방식 전환(리페인트 제거), WeakMap 좌표 보관",
+        "성능 감사: crt-flicker/vault-boy/screen-glitch will-change 레이어 승격"
+      ]
+    },
     {
       "date": "2026-03-17",
       "session": "프로젝트 카드 레이아웃 개선",
