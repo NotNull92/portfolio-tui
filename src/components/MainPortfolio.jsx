@@ -1271,7 +1271,7 @@ const NotesTab = () => {
         <div className="notes-empty">{'>'} NO ENTRIES YET_</div>
       ) : (
         <div className="notes-hint text-glow">
-          {'>'} 글을 선택하면 책이 열립니다. 하단의 <span className="hint-key">◀ ▶</span> 또는
+          {'>'} 글을 선택하면 게시글이 열립니다. 하단의 <span className="hint-key">◀ ▶</span> 또는
           키보드 <span className="hint-key">←</span> <span className="hint-key">→</span> 로 페이지를 넘기고,{' '}
           <span className="hint-key">ESC</span> 로 닫습니다_
         </div>
