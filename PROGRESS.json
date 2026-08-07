@@ -123,6 +123,20 @@
   "history": [
     {
       "date": "2026-08-07",
+      "session": "에이전트 툴 3종 로고 미디어 + PORTFOLIO-BLOG 카드 제거",
+      "changes": [
+        "각 레포 README 로고를 raw.githubusercontent 로 받아 WebP 변환 (알파 보존)",
+        "hera-agent-unity: docs/assets/hera_logo.png → 500x500 54KB",
+        "hera-agent-godot: docs/assets/hera_godot_logo.png → 640x640 87KB",
+        "hebe-agent-unity: docs/logo/hebe_logo.png → 640x640 92KB",
+        "media 항목에 kind:'logo' 플래그 추가 — 정사각 로고는 object-fit:contain 으로 잘림 방지",
+        "로고 배경은 투명 유지 + 은은한 그린 그리드로 여백 처리 (.project-media.is-logo)",
+        "PORTFOLIO-BLOG 프로젝트 카드 제거 (이 사이트 자체이므로 중복)",
+        "미해결: MENTAL ROBO 3장 / EOS-RED 1장은 대화 첨부 이미지라 디스크에 없어 대기. GGJ 스토리지는 핫링크 403 차단"
+      ]
+    },
+    {
+      "date": "2026-08-07",
       "session": "게임 스크린샷 투입 (RingVerse 타이틀 + NoMoreRolls 영상 프레임 4종)",
       "changes": [
         "RingVerse: Inventoria/Screenshots/title_screen_logo_no_overlap_2026-07-23.png → 1280x720 WebP 256KB (원본 3MB PNG, nearest 커널로 픽셀아트 보존)",

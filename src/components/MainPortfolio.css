@@ -408,6 +408,25 @@
   filter: none;
 }
 
+/* 로고 미디어 — 정사각 이미지가 잘리지 않도록 contain,
+   투명 배경은 살리고 빈 여백은 은은한 그리드로 채운다 */
+.project-media.is-logo {
+  background-image:
+    linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-color: rgba(0, 20, 6, 0.55);
+}
+
+.project-media.is-logo img {
+  object-fit: contain;
+  padding: 10px;
+}
+
+.project-media.is-logo.modal img {
+  padding: 22px;
+}
+
 .project-media.placeholder {
   display: flex;
   flex-direction: column;

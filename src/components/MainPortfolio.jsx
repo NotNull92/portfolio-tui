@@ -9,6 +9,9 @@ import nmrTitleImg from '../assets/projects/nomorerolls-title.webp';
 import nmrBattleImg from '../assets/projects/nomorerolls-battle.webp';
 import nmrCorridorImg from '../assets/projects/nomorerolls-corridor.webp';
 import nmrTalkImg from '../assets/projects/nomorerolls-talk.webp';
+import heraUnityLogo from '../assets/projects/hera-unity-logo.webp';
+import heraGodotLogo from '../assets/projects/hera-godot-logo.webp';
+import hebeLogo from '../assets/projects/hebe-logo.webp';
 import './MainPortfolio.css';
 
 // 섹션 헤더 (스크램블 리빌)
@@ -69,7 +72,8 @@ const ProjectMedia = ({ media, name, variant = 'card' }) => {
 
   return (
     <>
-      <div className={`project-media ${variant}`}>
+      {/* kind: 'logo' 는 정사각 로고라 잘리지 않도록 contain 렌더 */}
+      <div className={`project-media ${variant} ${shown.kind === 'logo' ? 'is-logo' : ''}`}>
         <img src={shown.src} alt={shown.alt || name} loading="lazy" />
       </div>
       {isGallery && (
@@ -539,6 +543,9 @@ AI agent → hera-agent-unity → Unity Editor
 • 버전 관리: Git (GitHub)
 • 릴리스: GitHub Releases (v0.1.4)`,
       status: 'RELEASED',
+      media: [
+        { src: heraUnityLogo, alt: 'hera-agent-unity 로고', kind: 'logo' },
+      ],
       tech: ['Go', 'C#', 'Unity Editor', 'UPM', 'CLI', 'Apache-2.0'],
       features: [
         'AI 에이전트용 라이브 Unity 에디터 제어 CLI',
@@ -609,6 +616,9 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
 • 버전 관리: Git (GitHub)
 • 배포: GitHub Releases + Godot Asset Store + Homebrew tap`,
       status: 'RELEASED',
+      media: [
+        { src: heraGodotLogo, alt: 'hera-agent-godot 로고', kind: 'logo' },
+      ],
       tech: ['Go', 'GDScript', 'Godot 4.7+', 'EditorPlugin', 'CLI', 'MIT'],
       features: [
         'AI 에이전트용 라이브 Godot 에디터 제어 CLI',
@@ -668,6 +678,9 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
 • 버전 관리: Git (GitHub)
 • 릴리스: GitHub Releases (v0.0.1)`,
       status: 'RELEASED',
+      media: [
+        { src: hebeLogo, alt: 'hebe-agent-unity 로고', kind: 'logo' },
+      ],
       tech: ['Go', 'C#', 'Unity Editor', 'UPM', 'CLI', 'Apache-2.0'],
       features: [
         'Hera의 경량 실행 에디션 (실행 코어만 남긴 미니멀 버전)',
@@ -767,22 +780,6 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       ],
       links: [
         { label: 'STEAM', url: 'https://store.steampowered.com/app/1539810/FreeDraw/' },
-      ],
-    },
-    {
-      name: 'PORTFOLIO-BLOG',
-      description: 'Terminal-style portfolio website',
-      fullDescription: 'A retro terminal-style portfolio website inspired by Fallout UI. Built with React and features CRT effects, typing animations, and a unique user experience.',
-      status: 'RELEASED',
-      tech: ['React', 'Vite', 'CSS', 'Framer Motion'],
-      features: [
-        'CRT monitor effects',
-        'Typing animations',
-        'Fallout-inspired UI',
-        'Responsive design',
-      ],
-      links: [
-        { label: 'LIVE', url: 'https://portfolio-tui-ten.vercel.app/' },
       ],
     },
     {
