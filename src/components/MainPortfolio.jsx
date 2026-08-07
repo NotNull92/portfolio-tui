@@ -206,7 +206,7 @@ const StatTab = () => {
         <SkillBar
           name="TOOLING (GO / GDSCRIPT)"
           pct={70}
-          note="hera-agent Unity·Godot 오픈소스"
+          note="hera/hebe-agent 오픈소스 3종 공개"
           delay={12}
         />
         <SkillBar
@@ -407,15 +407,16 @@ const QuestsTab = () => {
     {
       name: 'HERA-AGENT-UNITY',
       description: 'AI 코딩 에이전트가 라이브 Unity 에디터를 제어하는 저토큰(Low-token) CLI',
-      fullDescription: `"AI 코딩 에이전트가 실행 중인 Unity 에디터를 직접 제어하는 저토큰 CLI"입니다. Codex, Claude, Cursor, Copilot 등의 에이전트가 MCP 서버나 Python 없이, 셸 명령만으로 라이브 Unity 에디터를 조사하고 변경할 수 있게 합니다.
+      fullDescription: `"AI 코딩 에이전트가 실행 중인 Unity 에디터를 직접 제어하는 저토큰 CLI"입니다. Codex, Claude, Cursor, Copilot, AntiGravity 등의 에이전트가 Python 서버 없이, 셸 명령만으로 라이브 Unity 에디터를 조사하고 변경할 수 있게 합니다.
 
 [프로젝트 개요]
 • 개발 기간: 2026.05 ~ 진행 중
-• 최신 릴리스: v0.0.38 (2026.07.06)
-• 유형: 개발자 도구 (Go CLI + Unity 패키지)
-• 라이선스: MIT (오픈소스)
+• 최신 릴리스: v0.1.4 (2026.08.06)
+• 유형: 개발자 도구 (Go CLI + Unity UPM 패키지)
+• 라이선스: Apache-2.0 (오픈소스)
 • 플랫폼: Windows / macOS / Linux
-• 사용 기술: Go, C#, Unity Editor API, PowerShell
+• 대상: Unity 2022.3+ (6000.x 검증)
+• 사용 기술: Go 1.25+, C#, Unity Editor API, PowerShell
 
 [핵심 개념]
 에이전트는 오래된 학습 데이터로 추측하지 않고, 실제 에디터에 직접 물어봅니다.
@@ -433,20 +434,30 @@ AI agent → hera-agent-unity → Unity Editor
 [저토큰 최적화]
 • list --compact ≈93 토큰, find_gameobjects --ids ≈49~55 토큰 수준으로 벤치마크
 • Unity 2022.3 / 2023.2 / 6000.x 다중 버전 검증
-• MCP 설정·Python 서버 없이 셸 명령만으로 동작
+• 기본 CLI 경로는 MCP 설정·Python 서버 없이 셸 명령만으로 동작
+• v0.1.0+ 부터 실험적 stdio MCP 어댑터 제공 (기본 비활성, 선택 사용)
+
+[v0.1.4 주요 변경]
+• 멀티 에디터 정책 락: 첫 대상 에디터를 결정적으로 선택한 뒤,
+  도메인 리로드나 에디터 재시작으로 포트가 바뀌어도 정규화된 프로젝트 경로로 고정 유지
+• 에이전트 컨텍스트 바운딩: 출력량을 제한해 토큰 폭주 방지
+• 셀렉터 미지정 시의 우선순위를 회귀 테스트로 고정
+
+[성과]
+• GitHub Stars 22 · Forks 3 (2026.08 기준, 카드에 실시간 표시)
 
 [협업 도구]
 • 버전 관리: Git (GitHub)
-• 릴리스: GitHub Releases (v0.0.38)`,
+• 릴리스: GitHub Releases (v0.1.4)`,
       status: 'RELEASED',
-      tech: ['Go', 'C#', 'Unity Editor', 'CLI', 'PowerShell', 'MIT'],
+      tech: ['Go', 'C#', 'Unity Editor', 'UPM', 'CLI', 'Apache-2.0'],
       features: [
         'AI 에이전트용 라이브 Unity 에디터 제어 CLI',
-        'MCP/Python 서버 없이 셸 명령만으로 동작',
+        'Python 서버 없이 셸 명령만으로 동작 (MCP 선택 지원)',
         'C# 실행 · 콘솔 읽기 · Play Mode · UI 생성',
         'EventSystem 기반 UI 입력 QA (Input QA)',
         '저토큰 최적화 (list --compact ≈93 토큰)',
-        'Unity 2022.3 ~ 6000.x 다중 버전 검증',
+        '멀티 에디터 정책 락 + 도메인 리로드 안전성 (v0.1.4)',
       ],
       links: [
         { label: 'GITHUB', url: 'https://github.com/NotNull92/hera-agent-unity' },
@@ -456,15 +467,16 @@ AI agent → hera-agent-unity → Unity Editor
     },
     {
       name: 'HERA-AGENT-GODOT',
-      description: 'AI 에이전트가 라이브 Godot 4.7+ 에디터를 제어하는 저토큰 CLI (Godot Asset Store 업로드 완료)',
+      description: 'AI 에이전트가 라이브 Godot 4.7+ 에디터를 제어하는 저토큰 CLI (v1.0.0 안정 계약 · Godot Asset Store 등록)',
       fullDescription: `"AI 코딩 에이전트에게 라이브 Godot 에디터의 눈·손·증거를 제공하는 저토큰 CLI"입니다. hera-agent-unity의 형제 프로젝트로, 같은 저토큰·셸 네이티브 철학을 Godot 전용으로 새로 설계했습니다(포팅이 아님).
 
 [프로젝트 개요]
 • 개발 기간: 2026.06 ~ 진행 중
-• 최신 릴리스: v0.6.0 (2026.07.06, Godot Asset Store 업로드 완료)
+• 최신 릴리스: v1.0.0 (2026.07.21) — 안정 CLI 계약 + SemVer 채택
 • 유형: 개발자 도구 (Go CLI + Godot 애드온)
 • 라이선스: MIT (오픈소스)
 • 대상: Godot 4.7+ 표준 빌드
+• 배포: GitHub Releases · Godot Asset Store · Homebrew tap
 • 사용 기술: Go 1.25+, GDScript, EditorPlugin, HTTP RPC
 
 [제품 아이덴티티]
@@ -485,28 +497,101 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
 • QA 워크플로우: game qa discover, 실행 가능한 체크 기반 QA 판정
 • batch / smoke / screenshot / diagnostics 등 다양한 명령 지원
 
+[v1.0.0 주요 변경]
+• 안정 계약 + SemVer: 명령·출력 필드·스트림·종료 코드에 메이저 호환성 보장과
+  문서화된 deprecation 정책 적용 (docs/CONTRACT.md)
+• Godot 네이티브 UI 테마 QA: Theme 리소스 항목을 조회·수정하고
+  간격/타입/색상/대비/컨테이너/장식 측정 규칙으로 검증
+• 스크린샷 diff: 두 캡처를 로컬에서 비교해 변경 픽셀 수·비율·바운딩 박스 산출
+  (프로젝트 이미지를 외부 업로드하지 않음)
+• 라이브 신뢰성 개선: 하트비트 스왑 재시도(바운디드 백오프),
+  진단이 로깅 사각지대를 보고해 false-clean 방지
+• 0.9 → 1.0 무중단 마이그레이션 (breaking change 없음)
+
 [저토큰(측정 기반)]
 • 턴당 상주 툴 스키마 0 토큰 (MCP 서버는 약 4k~31k 토큰)
 • status ≈48 토큰, node get ≈186 토큰 수준의 compact JSON 응답
+• 씬 구성 → 실행 → 런타임 QA → 노드 수정까지 전체 세션 ≈1,170 토큰
+
+[성과]
+• GitHub Stars 10 · Forks 1 (2026.08 기준, 카드에 실시간 표시)
 
 [협업 도구]
 • 버전 관리: Git (GitHub)
-• 배포: GitHub Releases + Godot Asset Store`,
+• 배포: GitHub Releases + Godot Asset Store + Homebrew tap`,
       status: 'RELEASED',
       tech: ['Go', 'GDScript', 'Godot 4.7+', 'EditorPlugin', 'CLI', 'MIT'],
       features: [
         'AI 에이전트용 라이브 Godot 에디터 제어 CLI',
-        'Go CLI + GDScript 애드온 (HTTP RPC 구조)',
+        'v1.0.0 안정 CLI 계약 + SemVer/deprecation 정책',
+        'Godot 네이티브 UI 테마 QA + 스크린샷 diff',
         '노드 트리 읽기/쓰기 · GDScript eval · 씬 실행',
-        'Game Feel UI Mode (Beta) + 증거 우선 QA',
-        '저토큰: 턴당 툴 스키마 0, status ≈48 토큰',
-        'Godot Asset Store 업로드 완료 (v0.6.0)',
+        '저토큰: 전체 QA 세션 ≈1,170 토큰 (툴 스키마 0)',
+        'Godot Asset Store + Homebrew tap 배포',
       ],
       links: [
         { label: 'GITHUB', url: 'https://github.com/NotNull92/hera-agent-godot' },
         { label: 'RELEASES', url: 'https://github.com/NotNull92/hera-agent-godot/releases' },
         { label: 'ASSET STORE', url: 'https://store.godotengine.org/asset/notnull92/hera-agent-godot/' },
         { label: 'YOUTUBE', url: 'https://www.youtube.com/@IndieAlchemist' },
+      ],
+    },
+    {
+      name: 'HEBE-AGENT-UNITY',
+      description: 'AI 에이전트를 위한 빠르고 복구 가능한 Unity 실행 런타임 (warm exec 240ms 측정)',
+      fullDescription: `"AI 코딩 에이전트를 위한 빠르고 복구 가능한 Unity 실행 런타임"입니다. 단순한 에디터 원격 제어가 아니라, 반복되는 C# 시작 비용을 캐시로 제거하는 데 집중한 경량 실행 런타임입니다. hera-agent-unity의 경량 실행 에디션으로, Hera의 검증된 localhost 실행 코어와 에이전트 루프에 필요한 도구만 남기고 MCP·타입 툴 계약·승인 플로우·배치·문서 번들·UI/에셋 파이프라인은 의도적으로 제외했습니다.
+
+[프로젝트 개요]
+• 개발 기간: 2026.08 ~ 진행 중
+• 최신 릴리스: v0.0.1 (2026.08.06, 초기 공개)
+• 유형: 개발자 도구 (Go 바이너리 1개 + Unity UPM 패키지 1개)
+• 라이선스: Apache-2.0 (오픈소스)
+• 사용 기술: Go, C#, Unity Editor API, localhost HTTP
+
+[설계 목표]
+• Hot execution loop: 컴파일러 탐색, 레퍼런스 세트, 컴파일된 DLL,
+  로드된 어셈블리를 캐시해 반복 실행 비용을 제거
+• Recoverable Editor control: 결정적 프로젝트/포트 타게팅,
+  하트비트 기반 대기, 도메인 리로드 안전 테스트, 재개 가능한 run ID
+• Agent-native feedback: 구조화된 에러 코드·제안·에이전트 힌트,
+  compact JSON, 토큰 절약형 툴 탐색
+• Small deployment surface: 별도 서버 프로세스·Python 런타임·MCP 클라이언트 불필요
+
+[측정 성능] (2026.08.06 벤치마크)
+동일한 31파일 픽스처와 동일 명령 시퀀스를 이미 열린 Unity 에디터에서 3회 반복 측정
+
+• 전체 고정 워크플로우: 중앙값 37.285s (p95 38.344s)
+• 동일 코드 warm exec: 중앙값 240ms (p95 273ms, 27회)
+• 서로 다른 코드 exec: 중앙값 313ms (p95 392ms, 30회)
+• 최초 cold exec: 1.460s → warm 대비 약 6.08배 (83.6% 단축)
+• EditMode 12개 테스트 960ms / PlayMode 3개 테스트 7.720s
+• 측정된 99개 CLI 명령에서 실패 0건, Unity 콘솔 에러 0건
+• 변동계수 약 2.63% (표준편차 0.984s)
+
+* 서로 다른 코드에서도 313ms가 나온다는 점은 단순 결과 캐싱이 아니라
+  컴파일러 탐색·레퍼런스 세트·응답 파일·어셈블리 준비가 재사용됨을 의미합니다.
+
+[측정 환경]
+• Windows 11 Pro, Intel Core i7-12700, 31.8 GiB RAM
+• Unity 6000.5.6f1, Interaction Mode: No Throttling
+
+[협업 도구]
+• 버전 관리: Git (GitHub)
+• 릴리스: GitHub Releases (v0.0.1)`,
+      status: 'RELEASED',
+      tech: ['Go', 'C#', 'Unity Editor', 'UPM', 'CLI', 'Apache-2.0'],
+      features: [
+        'Hera의 경량 실행 에디션 (실행 코어만 남긴 미니멀 버전)',
+        '컴파일러·레퍼런스·DLL·어셈블리 캐시로 warm exec 240ms',
+        'cold 대비 약 6.08배 단축 (83.6%), 측정 기반 벤치마크 공개',
+        '99개 명령 측정에서 실패 0건 · 콘솔 에러 0건',
+        '도메인 리로드 안전 테스트 + 재개 가능한 run ID',
+        'Go 바이너리 1개 + UPM 패키지 1개, 서버 프로세스 불필요',
+      ],
+      links: [
+        { label: 'GITHUB', url: 'https://github.com/NotNull92/hebe-agent-unity' },
+        { label: 'RELEASES', url: 'https://github.com/NotNull92/hebe-agent-unity/releases' },
+        { label: 'HERA', url: 'https://github.com/NotNull92/hera-agent-unity' },
       ],
     },
     {
@@ -721,8 +806,10 @@ const LogsTab = () => {
     {
       year: '2026',
       events: [
-        { date: '06', title: 'HERA-AGENT-GODOT 개발', desc: 'AI 에이전트용 라이브 Godot 에디터 제어 CLI 개발 (v0.6.0, Godot Asset Store 업로드)' },
-        { date: '05', title: 'HERA-AGENT-UNITY 개발', desc: 'AI 에이전트용 라이브 Unity 에디터 제어 저토큰 CLI 개발 (오픈소스, MIT)' },
+        { date: '08', title: 'HEBE-AGENT-UNITY 공개', desc: 'Hera의 경량 실행 에디션 오픈소스 공개 (v0.0.1) — warm exec 240ms, cold 대비 6.08배 단축 벤치마크' },
+        { date: '07', title: 'HERA-AGENT-GODOT v1.0.0 릴리스', desc: '안정 CLI 계약 + SemVer 채택, UI 테마 QA·스크린샷 diff 추가, Homebrew tap 배포' },
+        { date: '06', title: 'HERA-AGENT-GODOT 개발 시작', desc: 'AI 에이전트용 라이브 Godot 에디터 제어 CLI 개발 (Godot Asset Store 등록)' },
+        { date: '05', title: 'HERA-AGENT-UNITY 개발 시작', desc: 'AI 에이전트용 라이브 Unity 에디터 제어 저토큰 CLI 개발 (오픈소스, Apache-2.0) — Stars 22' },
         { date: '03', title: 'PORTFOLIO-BLOG 개발', desc: '터미널 스타일 포트폴리오 웹사이트 개발' },
         { date: '01', title: 'DAILY BREW 사이드 프로젝트 시작', desc: '카페 시뮬레이션 게임 개발 시작' },
       ]
@@ -912,7 +999,7 @@ const ContactTab = () => {
 };
 
 const MARQUEE_TEXT =
-  'UNITY DEVELOPER ▸ 5 YEARS EXPERIENCE ▸ NOMOREROLLS IN DEVELOPMENT ▸ HERA-AGENT-UNITY / GODOT ▸ GITHUB.COM/NOTNULL92 ▸ OPEN FOR TRANSMISSION ▸ ';
+  'UNITY DEVELOPER ▸ 5 YEARS EXPERIENCE ▸ NOMOREROLLS IN DEVELOPMENT ▸ HERA-AGENT UNITY / GODOT ▸ HEBE-AGENT-UNITY ▸ GITHUB.COM/NOTNULL92 ▸ OPEN FOR TRANSMISSION ▸ ';
 
 const formatTime = (date) =>
   date.toLocaleTimeString('en-US', {

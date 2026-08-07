@@ -57,6 +57,31 @@
     ],
     "completed": [
       {
+        "name": "HERA-AGENT-UNITY",
+        "description": "AI 코딩 에이전트가 라이브 Unity 에디터를 제어하는 저토큰 CLI",
+        "latestRelease": "v0.1.4 (2026-08-06)",
+        "license": "Apache-2.0",
+        "tech": ["Go", "C#", "Unity Editor", "UPM", "CLI"],
+        "githubUrl": "https://github.com/NotNull92/hera-agent-unity"
+      },
+      {
+        "name": "HERA-AGENT-GODOT",
+        "description": "AI 에이전트가 라이브 Godot 4.7+ 에디터를 제어하는 저토큰 CLI",
+        "latestRelease": "v1.0.0 (2026-07-21, 안정 CLI 계약 + SemVer)",
+        "license": "MIT",
+        "tech": ["Go", "GDScript", "Godot 4.7+", "EditorPlugin", "CLI"],
+        "githubUrl": "https://github.com/NotNull92/hera-agent-godot",
+        "assetStoreUrl": "https://store.godotengine.org/asset/notnull92/hera-agent-godot/"
+      },
+      {
+        "name": "HEBE-AGENT-UNITY",
+        "description": "Hera의 경량 실행 에디션 — 캐시 기반 고속 Unity 실행 런타임 (warm exec 240ms)",
+        "latestRelease": "v0.0.1 (2026-08-06)",
+        "license": "Apache-2.0",
+        "tech": ["Go", "C#", "Unity Editor", "UPM", "CLI"],
+        "githubUrl": "https://github.com/NotNull92/hebe-agent-unity"
+      },
+      {
         "name": "MENTAL ROBO",
         "description": "리듬 입력과 토크 쇼를 결합한 코미디 로봇 스탠드업 게임 (GGJ 2024)",
         "tech": ["Unity", "C#", "Git", "GitHub"],
@@ -92,6 +117,19 @@
   },
 
   "history": [
+    {
+      "date": "2026-08-07",
+      "session": "GitHub 레포 실데이터 동기화 (hera x2 최신화 + hebe 신규 추가)",
+      "changes": [
+        "GitHub API로 NotNull92 레포 실데이터 대조 후 반영",
+        "HERA-AGENT-UNITY: v0.0.38(2026.07) → v0.1.4(2026.08.06), 라이선스 MIT → Apache-2.0 정정",
+        "HERA-AGENT-UNITY: v0.1.4 멀티 에디터 정책 락 + 컨텍스트 바운딩, 실험적 stdio MCP 어댑터(기본 off) 반영",
+        "HERA-AGENT-GODOT: v0.6.0 → v1.0.0(2026.07.21) 안정 CLI 계약·SemVer, UI 테마 QA, 스크린샷 diff, Homebrew tap 반영",
+        "HEBE-AGENT-UNITY 신규 추가 — Hera 경량 실행 에디션, v0.0.1, Apache-2.0",
+        "HEBE 측정 벤치마크 수록: warm exec 240ms / unique 313ms / cold 대비 6.08배, 99개 명령 실패 0건",
+        "LOGS 타임라인 2026.07·2026.08 항목 추가, 부팅 문구 2 → 3 AI DEV TOOLS, 마퀴·스킬 note 갱신"
+      ]
+    },
     {
       "date": "2026-08-07",
       "session": "채용 퍼널 개선 (리크루터 관점 피드백 반영)",
