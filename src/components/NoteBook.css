@@ -1,0 +1,267 @@
+/* 폴아웃 스킬북 → 핍보이 테마
+   종이 대신 인광 그린 판, 장식·페이지 번호는 앰버로 대비를 준다 */
+
+.book-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 13, 2, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.book {
+  /* 한 줄 높이를 px로 고정하고 지면 높이를 그 배수로 잡아야
+     마지막 줄이 잘리지 않는다 */
+  --book-lh: 26px;
+  --book-lines: 16;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 46px 26px 16px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(0, 255, 65, 0.07), transparent 70%),
+    #02150a;
+  border: 2px solid #00ff41;
+  box-shadow:
+    0 0 40px rgba(0, 255, 65, 0.25),
+    inset 0 0 60px rgba(0, 255, 65, 0.05);
+  will-change: transform, opacity;
+  animation: book-flash 0.45s ease-out;
+}
+
+@keyframes book-flash {
+  0% { filter: brightness(2.4); }
+  100% { filter: brightness(1); }
+}
+
+.book-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: transparent;
+  border: 1px solid #00ff4180;
+  color: #00ff41;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 2;
+}
+
+.book-close:hover {
+  background: rgba(0, 255, 65, 0.2);
+  border-color: #00ff41;
+}
+
+/* 펼친 지면 */
+.book-viewport {
+  position: relative;
+  width: min(88vw, 780px);
+  height: calc(var(--book-lh) * var(--book-lines));
+  overflow: hidden;
+}
+
+@media (max-height: 820px) {
+  .book { --book-lines: 13; }
+}
+
+@media (max-height: 680px) {
+  .book { --book-lines: 10; }
+}
+
+.book-viewport.one-page {
+  width: min(88vw, 380px);
+}
+
+/* 가운데 접힘 */
+.book-gutter {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 44px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.55) 30%,
+    rgba(0, 0, 0, 0.8) 50%,
+    rgba(0, 0, 0, 0.55) 70%,
+    transparent
+  );
+}
+
+.book-gutter::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 255, 65, 0.55) 12%,
+    rgba(0, 255, 65, 0.55) 88%,
+    transparent
+  );
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.35);
+}
+
+.book-flow {
+  height: 100%;
+  column-fill: auto;
+  transition: transform 0.45s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform;
+  /* column-width / column-gap 은 JS가 측정 후 주입한다 */
+}
+
+/* 표제지 = 첫 열 */
+.book-titlepage {
+  break-after: column;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  padding: 0 6px;
+}
+
+.book-emblem {
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffaa0080;
+  transform: rotate(45deg);
+  margin-bottom: 22px;
+  box-shadow: 0 0 18px rgba(255, 170, 0, 0.2);
+}
+
+.book-emblem-mark {
+  transform: rotate(-45deg);
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1;
+  color: #ffaa00;
+  text-shadow: 0 0 12px rgba(255, 170, 0, 0.6);
+}
+
+.book-title {
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: #33ff66;
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  margin: 0;
+}
+
+.book-rule {
+  width: 54px;
+  height: 1px;
+  background: #ffaa0090;
+  margin: 14px 0;
+}
+
+.book-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.book-type {
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 2px 8px;
+  border: 1px solid;
+}
+
+.book-date {
+  font-size: 11px;
+  color: #66aa88;
+  letter-spacing: 1px;
+}
+
+/* 본문 */
+/* 한글은 양쪽정렬 시 어절 사이가 크게 벌어져 오히려 읽기 나쁘다 — 왼쪽 정렬 */
+.book-body {
+  font-size: 13.5px;
+  line-height: var(--book-lh);
+  color: #b6e6c8;
+  text-align: left;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.book-body p {
+  margin: 0 0 1em;
+  orphans: 2;
+  widows: 2;
+}
+
+/* 장식 대문자 */
+.book-body p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 52px;
+  line-height: 0.82;
+  padding: 6px 10px 0 0;
+  color: #ffaa00;
+  text-shadow: 0 0 14px rgba(255, 170, 0, 0.45);
+}
+
+/* 하단 페이지 넘김 */
+.book-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 1px solid #00ff4140;
+  padding-top: 12px;
+}
+
+.book-arrow {
+  background: transparent;
+  border: 1px solid #ffaa0060;
+  color: #ffaa00;
+  font-size: 14px;
+  line-height: 1;
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.book-arrow:hover:not(:disabled) {
+  background: rgba(255, 170, 0, 0.15);
+  border-color: #ffaa00;
+  box-shadow: 0 0 12px rgba(255, 170, 0, 0.3);
+}
+
+.book-arrow:disabled {
+  opacity: 0.22;
+  cursor: default;
+}
+
+.book-pageno {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #66aa88;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book { animation: none; }
+  .book-flow { transition: none; }
+}

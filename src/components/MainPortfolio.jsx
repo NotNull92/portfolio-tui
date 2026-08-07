@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Target, Clock, Briefcase, Mail } from 'lucide-react';
+import { User, Target, Clock, Briefcase, Mail, BookOpen } from 'lucide-react';
+import NoteBook from './NoteBook';
+import { NOTES, NOTE_TYPES } from '../data/notes';
 import ScrambleText from './effects/ScrambleText';
 import AsciiRain from './effects/AsciiRain';
 import vaultBoyImg from '../assets/notnull-logo.png';
@@ -1224,6 +1226,60 @@ const InventoryTab = () => {
   );
 };
 
+// Notes Tab - 직접 쓴 글 (아티클 / 시 / 철학 / 단상)
+const NotesTab = () => {
+  const [openNote, setOpenNote] = useState(null);
+
+  return (
+    <div className="tab-content">
+      <SectionHeader title="PERSONAL ARCHIVE" />
+      <div className="notes-list">
+        {NOTES.map((note, idx) => {
+          const meta = NOTE_TYPES[note.type] || { label: note.type, color: '#88ddaa' };
+          return (
+            <motion.button
+              key={note.id}
+              type="button"
+              className="note-row tui-corners"
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: idx * 0.08 }}
+              onClick={() => setOpenNote(note)}
+            >
+              <span className="note-spine" style={{ background: meta.color }} aria-hidden="true" />
+              <span className="note-main">
+                <span className="note-head">
+                  <span className="note-title text-glow">{note.title}</span>
+                  <span
+                    className="note-type"
+                    style={{ color: meta.color, borderColor: `${meta.color}66` }}
+                  >
+                    {meta.label}
+                  </span>
+                </span>
+                <span className="note-excerpt">{note.excerpt}</span>
+                <span className="note-foot">
+                  <span className="note-date">[{note.date}]</span>
+                  <span className="note-open">{'[ OPEN BOOK ]'}</span>
+                </span>
+              </span>
+            </motion.button>
+          );
+        })}
+      </div>
+      {NOTES.length === 0 && (
+        <div className="notes-empty">{'>'} NO ENTRIES YET_</div>
+      )}
+
+      <AnimatePresence>
+        {openNote && (
+          <NoteBook key={openNote.id} note={openNote} onClose={() => setOpenNote(null)} />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
 // Contact Tab - 연락처
 const ContactTab = () => {
   const contacts = [
@@ -1320,6 +1376,7 @@ const TABS = [
   { id: 'logs', label: 'LOGS', icon: Clock },
   { id: 'quests', label: 'QUESTS', icon: Target },
   { id: 'inventory', label: 'INVENTORY', icon: Briefcase },
+  { id: 'notes', label: 'NOTES', icon: BookOpen },
   { id: 'contact', label: 'CONTACT', icon: Mail },
 ];
 
@@ -1398,6 +1455,7 @@ const MainPortfolio = () => {
             {activeTab === 'logs' && <motion.div key="logs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><LogsTab /></motion.div>}
             {activeTab === 'quests' && <motion.div key="quests" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><QuestsTab /></motion.div>}
             {activeTab === 'inventory' && <motion.div key="inventory" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><InventoryTab /></motion.div>}
+            {activeTab === 'notes' && <motion.div key="notes" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><NotesTab /></motion.div>}
             {activeTab === 'contact' && <motion.div key="contact" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><ContactTab /></motion.div>}
           </AnimatePresence>
         </div>

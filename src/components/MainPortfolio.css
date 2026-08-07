@@ -1096,6 +1096,116 @@
   opacity: 0.2;
 }
 
+/* NOTES — 서가 목록 (책등 + 카드) */
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.note-row {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  background: rgba(0, 255, 65, 0.03);
+  border: 1px solid #00ff4140;
+  color: inherit;
+  font-family: 'JetBrains Mono', monospace;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.note-row:hover {
+  border-color: #00ff41;
+  background: rgba(0, 255, 65, 0.07);
+  transform: translateX(4px);
+}
+
+/* 책등 */
+.note-spine {
+  flex: 0 0 5px;
+  align-self: stretch;
+  opacity: 0.75;
+  transition: opacity 0.25s ease;
+}
+
+.note-row:hover .note-spine {
+  opacity: 1;
+}
+
+.note-main {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px 18px;
+  flex: 1;
+  min-width: 0;
+}
+
+.note-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.note-title {
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 1.1;
+}
+
+.note-type {
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 2px 7px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+.note-excerpt {
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: #99ccaa;
+  opacity: 0.85;
+}
+
+.note-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.note-date {
+  font-size: 10px;
+  color: #66aa88;
+  letter-spacing: 1px;
+}
+
+.note-open {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #ffaa00;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.note-row:hover .note-open {
+  opacity: 1;
+}
+
+.notes-empty {
+  margin-top: 24px;
+  font-size: 12px;
+  opacity: 0.5;
+}
+
 /* Contact List — 2열 그리드 */
 .contact-list {
   display: grid;

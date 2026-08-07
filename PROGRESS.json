@@ -31,11 +31,20 @@
   },
 
   "tabStructure": {
-    "STAT": "개인 정보 (이름, 역할, 경력, 상태) + 스킬 바",
+    "STAT": "개인 정보 (이름, 역할, 경력, 소속, 재직상태) + 스킬 바 + ID 포트레이트",
     "LOGS": "경력/활동 타임라인 (연도별 이력)",
-    "QUESTS": "프로젝트 (IN PROGRESS / COMPLETED 섹션 분리)",
+    "QUESTS": "프로젝트 (카테고리 필터 + IN PROGRESS / COMPLETED 섹션)",
     "INVENTORY": "대외활동/수상내역 (아이템 카드 형태, 링크 버튼 포함)",
-    "CONTACT": "연락처 링크 (GitHub, Email, LinkedIn, Blog)"
+    "NOTES": "직접 쓴 글 (아티클/시/철학/단상) — 목록 클릭 시 폴아웃 스킬북 형태 뷰어",
+    "CONTACT": "연락처 링크 (GitHub, Email, LinkedIn, Blog, Resume)"
+  },
+
+  "notesGuide": {
+    "dataFile": "src/data/notes.js",
+    "howToAdd": "NOTES 배열 맨 앞에 { id, title, type, date, excerpt, body } 추가. 배열 순서 = 표시 순서",
+    "types": "ARTICLE | POEM | PHILOSOPHY | THOUGHT (NOTE_TYPES 에서 라벨·색 정의)",
+    "bodyFormat": "빈 줄 하나가 문단 구분. 길이 제한 없음 — 길면 책이 자동으로 페이지 분할",
+    "sampleEntries": "about-this-archive, sample-long-form 두 개는 형식 확인용이므로 교체/삭제 가능"
   },
 
   "projects": {
@@ -121,6 +130,24 @@
   },
 
   "history": [
+    {
+      "date": "2026-08-07",
+      "session": "NOTES 탭 추가 — 폴아웃 스킬북 형태 글 아카이브",
+      "changes": [
+        "INVENTORY와 CONTACT 사이에 NOTES 탭 신설 (탭 6개, 숫자키 1~6으로 자동 확장)",
+        "글 데이터는 src/data/notes.js 로 분리 — 컴포넌트를 건드리지 않고 글만 추가 가능",
+        "NOTE_TYPES: ARTICLE / POEM / PHILOSOPHY / THOUGHT (라벨·색 정의)",
+        "목록: 책등(분류 색) + 제목 + 발췌 + 날짜, 호버 시 [ OPEN BOOK ] 노출",
+        "본문 뷰어(NoteBook.jsx): 폴아웃 스킬북 형태 — 펼친 두 페이지 + 접힘 음영 + 하단 ◀ ▶",
+        "실제 페이지 분할: CSS 다단(column-fill:auto) + JS 측정으로 열 개수를 세어 장(spread) 단위 이동",
+        "첫 열 = 표제지 (마름모 엠블럼·제목·분류·날짜), 본문은 둘째 열부터 시작",
+        "본문 첫 글자 앰버 드롭캡, 좌우 방향키 넘김, Escape 닫기",
+        "핍보이 승화: 종이색 대신 딥그린 지면 + 인광 테두리, 장식·페이지번호·화살표만 앰버",
+        "620px 미만에서는 한 번에 한 페이지만 펼침",
+        "줄 잘림 방지: line-height를 26px로 고정하고 지면 높이를 그 배수로 계산 (화면 높이별 16/13/10줄)",
+        "한글 양쪽정렬은 어절 간격이 벌어져 왼쪽 정렬로 변경"
+      ]
+    },
     {
       "date": "2026-08-07",
       "session": "WORKFORGE-MCP 프로젝트 카드 추가",
