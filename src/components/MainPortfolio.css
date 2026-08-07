@@ -1270,6 +1270,22 @@
   transform: translateY(-50%) translateX(0);
 }
 
+/* 내부 탭 이동 항목 (button 이라 기본 스타일을 눌러준다) */
+.contact-item.internal {
+  width: 100%;
+  font-family: 'JetBrains Mono', monospace;
+  text-align: left;
+  cursor: pointer;
+  border-style: dashed;
+}
+
+.contact-item.internal::after {
+  content: '▸ OPEN TAB';
+  right: 18px;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
 .contact-icon {
   font-size: 18px;
   font-family: 'JetBrains Mono', monospace;

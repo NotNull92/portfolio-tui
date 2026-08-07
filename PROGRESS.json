@@ -40,11 +40,13 @@
   },
 
   "notesGuide": {
-    "dataFile": "src/data/notes.js",
-    "howToAdd": "NOTES 배열 맨 앞에 { id, title, type, date, excerpt, body } 추가. 배열 순서 = 표시 순서",
+    "contentDir": "src/content/notes/ — 여기에 .md 파일을 넣으면 자동으로 목록에 뜬다. 코드 수정 불필요",
+    "loader": "src/data/notes.js — import.meta.glob 로 마크다운을 빌드 시점에 인라인하고 frontmatter 를 파싱한다. 이 파일은 건드릴 일이 없다",
+    "fileNaming": "YYYY-MM-DD-제목.md 권장 (frontmatter 에 date 가 없으면 파일명 앞 날짜를 쓴다)",
+    "frontmatter": "title / type / date / excerpt — excerpt 를 비우면 첫 문단에서 자동 생성",
     "types": "ARTICLE | POEM | PHILOSOPHY | THOUGHT (NOTE_TYPES 에서 라벨·색 정의)",
     "bodyFormat": "빈 줄 하나가 문단 구분. 길이 제한 없음 — 길면 책이 자동으로 페이지 분할",
-    "sampleEntries": "about-this-archive 1편만 남아 있다. 교체/삭제 가능",
+    "ordering": "date 내림차순 자동 정렬 (최신 글이 위). 순서를 직접 맞출 필요 없음",
     "usageHint": "조작 안내는 본문에 쓰지 않는다 — 목록 하단 .notes-hint(전체 안내)와 책 하단 .book-navhint(2장 이상일 때만)에 UI로 배치돼 있다"
   },
 

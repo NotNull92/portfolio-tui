@@ -1287,7 +1287,7 @@ const NotesTab = () => {
 };
 
 // Contact Tab - 연락처
-const ContactTab = () => {
+const ContactTab = ({ onNavigate }) => {
   const contacts = [
     {
       label: 'GITHUB',
@@ -1319,31 +1319,44 @@ const ContactTab = () => {
       url: 'mailto:fatiger92@gmail.com?subject=%5BResume%20Request%5D%20Portfolio%20방문',
       icon: '[▼]'
     },
+    {
+      label: 'NOTES',
+      value: `개인 서가 — 아티클 · 시 · 단상 ${NOTES.length}편`,
+      tab: 'notes',
+      icon: '[≡]'
+    },
   ];
 
   return (
     <div className="tab-content">
       <SectionHeader title="CONTACT TRANSMISSION" />
       <div className="contact-list">
-        {contacts.map((contact, idx) => (
-          <motion.a
-            key={idx}
-            href={contact.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="contact-item"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
-            whileHover={{ borderColor: '#00ff41' }}
-          >
-            <span className="contact-icon text-glow">{contact.icon}</span>
-            <div className="contact-info">
-              <span className="contact-label">{contact.label}:</span>
-              <span className="contact-value text-glow">{contact.value}</span>
-            </div>
-          </motion.a>
-        ))}
+        {contacts.map((contact, idx) => {
+          // tab 항목은 외부 링크가 아니라 내부 탭 이동이므로 button 으로 낸다
+          const isInternal = Boolean(contact.tab);
+          const Tag = isInternal ? motion.button : motion.a;
+          const linkProps = isInternal
+            ? { type: 'button', onClick: () => onNavigate?.(contact.tab) }
+            : { href: contact.url, target: '_blank', rel: 'noopener noreferrer' };
+
+          return (
+            <Tag
+              key={idx}
+              {...linkProps}
+              className={`contact-item ${isInternal ? 'internal' : ''}`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ borderColor: '#00ff41' }}
+            >
+              <span className="contact-icon text-glow">{contact.icon}</span>
+              <div className="contact-info">
+                <span className="contact-label">{contact.label}:</span>
+                <span className="contact-value text-glow">{contact.value}</span>
+              </div>
+            </Tag>
+          );
+        })}
       </div>
       <div className="contact-hint text-glow">
         {'>'} CLICK TO CONNECT_
@@ -1462,7 +1475,7 @@ const MainPortfolio = () => {
             {activeTab === 'quests' && <motion.div key="quests" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><QuestsTab /></motion.div>}
             {activeTab === 'inventory' && <motion.div key="inventory" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><InventoryTab /></motion.div>}
             {activeTab === 'notes' && <motion.div key="notes" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><NotesTab /></motion.div>}
-            {activeTab === 'contact' && <motion.div key="contact" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><ContactTab /></motion.div>}
+            {activeTab === 'contact' && <motion.div key="contact" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><ContactTab onNavigate={setActiveTab} /></motion.div>}
           </AnimatePresence>
         </div>
 

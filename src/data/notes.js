@@ -1,20 +1,24 @@
 /**
- * NOTES 탭 데이터 — 아티클 / 시 / 철학적 견해 / 개인적 단상
+ * NOTES 탭 데이터 로더
  *
- * 글을 추가하려면 아래 NOTES 배열 맨 앞에 항목을 하나 넣으면 된다.
- * (배열 순서가 곧 표시 순서다. 최신 글을 위에 두면 된다.)
+ * ── 글 쓰는 법 ────────────────────────────────────────────────
+ * 이 파일은 건드릴 필요가 없다.
+ * src/content/notes/ 에 .md 파일을 하나 만들면 자동으로 목록에 뜬다.
  *
- *   {
- *     id: 'unique-slug',        // 고유 문자열. 아무거나, 중복만 피하면 된다
- *     title: '글 제목',
- *     type: 'POEM',             // ARTICLE | POEM | PHILOSOPHY | THOUGHT
- *     date: '2026-08-07',
- *     excerpt: '목록에 보일 한 줄 요약',
- *     body: `본문.
+ *   src/content/notes/2026-08-08-어떤-제목.md
  *
- * 빈 줄 하나가 문단 구분이다. 길이 제한은 없고,
- * 길어지면 책이 알아서 여러 페이지로 나눈다.`,
- *   }
+ *   ---
+ *   title: 어떤 제목
+ *   type: POEM              # ARTICLE | POEM | PHILOSOPHY | THOUGHT
+ *   date: 2026-08-08
+ *   excerpt: 목록에 보일 한 줄 요약   # 없으면 첫 문단에서 자동 생성
+ *   ---
+ *
+ *   본문. 빈 줄 하나가 문단 구분이다.
+ *   길이 제한은 없고, 길어지면 책이 알아서 페이지를 나눈다.
+ *
+ * 정렬은 date 내림차순(최신 글이 위)이라 순서를 신경 쓸 필요도 없다.
+ * ─────────────────────────────────────────────────────────────
  */
 
 export const NOTE_TYPES = {
@@ -24,21 +28,52 @@ export const NOTE_TYPES = {
   THOUGHT: { label: 'THOUGHT', ko: '단상', color: '#facc15' },
 };
 
-export const NOTES = [
-  {
-    id: 'about-this-archive',
-    title: '이 서가에 대하여',
-    type: 'THOUGHT',
-    date: '2026-08-07',
-    excerpt: '코드로 남기지 못한 것들을 두는 자리.',
-    body: `코드는 무엇을 만들었는지는 말해주지만, 왜 그렇게 만들었는지는 잘 말해주지 않는다.
+const DEFAULT_TYPE = 'THOUGHT';
 
-커밋 로그에 남는 건 결과다. 그 앞에 있던 망설임, 버린 선택지, 밤새 뒤집었다가 결국 처음으로 돌아온 결정 같은 것들은 어디에도 기록되지 않는다.
+/** `--- key: value ---` 형태의 단순 frontmatter 파서 (외부 의존성 없이) */
+const parseFrontmatter = (raw) => {
+  const text = raw.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
+  const m = text.match(/^---\n([\s\S]*?)\n---\n?/);
+  if (!m) return { meta: {}, body: text.trim() };
 
-이 서가는 그런 것들을 두는 자리다.
+  const meta = {};
+  for (const line of m[1].split('\n')) {
+    const hit = line.match(/^\s*([A-Za-z_][\w-]*)\s*:\s*(.*)$/);
+    if (!hit) continue;
+    let value = hit[2].trim().replace(/\s+#.*$/, ''); // 값 뒤 주석 제거
+    value = value.replace(/^["'](.*)["']$/, '$1'); // 따옴표 제거
+    meta[hit[1]] = value;
+  }
+  return { meta, body: text.slice(m[0].length).trim() };
+};
 
-만들면서 든 생각, 게임이라는 매체에 대한 견해, 가끔은 코드와 아무 상관 없는 문장들. 정리된 결론이 아니라 정리되는 중인 생각을 그대로 둔다.
+const firstParagraph = (body) => {
+  const p = body.split(/\n\s*\n/)[0] || '';
+  return p.length > 90 ? `${p.slice(0, 90).trimEnd()}…` : p;
+};
 
-읽는 사람이 있다면, 결과물보다 그 뒤의 사람을 조금 더 알게 되기를.`,
-  },
-];
+// Vite가 빌드 시점에 마크다운을 전부 문자열로 인라인한다 (런타임 요청 없음)
+const files = import.meta.glob('../content/notes/*.md', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+});
+
+export const NOTES = Object.entries(files)
+  .map(([path, raw]) => {
+    const { meta, body } = parseFrontmatter(raw);
+    const filename = path.split('/').pop().replace(/\.md$/, '');
+    const type = NOTE_TYPES[meta.type] ? meta.type : DEFAULT_TYPE;
+
+    return {
+      id: meta.id || filename,
+      title: meta.title || filename,
+      type,
+      // 프론트매터에 date가 없으면 파일명 앞의 YYYY-MM-DD 를 쓴다
+      date: meta.date || (filename.match(/^\d{4}-\d{2}-\d{2}/) || [''])[0],
+      excerpt: meta.excerpt || firstParagraph(body),
+      body,
+    };
+  })
+  // 최신 글이 위로. 같은 날짜면 파일명 역순
+  .sort((a, b) => (b.date || '').localeCompare(a.date || '') || b.id.localeCompare(a.id));
