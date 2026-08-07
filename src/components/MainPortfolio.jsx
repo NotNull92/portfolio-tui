@@ -16,6 +16,18 @@ import mrTitleImg from '../assets/projects/mentalrobo-title.webp';
 import mrTopicImg from '../assets/projects/mentalrobo-topic.webp';
 import mrRhythmImg from '../assets/projects/mentalrobo-rhythm.webp';
 import eosRedKeyart from '../assets/projects/eosred-keyart.webp';
+import fdDrawImg from '../assets/projects/freedraw-drawing.webp';
+import fdExhibitImg from '../assets/projects/freedraw-exhibit.webp';
+import fdGalleryImg from '../assets/projects/freedraw-gallery.webp';
+import fdBiennaleImg from '../assets/projects/freedraw-biennale.webp';
+import zkVillageImg from '../assets/projects/zombie-village.webp';
+import zkGameplayImg from '../assets/projects/zombie-gameplay.webp';
+import zkShopImg from '../assets/projects/zombie-shop.webp';
+import zkCharImg from '../assets/projects/zombie-characters.webp';
+import agTitleImg from '../assets/projects/actiongolf-title.webp';
+import agLobbyImg from '../assets/projects/actiongolf-lobby.webp';
+import agShopImg from '../assets/projects/actiongolf-shop.webp';
+import agSensorImg from '../assets/projects/actiongolf-sensor.webp';
 import './MainPortfolio.css';
 
 // 섹션 헤더 (스크램블 리빌)
@@ -784,6 +796,12 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       description: 'VR drawing application for MetaQuest 2',
       fullDescription: 'VR을 이용한 드로잉 컨텐츠. 2021년 전북콘텐츠진흥원 국가지원사업에서 86점을 받았으며, NC와 협력해 광주 비엔날레 전시 계약을 체결했다.',
       status: 'RELEASED',
+      media: [
+        { src: fdDrawImg, alt: 'VR 3D 드로잉 — RECORDING ROOM에서 컬러 팔레트로 공간에 직접 그리는 장면' },
+        { src: fdExhibitImg, alt: '광주디자인비엔날레 2021 전시 작품 소개 — 3D 디자인 구현 · 실감형 미술교육' },
+        { src: fdGalleryImg, alt: 'DRAW ROOM 갤러리 공간 — 작품을 전시·감상하는 VR 룸' },
+        { src: fdBiennaleImg, alt: '광주디자인비엔날레 2021 전시 개요 및 배치도' },
+      ],
       tech: ['Unity', 'C#', 'SteamVR', 'Oculus Integration', 'TCP Socket'],
       features: [
         'VR 3D drawing system',
@@ -800,6 +818,12 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       description: '조선시대 컨셉 모바일 슈팅 게임',
       fullDescription: '오픈소스 프로젝트를 분석하여 리메이크한 모바일 슈팅 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2020.10 - 2020.12\n• 장르: 모바일 슈팅 게임\n• 플랫폼: 모바일\n• 팀 구성: 클라이언트 1인\n• 사용 기술: C#, Unity3D\n\n[핵심 기여도]\n• 오픈소스 프로젝트 분석 및 리메이크\n• 기존 포스트 아포칼립스 컨셉에서 조선시대 컨셉으로 변경\n• UI 전면 수정, 맵 레벨링, 인게임 내 오브젝트 모델링 변경\n• Json을 이용한 다국어 지원 기능 추가\n• 구글 애드몹, 인앱결제 추가 및 스토어 출시\n\n[출시 후 성과]\n• 전북콘텐츠진흥원 국가지원사업 지원금: 50,000,000\n\n[협업 도구]\n• 버전 관리: Unity Collaborate, Trello\n• 이슈 트래킹: Notion\n• 문서화: Hwp, Word',
       status: 'RELEASED',
+      media: [
+        { src: zkVillageImg, alt: '조선시대 컨셉 마을 — 포스트 아포칼립스에서 전면 리컨셉한 배경' },
+        { src: zkGameplayImg, alt: '인게임 — 웨이브 방어 슈팅 (WAVE 1/10)' },
+        { src: zkShopImg, alt: '상점 UI — 무기/방어구 구매 및 업그레이드' },
+        { src: zkCharImg, alt: '조선 병사 캐릭터 모델링 — 컨셉 변경에 맞춰 교체한 인게임 오브젝트' },
+      ],
       tech: ['Unity', 'C#', 'Google AdMob', 'IAP', 'JSON'],
       features: [
         '오픈소스 리메이크 (1인 개발)',
@@ -814,6 +838,12 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       description: '자이로 센서 기반 모바일 골프 게임',
       fullDescription: '자이로 센서를 이용한 모바일 골프 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2021.01 - 2021.04\n• 장르: 자이로 센서를 이용한 모바일 골프 게임\n• 플랫폼: 모바일\n• 팀 구성: 클라이언트 2인\n• 사용 기술: C#, Unity3D, 아두이노, Bluetooth Plugin\n\n[핵심 기여도]\n• UI 코드 개선 및 리뉴얼\n• 상점 시스템 추가\n• 블루투스 센서 연결 및 데이터 전송 코드 개선 및 최적화\n\n[팀 내 역할]\n• 메인 개발자에게 프로젝트를 넘겨받아 작업 진행\n\n[협업 도구]\n• 버전 관리: Unity Collaborate, Trello\n• 이슈 트래킹: Notion\n• 문서화: Notion',
       status: 'RELEASED',
+      media: [
+        { src: agTitleImg, alt: 'ACTION GOLF 타이틀 화면' },
+        { src: agSensorImg, alt: '인게임 — 자이로 센서 스윙 준비 (골프채를 직각으로 놓는 캘리브레이션 안내)' },
+        { src: agShopImg, alt: '상점 시스템 — 골프채 구매/장착 (직접 추가한 시스템)' },
+        { src: agLobbyImg, alt: '로비 — 연습장/싱글플레이/멀티플레이/상점 (UI 리뉴얼 담당)' },
+      ],
       tech: ['Unity', 'C#', 'Arduino', 'Bluetooth Plugin', 'Gyro Sensor'],
       features: [
         '자이로 센서 기반 골프 스윙',

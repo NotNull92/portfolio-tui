@@ -123,6 +123,18 @@
   "history": [
     {
       "date": "2026-08-07",
+      "session": "FREEDRAW · ZOMBIE KINGDOM · ACTION GOLF 미디어 추가 (전 카드 NO SIGNAL 해소)",
+      "changes": [
+        "media-drop 에 전달된 자료에서 프로젝트별 대표 4컷씩 선별 → WebP 변환 (12장 합계 800KB)",
+        "FREEDRAW: 인게임 영상(1280x720, 168초)에서 3D 드로잉 장면 프레임 추출 + 비엔날레 전시 슬라이드 2장 + 갤러리 룸",
+        "ZOMBIE KINGDOM: 조선 마을 배경 / 웨이브 인게임 / 상점 UI / 조선 병사 캐릭터 모델",
+        "ACTION GOLF: 타이틀 / 자이로 센서 캘리브레이션 / 상점 시스템 / 로비 — 본인 기여(상점·UI리뉴얼·센서) 중심으로 선별",
+        "제외: freedraw/프리드로우 심사결과.jpg — 검게 가려진 내부 심사·계약 문서라 공개 포트폴리오 부적합",
+        "ACTION GOLF 29장 / ZOMBIE KINGDOM 8장 등 원본은 media-drop 에 그대로 보존(gitignore)"
+      ]
+    },
+    {
+      "date": "2026-08-07",
       "session": "에이전트 툴 3종 로고 미디어 + PORTFOLIO-BLOG 카드 제거",
       "changes": [
         "각 레포 README 로고를 raw.githubusercontent 로 받아 WebP 변환 (알파 보존)",
