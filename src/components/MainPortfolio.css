@@ -315,6 +315,69 @@
   }
 }
 
+/* 카테고리 필터 칩 */
+.quest-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.quest-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #88ddaa;
+  background: transparent;
+  border: 1px solid #00ff4140;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.quest-filter:hover {
+  color: #00ff41;
+  border-color: #00ff4180;
+  background: rgba(0, 255, 65, 0.06);
+}
+
+.quest-filter.active {
+  color: #000d02;
+  background: #00ff41;
+  border-color: #00ff41;
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.35);
+}
+
+.filter-count {
+  font-size: 10px;
+  opacity: 0.65;
+  font-variant-numeric: tabular-nums;
+}
+
+.quest-filter.active .filter-count {
+  opacity: 0.8;
+}
+
+/* 성격 태그 배지 (LIVE SERVICE / OPEN SOURCE / SOLO 등) */
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.project-tag {
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 2px 7px;
+  border: 1px solid;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
 /* Projects Grid */
 .projects-grid {
   display: grid;

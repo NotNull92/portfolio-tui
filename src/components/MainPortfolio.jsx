@@ -315,6 +315,13 @@ const ProjectModal = ({ project, onClose }) => {
             </span>
           </div>
 
+          {project.tags && project.tags.length > 0 && (
+            <div className="modal-section">
+              <span className="modal-label">TAGS:</span>
+              <ProjectTags tags={project.tags} />
+            </div>
+          )}
+
           {parseGithubRepo(project) && (
             <div className="modal-section">
               <span className="modal-label">REPO STATS:</span>
@@ -374,8 +381,45 @@ const ProjectModal = ({ project, onClose }) => {
   );
 };
 
+// 1차 축: 플랫폼/유형 (필터) — 프로젝트는 복수 소속 가능
+const CATEGORIES = [
+  { id: 'ALL', label: 'ALL' },
+  { id: 'MOBILE', label: 'MOBILE GAME' },
+  { id: 'PC', label: 'PC GAME' },
+  { id: 'ARVR', label: 'AR/VR' },
+  { id: 'TOOL', label: 'TOOL' },
+];
+
+// 2차 축: 성격 태그 (배지) — 필터에는 쓰지 않고 카드에서 신호만 준다
+const TAG_COLORS = {
+  'LIVE SERVICE': '#38bdf8',
+  'OPEN SOURCE': '#00ff41',
+  SOLO: '#a855f7',
+  'GAME JAM': '#ff8800',
+  HARDWARE: '#facc15',
+  EXHIBITION: '#f472b6',
+};
+
+const ProjectTags = ({ tags }) => {
+  if (!tags || tags.length === 0) return null;
+  return (
+    <div className="project-tags">
+      {tags.map((t) => (
+        <span
+          key={t}
+          className="project-tag"
+          style={{ color: TAG_COLORS[t] || '#88ddaa', borderColor: `${TAG_COLORS[t] || '#88ddaa'}66` }}
+        >
+          {t}
+        </span>
+      ))}
+    </div>
+  );
+};
+
 const QuestsTab = () => {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [filter, setFilter] = useState('ALL');
 
   const inProgressProjects = [
     {
@@ -435,6 +479,8 @@ const QuestsTab = () => {
 • AI 파트너: OMEGA(Ω) (오피) — 전략, 태스크 분해, 문서 관리`,
       status: 'PROTOTYPE DONE',
       progress: 55,
+      category: ['PC'],
+      tags: ['SOLO'],
       media: [
         { src: nmrTitleImg, alt: '타이틀 화면 — FIGHT / TALK 이중 루트를 상징하는 응접실 타이틀' },
         { src: nmrBattleImg, alt: '전투 화면 — 주사위 5개 굴림/LOCK, 족보 기록, 체력·굴욕 이중 게이지' },
@@ -498,6 +544,8 @@ const QuestsTab = () => {
 • 버전 관리: Git (GitHub)`,
       status: 'IN PROGRESS',
       progress: 45,
+      category: ['MOBILE', 'PC'],
+      tags: ['SOLO'],
       media: [
         { src: ringverseTitleImg, alt: 'RingVerse: Karvas Command 타이틀 화면 — 카르바스 성채와 쥐 떼 벌판' },
       ],
@@ -560,6 +608,8 @@ AI agent → hera-agent-unity → Unity Editor
 • 버전 관리: Git (GitHub)
 • 릴리스: GitHub Releases (v0.1.4)`,
       status: 'RELEASED',
+      category: ['TOOL'],
+      tags: ['OPEN SOURCE'],
       media: [
         { src: heraUnityLogo, alt: 'hera-agent-unity 로고', kind: 'logo' },
       ],
@@ -633,6 +683,8 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
 • 버전 관리: Git (GitHub)
 • 배포: GitHub Releases + Godot Asset Store + Homebrew tap`,
       status: 'RELEASED',
+      category: ['TOOL'],
+      tags: ['OPEN SOURCE'],
       media: [
         { src: heraGodotLogo, alt: 'hera-agent-godot 로고', kind: 'logo' },
       ],
@@ -695,6 +747,8 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
 • 버전 관리: Git (GitHub)
 • 릴리스: GitHub Releases (v0.0.1)`,
       status: 'RELEASED',
+      category: ['TOOL'],
+      tags: ['OPEN SOURCE'],
       media: [
         { src: hebeLogo, alt: 'hebe-agent-unity 로고', kind: 'logo' },
       ],
@@ -753,6 +807,8 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
 • 버전 관리: Git (GitHub)
 • 리포지토리: https://github.com/MrBadToast/GGJ2024`,
       status: 'RELEASED',
+      category: ['PC'],
+      tags: ['GAME JAM'],
       media: [
         { src: mrTitleImg, alt: '타이틀 — 스포트라이트 아래 무대에 선 코미디언 로봇' },
         { src: mrTopicImg, alt: '농담 주제 선택 — 청중 공략 포인트를 읽고 인싸/아재/화장실 개그 중 선택' },
@@ -775,6 +831,8 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       description: '장기 LIVE 서비스 모바일 MMORPG (2021.09 ~ 현재 참여 중)',
       fullDescription: '장기 Live 서비스 중인 모바일 MMORPG로, 2021년 9월 합류해 현재까지 컨텐츠·BM 개발을 이어가고 있는 프로젝트입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2021.09 - ing (Live 서비스 중)\n• 장르: MMORPG\n• 플랫폼: 모바일\n• 팀 구성: 클라이언트 7 ~ 8인\n• 사용 기술: C#, Unity3D, OSA, UniRx, Dotween 등\n\n[출시 후 성과 지표]\n• MAU: 최대 35,000\n• DAU: 최대 12,000\n• 매출: 최대 400억, 평균 200억\n\n[핵심 기여도]\n• 스텝업 패키지 개발 및 유지 보수: 새로운 BM 시스템 개발로 매출에 기여\n• 상품 1+1 구매 기능 개발 및 유지 보수: 이벤트성 신규 유저 진입을 위한 BM 개발\n• 조건부 팝업 패키지 개발 및 유지 보수: 새로운 BM 시스템 개발\n• 대형/소형 컨텐츠 다수 개발 및 개선\n\n[대표 개발 컨텐츠]\n\n◆ 대형 컨텐츠\n• 길드 경쟁전: 길드원 간 협업 미션 시스템, PVP 경쟁 시스템\n• 길드 경쟁전 전용 PVE 던전: 실시간 협력 던전 시스템\n• 길드 경쟁전 리뉴얼: PVP 중심 경쟁 시스템, 밸런스 조정\n\n◆ BM 시스템\n• 스텝업 상품 시스템: 단계별 구매 유도 BM (매출 30% 기여)\n• 조건부 팝업: 유저 행동 기반 타겟팅 상품 노출 (전환율 45%)\n• 스텝업 패키지 개선: 다단계 구매 시스템 고도화\n\n◆ 시스템 & 편의성\n• 휴면 계정 처리: 유니크 식별자 재사용 시스템 (운영 공수 90% 절감)\n• 캐릭터 즉시 삭제: UniRx 기반 반응형 UI\n• 월드 랭킹 시스템: 서버 부하 85% 감소 최적화\n• VIP 칭호/버프/이펙트: 등급별 차별화 시스템\n• 재화 숫자 표기 개선: UI 가독성 향상\n\n◆ 기타 컨텐츠\n• 길드 추천 시스템: 길드 가입률 30% 증가\n• 보스 던전 리뉴얼: 참여율 35% 증가\n• 콜로세움 개선: 일일 참여율 150% 증가\n• 소울 각인 확장, 펫 레벨 증가, 아이템 획득 세분화 등\n\n[협업 도구]\n• 버전 관리: Git, SVN, Git Fork, Gitea, CDN, Hermes, Jenkins\n• 이슈 트래킹: RedMine\n• 문서화: Notion, Wiki',
       status: 'RELEASED',
+      category: ['MOBILE'],
+      tags: ['LIVE SERVICE'],
       media: [
         { src: eosRedKeyart, alt: 'EOS RED 공식 키아트 (블루포션게임즈)' },
       ],
@@ -796,6 +854,8 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       description: 'VR drawing application for MetaQuest 2',
       fullDescription: 'VR을 이용한 드로잉 컨텐츠. 2021년 전북콘텐츠진흥원 국가지원사업에서 86점을 받았으며, NC와 협력해 광주 비엔날레 전시 계약을 체결했다.',
       status: 'RELEASED',
+      category: ['ARVR'],
+      tags: ['EXHIBITION'],
       media: [
         { src: fdDrawImg, alt: 'VR 3D 드로잉 — RECORDING ROOM에서 컬러 팔레트로 공간에 직접 그리는 장면' },
         { src: fdExhibitImg, alt: '광주디자인비엔날레 2021 전시 작품 소개 — 3D 디자인 구현 · 실감형 미술교육' },
@@ -818,6 +878,8 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       description: '조선시대 컨셉 모바일 슈팅 게임',
       fullDescription: '오픈소스 프로젝트를 분석하여 리메이크한 모바일 슈팅 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2020.10 - 2020.12\n• 장르: 모바일 슈팅 게임\n• 플랫폼: 모바일\n• 팀 구성: 클라이언트 1인\n• 사용 기술: C#, Unity3D\n\n[핵심 기여도]\n• 오픈소스 프로젝트 분석 및 리메이크\n• 기존 포스트 아포칼립스 컨셉에서 조선시대 컨셉으로 변경\n• UI 전면 수정, 맵 레벨링, 인게임 내 오브젝트 모델링 변경\n• Json을 이용한 다국어 지원 기능 추가\n• 구글 애드몹, 인앱결제 추가 및 스토어 출시\n\n[출시 후 성과]\n• 전북콘텐츠진흥원 국가지원사업 지원금: 50,000,000\n\n[협업 도구]\n• 버전 관리: Unity Collaborate, Trello\n• 이슈 트래킹: Notion\n• 문서화: Hwp, Word',
       status: 'RELEASED',
+      category: ['MOBILE'],
+      tags: ['SOLO'],
       media: [
         { src: zkVillageImg, alt: '조선시대 컨셉 마을 — 포스트 아포칼립스에서 전면 리컨셉한 배경' },
         { src: zkGameplayImg, alt: '인게임 — 웨이브 방어 슈팅 (WAVE 1/10)' },
@@ -838,6 +900,8 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       description: '자이로 센서 기반 모바일 골프 게임',
       fullDescription: '자이로 센서를 이용한 모바일 골프 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2021.01 - 2021.04\n• 장르: 자이로 센서를 이용한 모바일 골프 게임\n• 플랫폼: 모바일\n• 팀 구성: 클라이언트 2인\n• 사용 기술: C#, Unity3D, 아두이노, Bluetooth Plugin\n\n[핵심 기여도]\n• UI 코드 개선 및 리뉴얼\n• 상점 시스템 추가\n• 블루투스 센서 연결 및 데이터 전송 코드 개선 및 최적화\n\n[팀 내 역할]\n• 메인 개발자에게 프로젝트를 넘겨받아 작업 진행\n\n[협업 도구]\n• 버전 관리: Unity Collaborate, Trello\n• 이슈 트래킹: Notion\n• 문서화: Notion',
       status: 'RELEASED',
+      category: ['MOBILE'],
+      tags: ['HARDWARE'],
       media: [
         { src: agTitleImg, alt: 'ACTION GOLF 타이틀 화면' },
         { src: agSensorImg, alt: '인게임 — 자이로 센서 스윙 준비 (골프채를 직각으로 놓는 캘리브레이션 안내)' },
@@ -879,6 +943,7 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
           {project.status}
         </span>
       </div>
+      <ProjectTags tags={project.tags} />
       <p className="project-description">{project.description}</p>
       <div className="project-tech">
         {project.tech.map((t, i) => (
@@ -905,24 +970,58 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     </motion.div>
   );
 
+  const matches = (p) => filter === 'ALL' || (p.category || []).includes(filter);
+  const shownInProgress = inProgressProjects.filter(matches);
+  const shownReleased = releasedProjects.filter(matches);
+  const countOf = (id) =>
+    id === 'ALL'
+      ? inProgressProjects.length + releasedProjects.length
+      : [...inProgressProjects, ...releasedProjects].filter((p) => (p.category || []).includes(id)).length;
+
   return (
     <div className="tab-content">
-      {/* In Progress Section */}
-      <SectionHeader title="QUESTS IN PROGRESS" />
-      <div className="projects-grid">
-        {inProgressProjects.map((project, index) => renderProjectCard(project, index))}
+      {/* 카테고리 필터 — IN PROGRESS / COMPLETED 구분은 그대로 유지된다 */}
+      <div className="quest-filters" role="group" aria-label="프로젝트 분류 필터">
+        {CATEGORIES.map((c) => (
+          <button
+            key={c.id}
+            type="button"
+            className={`quest-filter ${filter === c.id ? 'active' : ''}`}
+            onClick={() => setFilter(c.id)}
+            aria-pressed={filter === c.id}
+          >
+            {c.label} <span className="filter-count">{countOf(c.id)}</span>
+          </button>
+        ))}
       </div>
 
+      {/* In Progress Section */}
+      {shownInProgress.length > 0 && (
+        <>
+          <SectionHeader title="QUESTS IN PROGRESS" />
+          <div className="projects-grid">
+            {shownInProgress.map((project, index) => renderProjectCard(project, index))}
+          </div>
+        </>
+      )}
+
       {/* Released Section */}
-      <SectionHeader title="COMPLETED QUESTS" style={{ marginTop: '30px' }} />
-      <div className="projects-grid">
-        {releasedProjects.map((project, index) => renderProjectCard(project, index))}
-      </div>
-      
+      {shownReleased.length > 0 && (
+        <>
+          <SectionHeader
+            title="COMPLETED QUESTS"
+            style={shownInProgress.length > 0 ? { marginTop: '30px' } : undefined}
+          />
+          <div className="projects-grid">
+            {shownReleased.map((project, index) => renderProjectCard(project, index))}
+          </div>
+        </>
+      )}
+
       {selectedProject && (
-        <ProjectModal 
-          project={selectedProject} 
-          onClose={() => setSelectedProject(null)} 
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
         />
       )}
     </div>

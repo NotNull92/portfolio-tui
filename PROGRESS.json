@@ -123,6 +123,19 @@
   "history": [
     {
       "date": "2026-08-07",
+      "session": "QUESTS 분류 체계 도입 (카테고리 필터 + 성격 태그 2축)",
+      "changes": [
+        "1차 축 = 카테고리 필터 칩: ALL(10) / MOBILE GAME(4) / PC GAME(3) / AR/VR(1) / TOOL(3)",
+        "project.category 는 배열 — 복수 소속 허용 (RingVerse = MOBILE + PC 로 양쪽에 노출)",
+        "IN PROGRESS / COMPLETED 섹션 구분은 그대로 유지, 필터는 두 섹션에 동시 적용",
+        "필터 결과가 0인 섹션은 헤더까지 자동 숨김 (AR/VR·TOOL 선택 시 COMPLETED 만 표시)",
+        "2차 축 = 성격 태그 배지: LIVE SERVICE / OPEN SOURCE / SOLO / GAME JAM / HARDWARE / EXHIBITION",
+        "태그는 필터에 쓰지 않고 카드·모달에서 신호만 준다 (색상은 TAG_COLORS 맵)",
+        "의도: EOS-RED의 라이브 서비스 경험처럼 플랫폼 축에 안 담기는 강점을 카드에서 바로 보이게 함"
+      ]
+    },
+    {
+      "date": "2026-08-07",
       "session": "FREEDRAW · ZOMBIE KINGDOM · ACTION GOLF 미디어 추가 (전 카드 NO SIGNAL 해소)",
       "changes": [
         "media-drop 에 전달된 자료에서 프로젝트별 대표 4컷씩 선별 → WebP 변환 (12장 합계 800KB)",
