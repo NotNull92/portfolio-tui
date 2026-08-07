@@ -123,6 +123,19 @@
   "history": [
     {
       "date": "2026-08-07",
+      "session": "게임 스크린샷 투입 (RingVerse 타이틀 + NoMoreRolls 영상 프레임 4종)",
+      "changes": [
+        "RingVerse: Inventoria/Screenshots/title_screen_logo_no_overlap_2026-07-23.png → 1280x720 WebP 256KB (원본 3MB PNG, nearest 커널로 픽셀아트 보존)",
+        "NoMoreRolls: Docs/video/NoMoreRolls_Play.mp4 에서 ffmpeg로 프레임 4장 추출 (타이틀 7s / 전투 86s / 복도 17s / Talk 보상 122s)",
+        "NoMoreRolls 원본 888x498 → WebP 4장 합계 약 274KB",
+        "ProjectMedia에 모달 썸네일 갤러리 추가 — media 2장 이상이면 썸네일 + [n/N] 캡션 표시, 카드는 항상 첫 장",
+        "미디어 필터 정책: 카드 기본 약한 톤 → 호버 시 원본 색 복원, 모달은 항상 원본",
+        "이미지 변환은 sharp를 --no-save 로 임시 설치해 수행 (package.json 미변경)",
+        "영상 프레임 추출 팁: 이 영상은 0~3s 스튜디오 스플래시, 4~7s 타이틀, 16s~ 본편 구조"
+      ]
+    },
+    {
+      "date": "2026-08-07",
       "session": "진행 중 프로젝트 개편 (RingVerse 추가 · DAILY BREW 제거 · NoMoreRolls 갱신)",
       "changes": [
         "RINGVERSE: KARVAS COMMAND 신규 추가 — 로컬 Inventoria 프로젝트 실데이터 기반",

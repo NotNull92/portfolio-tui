@@ -5,6 +5,10 @@ import ScrambleText from './effects/ScrambleText';
 import AsciiRain from './effects/AsciiRain';
 import vaultBoyImg from '../assets/notnull-logo.png';
 import ringverseTitleImg from '../assets/projects/ringverse-title.webp';
+import nmrTitleImg from '../assets/projects/nomorerolls-title.webp';
+import nmrBattleImg from '../assets/projects/nomorerolls-battle.webp';
+import nmrCorridorImg from '../assets/projects/nomorerolls-corridor.webp';
+import nmrTalkImg from '../assets/projects/nomorerolls-talk.webp';
 import './MainPortfolio.css';
 
 // 섹션 헤더 (스크램블 리빌)
@@ -45,20 +49,50 @@ const handleCardMouseLeave = (e) => {
 };
 
 // 프로젝트 미디어 (스크린샷/GIF) — media 배열이 비어 있으면 TUI 스타일 더미 프레임 표시
-// 실제 자료가 준비되면 프로젝트 데이터에 media: [{ src, alt }] 를 추가하면 된다
+// 실제 자료가 준비되면 프로젝트 데이터에 media: [{ src, alt }] 를 추가하면 된다.
+// 카드는 항상 첫 장만, 모달은 2장 이상일 때 썸네일 갤러리를 함께 보여준다.
 const ProjectMedia = ({ media, name, variant = 'card' }) => {
-  if (media && media.length > 0) {
+  const [idx, setIdx] = useState(0);
+
+  if (!media || media.length === 0) {
     return (
-      <div className={`project-media ${variant}`}>
-        <img src={media[0].src} alt={media[0].alt || name} loading="lazy" />
+      <div className={`project-media placeholder ${variant}`}>
+        <span className="media-nosignal">NO SIGNAL</span>
+        <span className="media-hint">[ MEDIA INCOMING ]</span>
       </div>
     );
   }
+
+  const isGallery = variant === 'modal' && media.length > 1;
+  const current = media[Math.min(idx, media.length - 1)];
+  const shown = variant === 'modal' ? current : media[0];
+
   return (
-    <div className={`project-media placeholder ${variant}`}>
-      <span className="media-nosignal">NO SIGNAL</span>
-      <span className="media-hint">[ MEDIA INCOMING ]</span>
-    </div>
+    <>
+      <div className={`project-media ${variant}`}>
+        <img src={shown.src} alt={shown.alt || name} loading="lazy" />
+      </div>
+      {isGallery && (
+        <>
+          <div className="media-thumbs">
+            {media.map((m, i) => (
+              <button
+                key={i}
+                type="button"
+                className={`media-thumb ${i === idx ? 'active' : ''}`}
+                onClick={() => setIdx(i)}
+                aria-label={m.alt || `${name} 스크린샷 ${i + 1}`}
+              >
+                <img src={m.src} alt="" loading="lazy" />
+              </button>
+            ))}
+          </div>
+          <div className="media-caption">
+            [{idx + 1}/{media.length}] {current.alt}
+          </div>
+        </>
+      )}
+    </>
   );
 };
 
@@ -380,6 +414,12 @@ const QuestsTab = () => {
 • AI 파트너: OMEGA(Ω) (오피) — 전략, 태스크 분해, 문서 관리`,
       status: 'PROTOTYPE DONE',
       progress: 55,
+      media: [
+        { src: nmrTitleImg, alt: '타이틀 화면 — FIGHT / TALK 이중 루트를 상징하는 응접실 타이틀' },
+        { src: nmrBattleImg, alt: '전투 화면 — 주사위 5개 굴림/LOCK, 족보 기록, 체력·굴욕 이중 게이지' },
+        { src: nmrCorridorImg, alt: '복도 진행 — 전투/휴식 문 선택, 문 너머 실루엣으로 적 암시' },
+        { src: nmrTalkImg, alt: 'Talk 루트 성공 — 설득 후 기억의 파편 보상 선택' },
+      ],
       tech: ['Unity', 'C#', 'DOTween', 'Odin Inspector', 'UniTask', 'OMEGA(Ω)', 'Git', 'Obsidian'],
       features: [
         '프로토타입 완료 — 플레이 영상 공개',
