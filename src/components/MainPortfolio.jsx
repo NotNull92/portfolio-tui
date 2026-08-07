@@ -1260,7 +1260,7 @@ const NotesTab = () => {
                 <span className="note-excerpt">{note.excerpt}</span>
                 <span className="note-foot">
                   <span className="note-date">[{note.date}]</span>
-                  <span className="note-open">{'[ OPEN BOOK ]'}</span>
+                  <span className="note-open">{'[ OPEN POST ]'}</span>
                 </span>
               </span>
             </motion.button>
