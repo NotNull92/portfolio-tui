@@ -211,8 +211,15 @@
   widows: 2;
 }
 
-/* 장식 대문자 */
-.book-body p:first-of-type::first-letter {
+/* 시: 원문 행갈이를 그대로 살린다.
+   산문은 적용하지 않는다 — 마크다운에서 하드랩된 줄이 그대로 끊겨 보이기 때문 */
+.book-body.verse p {
+  white-space: pre-line;
+}
+
+/* 장식 대문자 — 시에는 넣지 않는다.
+   행갈이가 의미를 갖는 글에서 첫 행이 드롭캡을 감싸며 깨지기 때문 */
+.book-body:not(.verse) p:first-of-type::first-letter {
   float: left;
   font-family: var(--font-display);
   font-size: 52px;

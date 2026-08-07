@@ -119,7 +119,8 @@ const NoteBook = ({ note, onClose }) => {
               </div>
             </div>
 
-            <div className="book-body">
+            {/* 시는 행갈이가 의미를 가지므로 줄바꿈을 보존한다 (pre-line) */}
+            <div className={`book-body ${note.type === 'POEM' ? 'verse' : ''}`}>
               {paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
