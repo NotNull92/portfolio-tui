@@ -262,7 +262,7 @@ const StatTab = () => {
         <SkillBar
           name="TOOLING (GO / GDSCRIPT)"
           pct={70}
-          note="hera/hebe-agent 오픈소스 3종 공개"
+          note="오픈소스 개발자 도구 4종 공개 (Unity·Godot·MCP)"
           delay={12}
         />
         <SkillBar
@@ -768,6 +768,63 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       ],
     },
     {
+      name: 'WORKFORGE-MCP',
+      description: 'ChatGPT를 Windows 워크스테이션에 안전하게 연결하는 MCP 게이트웨이',
+      fullDescription: `"ChatGPT에게 내 PC를 만질 안전한 손을 쥐여주는 MCP 게이트웨이"입니다. ChatGPT가 실제 프로젝트 파일을 읽고, Git 상태를 파악하고, 가드가 걸린 편집을 수행하고, 로컬 이미지를 확인하고, 감독 하에 PowerShell 작업을 실행할 수 있게 합니다.
+
+기존에는 에러 메시지 복사 → 붙여넣기 → 관련 소스 찾기 → 코드 복사 → 수정본 받기 → 다시 붙여넣기 → 빌드 → 다음 에러 복사의 반복이었다면, WorkForge는 이 루프를 "프로젝트 확인하고, 문제 찾아서, 고쳐줘" 한 문장으로 바꿉니다.
+
+[프로젝트 개요]
+• 개발 기간: 2026.08 ~ 진행 중
+• 유형: 개발자 도구 (MCP 서버 / Windows 게이트웨이)
+• 라이선스: MIT (오픈소스)
+• 대상: Windows + ChatGPT (OpenAI Secure MCP Tunnel)
+• 사용 기술: TypeScript, Node.js, PowerShell, MCP (Model Context Protocol)
+
+[제공 기능 — MCP 툴 12종]
+• 파일/폴더 탐색: 구조 파악, 관련 파일 검색, 설정 파일 읽기
+• 파일 생성·편집: SHA-256 가드 기반 안전 편집
+• 프로젝트 상태 파악: Git 변경 사항, 마지막 커밋 이후 diff 요약
+• PowerShell 작업: 빌드/테스트 실행, 진행 상태 조회, 취소
+• 로컬 이미지 검사: PNG 열어 UI 설명, 크기·내용 확인
+
+[안전 설계]
+보안을 사후 조치가 아니라 설계 단계에 넣었습니다.
+• 권한 경계: 실행한 Windows 계정 권한 안에서만 동작 —
+  권한 상승 도구가 아니며 ACL·UAC를 우회하지 않음
+• 상주 없음: 서비스·예약 작업·시작 프로그램·Run 레지스트리를 만들지 않음.
+  재부팅 후 터널은 사용자가 다시 켜기 전까지 정지 상태 유지
+• 재실행 방지: 연결이 끊겨도 이전 PowerShell 명령을 나중에 몰래 재생하지 않음
+• Stale 편집 차단: SHA-256 검증으로 "내가 방금 본 그 파일일 때만 수정" 보장 —
+  그 사이 누가 바꿨으면 중단
+• 자격 증명 격리: Runtime API Key를 보호된 로컬 파일에 두고,
+  프로젝트·셸 코드 실행 전 환경변수에서 제거
+• 로그 마스킹: 사용자 홈 경로·터널 ID·자격 증명 패턴을 자동 마스킹
+
+[설치·운영]
+• Install / Setup / Configure Tunnel / Uninstall 배치 스크립트 제공
+• ForgeUI 컨트롤 패널 (WorkForge Control.cmd)
+• SECURITY.md · THIRD_PARTY_NOTICES.md 문서화
+
+[협업 도구]
+• 버전 관리: Git (GitHub)`,
+      status: 'RELEASED',
+      category: ['TOOL'],
+      tags: ['OPEN SOURCE'],
+      tech: ['TypeScript', 'Node.js', 'PowerShell', 'MCP', 'Windows', 'MIT'],
+      features: [
+        'ChatGPT ↔ Windows 워크스테이션 MCP 게이트웨이',
+        'MCP 툴 12종 (파일·Git·PowerShell·이미지)',
+        'SHA-256 가드 편집으로 stale 덮어쓰기 차단',
+        '권한 상승 없음 · 상주 없음 · 명령 재실행 방지',
+        'Runtime 키 격리 + 로그 자동 마스킹',
+        '설치/터널 설정 배치 스크립트 + ForgeUI 제공',
+      ],
+      links: [
+        { label: 'GITHUB', url: 'https://github.com/NotNull92/workforge-mcp' },
+      ],
+    },
+    {
       name: 'MENTAL ROBO',
       description: '리듬 입력과 토크 쇼를 결합한 코미디 로봇 스탠드업 게임 (GGJ 2024)',
       fullDescription: `"리듬 입력과 토크 쇼를 결합한 코미디 로봇 스탠드업 게임"입니다. 게임잼 주제 "Make Me Laugh"에 맞춰, 청중의 성향을 파악하고 적절한 농담 주제를 선택하여 최고의 코미디언 로봇이 되는 48시간 게임잼 완성작입니다.
@@ -1035,6 +1092,7 @@ const LogsTab = () => {
       year: '2026',
       events: [
         { date: '08', title: 'NoMoreRolls 프로토타입 완료', desc: '주사위 족보 전투 + Fight/Talk 이중 루트 프로토타입 완성, 플레이 영상 공개' },
+        { date: '08', title: 'WORKFORGE-MCP 공개', desc: 'ChatGPT를 Windows 워크스테이션에 연결하는 MCP 게이트웨이 오픈소스 공개 (MCP 툴 12종, MIT)' },
         { date: '08', title: 'HEBE-AGENT-UNITY 공개', desc: 'Hera의 경량 실행 에디션 오픈소스 공개 (v0.0.1) — warm exec 240ms, cold 대비 6.08배 단축 벤치마크' },
         { date: '07', title: 'HERA-AGENT-GODOT v1.0.0 릴리스', desc: '안정 CLI 계약 + SemVer 채택, UI 테마 QA·스크린샷 diff 추가, Homebrew tap 배포' },
         { date: '06', title: 'RINGVERSE: KARVAS COMMAND 개발 시작', desc: '그리드 빌드 × 거점 디펜스 융합 모바일 게임 1인 개발 (코드명 Inventoria)' },

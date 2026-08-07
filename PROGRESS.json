@@ -123,6 +123,18 @@
   "history": [
     {
       "date": "2026-08-07",
+      "session": "WORKFORGE-MCP 프로젝트 카드 추가",
+      "changes": [
+        "ChatGPT ↔ Windows 워크스테이션 MCP 게이트웨이 (TypeScript/PowerShell, MIT, 2026.08~)",
+        "MCP 툴 12종: 파일 탐색·편집 / Git 상태 / PowerShell 작업 / 로컬 이미지 검사",
+        "안전 설계 상세 수록: 권한 상승 없음, 상주(서비스·예약작업·Run키) 없음, 명령 재실행 방지, SHA-256 stale 편집 차단, Runtime 키 격리, 로그 마스킹",
+        "category TOOL / tags OPEN SOURCE — TOOL 필터가 3 → 4로 증가, 전체 11개",
+        "연동: 부팅 문구 3 → 4 AI DEV TOOLS, LOGS 2026.08 항목 추가, STAT 스킬 note를 '오픈소스 개발자 도구 4종'으로 갱신",
+        "미디어 없음 — 레포에 로고가 없어 NO SIGNAL 더미 유지"
+      ]
+    },
+    {
+      "date": "2026-08-07",
       "session": "QUESTS 분류 체계 도입 (카테고리 필터 + 성격 태그 2축)",
       "changes": [
         "1차 축 = 카테고리 필터 칩: ALL(10) / MOBILE GAME(4) / PC GAME(3) / AR/VR(1) / TOOL(3)",
