@@ -132,7 +132,9 @@
         "media 항목에 kind:'logo' 플래그 추가 — 정사각 로고는 object-fit:contain 으로 잘림 방지",
         "로고 배경은 투명 유지 + 은은한 그린 그리드로 여백 처리 (.project-media.is-logo)",
         "PORTFOLIO-BLOG 프로젝트 카드 제거 (이 사이트 자체이므로 중복)",
-        "미해결: MENTAL ROBO 3장 / EOS-RED 1장은 대화 첨부 이미지라 디스크에 없어 대기. GGJ 스토리지는 핫링크 403 차단"
+        "MENTAL ROBO 3장(타이틀·주제선택·리듬입력) + EOS-RED 공식 키아트 1장 추가 — media-drop/ 경유",
+        "media-drop/ 은 원본 드롭 폴더로 gitignore 처리 (최적화본만 src/assets/projects 에 커밋)",
+        "참고: 대화에 첨부된 이미지는 파일로 저장할 수단이 없어 media-drop 폴더 경유가 필요하다"
       ]
     },
     {
