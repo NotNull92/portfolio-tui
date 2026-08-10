@@ -1168,12 +1168,38 @@ const LogsTab = () => {
 const InventoryTab = () => {
   const activities = [
     {
+      year: '2026',
+      title: 'Godot Asset Store 등록',
+      type: 'PLATFORM',
+      desc: 'hera-agent-godot 공식 애셋 스토어 배포\n- Homebrew tap 병행 배포\n- v1.0.0 안정 CLI 계약 공개',
+      link: 'https://store.godotengine.org/asset/notnull92/hera-agent-godot/',
+      linkLabel: 'VIEW ASSET',
+    },
+    {
       year: '2024',
       title: 'Global Game Jam 2024 Seoul 참가',
       type: 'GAME JAM',
       desc: '48시간 게임 개발 대회 참가\n- 3인팀으로 게임 아이디어 구상 및 개발\n- 게임 개발 과정에서의 문제 해결 능력 향상',
       link: 'https://globalgamejam.org/games/2024/mental-robo-2',
       linkLabel: 'VIEW GAME',
+    },
+    {
+      year: '2021',
+      title: '전북콘텐츠진흥원 국가지원사업 선정',
+      type: 'FUNDING',
+      desc: 'FREEDRAW — VR 드로잉 앱\n- 심사 결과 86점\n- ACTION GOLF 역시 동 사업 대상',
+    },
+    {
+      year: '2020',
+      title: '전북콘텐츠진흥원 국가지원사업 선정',
+      type: 'FUNDING',
+      desc: 'ZOMBIE KINGDOM — 조선시대 컨셉 모바일 슈팅\n- 지원금 50,000,000원\n- 구글 애드몹·인앱결제 적용 후 스토어 출시',
+    },
+    {
+      year: '2020',
+      title: '국비지원 유니티 개발자 양성 프로그램 수료',
+      type: 'AWARD',
+      desc: '게임 개발 학습 과정 수료\n- 최우수상 수여',
     },
   ];
 
@@ -1183,6 +1209,9 @@ const InventoryTab = () => {
       case 'EXHIBITION': return '#a855f7';
       case 'COMMUNITY': return '#3b82f6';
       case 'FESTIVAL': return '#00ff41';
+      case 'AWARD': return '#facc15';
+      case 'FUNDING': return '#38bdf8';
+      case 'PLATFORM': return '#f472b6';
       default: return '#6b7280';
     }
   };
