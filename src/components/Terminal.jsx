@@ -17,7 +17,7 @@ const ASCII_ART = `
 `;
 
 const BOOT_MESSAGES = [
-  { text: 'INDIE ALCHEMIST COMPANY (TM) TERMLINK PROTOCOL', delay: 100 },
+  { text: 'EMBER STUDIO COMPANY (TM) TERMLINK PROTOCOL', delay: 100 },
   { text: '', delay: 200 },
   { text: '> INITIALIZING MAIN SYSTEM...', delay: 150 },
   { text: '> LOADING UNITY RUNTIME... 5 YEARS OF FIELD DATA FOUND', delay: 150 },
