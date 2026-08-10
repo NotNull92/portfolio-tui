@@ -20,9 +20,7 @@ import mrTopicImg from '../assets/projects/mentalrobo-topic.webp';
 import mrRhythmImg from '../assets/projects/mentalrobo-rhythm.webp';
 import eosRedKeyart from '../assets/projects/eosred-keyart.webp';
 import fdDrawImg from '../assets/projects/freedraw-drawing.webp';
-import fdExhibitImg from '../assets/projects/freedraw-exhibit.webp';
 import fdGalleryImg from '../assets/projects/freedraw-gallery.webp';
-import fdBiennaleImg from '../assets/projects/freedraw-biennale.webp';
 import zkVillageImg from '../assets/projects/zombie-village.webp';
 import zkGameplayImg from '../assets/projects/zombie-gameplay.webp';
 import zkShopImg from '../assets/projects/zombie-shop.webp';
@@ -628,7 +626,7 @@ AI agent → hera-agent-unity → Unity Editor
       links: [
         { label: 'GITHUB', url: 'https://github.com/NotNull92/hera-agent-unity' },
         { label: 'RELEASES', url: 'https://github.com/NotNull92/hera-agent-unity/releases' },
-        { label: 'YOUTUBE', url: 'https://www.youtube.com/@IndieAlchemist' },
+        { label: 'YOUTUBE', url: 'https://www.youtube.com/@emberstudioo' },
       ],
     },
     {
@@ -704,7 +702,7 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
         { label: 'GITHUB', url: 'https://github.com/NotNull92/hera-agent-godot' },
         { label: 'RELEASES', url: 'https://github.com/NotNull92/hera-agent-godot/releases' },
         { label: 'ASSET STORE', url: 'https://store.godotengine.org/asset/notnull92/hera-agent-godot/' },
-        { label: 'YOUTUBE', url: 'https://www.youtube.com/@IndieAlchemist' },
+        { label: 'YOUTUBE', url: 'https://www.youtube.com/@emberstudioo' },
       ],
     },
     {
@@ -915,15 +913,12 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     {
       name: 'FREEDRAW',
       description: 'VR drawing application for MetaQuest 2',
-      fullDescription: 'VR을 이용한 드로잉 컨텐츠. 2021년 전북콘텐츠진흥원 국가지원사업에서 86점을 받았으며, NC와 협력해 광주 비엔날레 전시 계약을 체결했다.',
+      fullDescription: 'VR을 이용한 드로잉 컨텐츠. 2021년 전북콘텐츠진흥원 국가지원사업에서 86점을 받았다.',
       status: 'RELEASED',
       category: ['ARVR'],
-      tags: ['EXHIBITION'],
       media: [
         { src: fdDrawImg, alt: 'VR 3D 드로잉 — RECORDING ROOM에서 컬러 팔레트로 공간에 직접 그리는 장면' },
-        { src: fdExhibitImg, alt: '광주디자인비엔날레 2021 전시 작품 소개 — 3D 디자인 구현 · 실감형 미술교육' },
         { src: fdGalleryImg, alt: 'DRAW ROOM 갤러리 공간 — 작품을 전시·감상하는 VR 룸' },
-        { src: fdBiennaleImg, alt: '광주디자인비엔날레 2021 전시 개요 및 배치도' },
       ],
       tech: ['Unity', 'C#', 'SteamVR', 'Oculus Integration', 'TCP Socket'],
       features: [
