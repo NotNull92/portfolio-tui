@@ -291,7 +291,7 @@ const Terminal = ({ onAuthenticated }) => {
               transition={{ duration: 0.3 }}
             >
               <div className="prompt-line text-glow neon-pulse">
-                {'>'} ENTER 키를 누르면 바로 입장합니다. (또는 ACCESS_KEY: alena)
+                {'>'} ENTER 키를 누르면 바로 입장합니다.
               </div>
               <div className="input-line">
                 <span className="text-glow">{'>'} </span>

@@ -4,9 +4,9 @@ Fallout Pip-Boy / terminal UI style portfolio built with React, Vite, Framer Mot
 
 ## Interaction Gimmick
 
-The terminal entry prompt intentionally exposes `ACCESS_KEY: alena` on screen. This is a presentation gimmick for the boot/authentication sequence, not a security boundary.
+The boot/authentication sequence is a presentation gimmick, not a security boundary. Anyone can enter: pressing Enter on an empty input lets you straight in, and the terminal is skipped entirely on a return visit or via a `?direct` link.
 
-Do not treat `alena` as a secret, and do not replace it with hidden admin authentication. Admin/editing features were discarded for security reasons; the portfolio should remain a static public presentation surface.
+`ACCESS_KEY` (`alena`) still works if typed, but it is no longer printed on screen — the on-screen hint was removed because the prompt reads better without it. **This does not make it a gate.** The value sits in plain source, there is nothing behind it that Enter alone does not also reach, and it must never be treated as a secret or turned into hidden admin authentication. Admin/editing features were discarded for security reasons; the portfolio should remain a static public presentation surface.
 
 ## Scripts
 
