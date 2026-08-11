@@ -243,7 +243,7 @@ const STAT_METRICS = [
   { num: 30, suffix: '%', label: 'BM 매출 기여', sub: '스텝업 패키지 설계·개발' },
   { num: 35, suffix: 'K', label: '라이브 MAU', sub: '모바일 MMORPG 운영 참여' },
   { num: 400, suffix: '억', label: '월 매출 게임 라이브', sub: '6년차 서비스 현역 참여 중' },
-  { num: 4, suffix: '종', label: '오픈소스 공개', sub: 'Unity·Godot·MCP · ★33+' },
+  { num: 4, suffix: '종', label: '오픈소스 공개', sub: 'OpenUPM·Godot Asset Store 배포' },
 ];
 
 const StatMetricCard = ({ num, suffix, label, sub, delay }) => {
@@ -265,7 +265,7 @@ const StatTab = () => {
   const personalData = [
     { label: 'NAME:', value: 'YOUNGJUN JI (NOTNULL)' },
     { label: 'ROLE:', value: 'UNITY DEVELOPER' },
-    { label: 'EXPERIENCE:', value: '6 YEARS' },
+    { label: 'EXPERIENCE:', value: 'UNITY 2020.10 ~ 현재' },
     { label: 'COMPANY:', value: '블루포션게임즈 (EOS RED)' },
     { label: 'STATUS:', value: '재직중 · EMPLOYED', color: '#00ff41' },
   ];
@@ -306,7 +306,7 @@ const StatTab = () => {
         <SkillBar
           name="UNITY / C#"
           pct={95}
-          note="6 YRS · 라이브 MMORPG 5년 · 출시작 4종"
+          note="2020.10~현재 · 라이브 MMORPG 2021.09~ · 출시작 4종"
           delay={0}
         />
         <SkillBar
@@ -681,14 +681,13 @@ const QuestsTab = () => {
       tldr: {
         what: 'AI 에이전트가 라이브 Unity 에디터를 직접 제어하는 저토큰 CLI',
         role: '단독 설계·개발 (Go + C#, Apache-2.0 오픈소스)',
-        result: 'GitHub ★22+ · 상주 스키마 0토큰 — MCP 서버 대비 토큰 소모 수십분의 1',
+        result: 'OpenUPM 패키지 등록 · 상주 스키마 0토큰 — MCP 서버 대비 토큰 소모 수십분의 1',
       },
       description: 'AI 코딩 에이전트가 라이브 Unity 에디터를 제어하는 저토큰(Low-token) CLI',
       fullDescription: `"AI 코딩 에이전트가 실행 중인 Unity 에디터를 직접 제어하는 저토큰 CLI"입니다. Codex, Claude, Cursor, Copilot, AntiGravity 등의 에이전트가 Python 서버 없이, 셸 명령만으로 라이브 Unity 에디터를 조사하고 변경할 수 있게 합니다.
 
 [프로젝트 개요]
-• 개발 기간: 2026.05 ~ 진행 중
-• 최신 릴리스: v0.1.4 (2026.08.06)
+• 개발 기간: 2026.05 ~ 진행 중 (지속 릴리스 — 최신 버전은 GitHub Releases 참고)
 • 유형: 개발자 도구 (Go CLI + Unity UPM 패키지)
 • 라이선스: Apache-2.0 (오픈소스)
 • 플랫폼: Windows / macOS / Linux
@@ -714,18 +713,18 @@ AI agent → hera-agent-unity → Unity Editor
 • 기본 CLI 경로는 MCP 설정·Python 서버 없이 셸 명령만으로 동작
 • v0.1.0+ 부터 실험적 stdio MCP 어댑터 제공 (기본 비활성, 선택 사용)
 
-[v0.1.4 주요 변경]
+[주요 설계]
 • 멀티 에디터 정책 락: 첫 대상 에디터를 결정적으로 선택한 뒤,
   도메인 리로드나 에디터 재시작으로 포트가 바뀌어도 정규화된 프로젝트 경로로 고정 유지
 • 에이전트 컨텍스트 바운딩: 출력량을 제한해 토큰 폭주 방지
 • 셀렉터 미지정 시의 우선순위를 회귀 테스트로 고정
 
 [성과]
-• GitHub Stars 22 · Forks 3 (2026.08 기준, 카드에 실시간 표시)
+• GitHub Stars·Forks는 카드에 실시간 표시 (OpenUPM 패키지 등록)
 
 [협업 도구]
 • 버전 관리: Git (GitHub)
-• 릴리스: GitHub Releases (v0.1.4)`,
+• 릴리스: GitHub Releases (지속 업데이트)`,
       status: 'RELEASED',
       category: ['TOOL'],
       tags: ['OPEN SOURCE'],
@@ -739,7 +738,7 @@ AI agent → hera-agent-unity → Unity Editor
         'C# 실행 · 콘솔 읽기 · Play Mode · UI 생성',
         'EventSystem 기반 UI 입력 QA (Input QA)',
         '저토큰 최적화 (list --compact ≈93 토큰)',
-        '멀티 에디터 정책 락 + 도메인 리로드 안전성 (v0.1.4)',
+        '멀티 에디터 정책 락 + 도메인 리로드 안전성',
       ],
       links: [
         { label: 'GITHUB', url: 'https://github.com/NotNull92/hera-agent-unity' },
@@ -754,7 +753,7 @@ AI agent → hera-agent-unity → Unity Editor
         role: '단독 개발 (Go + GDScript, MIT 오픈소스)',
         result: 'v1.0.0 안정 계약(SemVer) · Godot Asset Store 등록 · Homebrew/Scoop/npm 배포',
       },
-      description: 'AI 에이전트가 라이브 Godot 4.7+ 에디터를 제어하는 저토큰 CLI (v1.0.0 안정 계약 · Godot Asset Store 등록)',
+      description: 'AI 에이전트가 라이브 Godot 에디터를 제어하는 저토큰 CLI (4.2~4.7 검증 · v1.0.0 안정 계약 · Godot Asset Store 등록)',
       fullDescription: `"AI 코딩 에이전트에게 라이브 Godot 에디터의 눈·손·증거를 제공하는 저토큰 CLI"입니다. hera-agent-unity의 형제 프로젝트로, 같은 저토큰·셸 네이티브 철학을 Godot 전용으로 새로 설계했습니다(포팅이 아님).
 
 [프로젝트 개요]
@@ -803,7 +802,7 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
 • 씬 구성 → 실행 → 런타임 QA → 노드 수정까지 전체 세션 ≈1,170 토큰
 
 [성과]
-• GitHub Stars 10 · Forks 1 (2026.08 기준, 카드에 실시간 표시)
+• GitHub Stars·Forks는 카드에 실시간 표시 (Godot Asset Store 등록)
 
 [협업 도구]
 • 버전 관리: Git (GitHub)
@@ -814,7 +813,7 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       media: [
         { src: heraGodotLogo, alt: 'hera-agent-godot 로고', kind: 'logo' },
       ],
-      tech: ['Go', 'GDScript', 'Godot 4.7+', 'EditorPlugin', 'CLI', 'MIT'],
+      tech: ['Go', 'GDScript', 'Godot 4.2~4.7', 'EditorPlugin', 'CLI', 'MIT'],
       features: [
         'AI 에이전트용 라이브 Godot 에디터 제어 CLI',
         'v1.0.0 안정 CLI 계약 + SemVer/deprecation 정책',
@@ -1110,10 +1109,10 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       tldr: {
         what: '조선시대 컨셉으로 전면 리메이크한 모바일 탄막 슈팅',
         role: '1인 리메이크 — 컨셉 전환·다국어 시스템·수익화(애드몹/IAP)',
-        result: 'Android 스토어 출시 · 국가지원사업 지원금 5,000만원',
+        result: 'Android 스토어 출시 · 전북콘텐츠진흥원 지원사업 선정 (프로젝트 지원금 5,000만 원)',
       },
       description: '조선시대 컨셉 모바일 슈팅 게임',
-      fullDescription: '오픈소스 프로젝트를 분석하여 리메이크한 모바일 슈팅 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2020.10 - 2020.12\n• 장르: 모바일 슈팅 게임\n• 플랫폼: 모바일 (Android)\n• 팀 구성: 클라이언트 1인\n• 사용 기술: C#, Unity3D\n\n[핵심 기여도]\n• 오픈소스 프로젝트 분석 및 리메이크\n• 기존 포스트 아포칼립스 컨셉에서 조선시대 컨셉으로 변경\n• UI 전면 수정, 맵 레벨링, 인게임 내 오브젝트 모델링 변경\n• Json을 이용한 다국어 지원 기능 추가\n• 구글 애드몹, 인앱결제 추가 및 스토어 출시\n\n[출시 후 성과]\n• 전북콘텐츠진흥원 국가지원사업 지원금: 50,000,000\n\n[협업 도구]\n• 버전 관리: Unity Collaborate, Trello\n• 이슈 트래킹: Notion\n• 문서화: Hwp, Word',
+      fullDescription: '오픈소스 프로젝트를 분석하여 리메이크한 모바일 슈팅 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2020.10 - 2020.12\n• 장르: 모바일 슈팅 게임\n• 플랫폼: 모바일 (Android)\n• 팀 구성: 클라이언트 1인\n• 사용 기술: C#, Unity3D\n\n[핵심 기여도]\n• 오픈소스 프로젝트 분석 및 리메이크\n• 기존 포스트 아포칼립스 컨셉에서 조선시대 컨셉으로 변경\n• UI 전면 수정, 맵 레벨링, 인게임 내 오브젝트 모델링 변경\n• Json을 이용한 다국어 지원 기능 추가\n• 구글 애드몹, 인앱결제 추가 및 스토어 출시\n\n[출시 후 성과]\n• 전북콘텐츠진흥원 지원사업 선정 — 프로젝트 지원금 5,000만 원 (개인 수익 아님)\n\n[협업 도구]\n• 버전 관리: Unity Collaborate, Trello\n• 이슈 트래킹: Notion\n• 문서화: Hwp, Word',
       status: 'RELEASED',
       category: ['MOBILE'],
       tags: ['SOLO'],
@@ -1129,7 +1128,7 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
         '조선시대 컨셉 변경',
         '다국어 지원 시스템',
         '구글 애드몹 & 인앱결제',
-        '전북콘텐츠진흥원 지원금 5천만원',
+        '전북콘텐츠진흥원 지원사업 선정 (프로젝트 지원금 5천만 원)',
       ],
     },
     {
@@ -1285,7 +1284,7 @@ const LogsTab = () => {
         { date: '07', title: 'HERA-AGENT-GODOT v1.0.0 릴리스', desc: '안정 CLI 계약 + SemVer 채택, UI 테마 QA·스크린샷 diff 추가, Homebrew tap 배포' },
         { date: '06', title: 'RINGVERSE: KARVAS COMMAND 개발 시작', desc: '그리드 빌드 × 거점 디펜스 융합 PC 게임 1인 개발 (코드명 Inventoria)' },
         { date: '06', title: 'HERA-AGENT-GODOT 개발 시작', desc: 'AI 에이전트용 라이브 Godot 에디터 제어 CLI 개발 (Godot Asset Store 등록)' },
-        { date: '05', title: 'HERA-AGENT-UNITY 개발 시작', desc: 'AI 에이전트용 라이브 Unity 에디터 제어 저토큰 CLI 개발 (오픈소스, Apache-2.0) — Stars 22' },
+        { date: '05', title: 'HERA-AGENT-UNITY 개발 시작', desc: 'AI 에이전트용 라이브 Unity 에디터 제어 저토큰 CLI 개발 (오픈소스, Apache-2.0 · OpenUPM 등록)' },
         { date: '04', title: 'NoMoreRolls 개발 시작', desc: '언더테일의 도덕적 선택을 주사위 족보로 번역한 1인 개발 로그라이크 착수' },
         { date: '03', title: 'PORTFOLIO-BLOG 개발', desc: '터미널 스타일 포트폴리오 웹사이트 개발' },
       ]
@@ -1577,7 +1576,7 @@ const ContactTab = ({ onNavigate }) => {
 };
 
 const MARQUEE_TEXT =
-  'UNITY DEVELOPER ▸ 6 YEARS EXPERIENCE ▸ RINGVERSE: KARVAS COMMAND ▸ NOMOREROLLS PROTOTYPE COMPLETE ▸ HERA-AGENT UNITY / GODOT ▸ HEBE-AGENT-UNITY ▸ GITHUB.COM/NOTNULL92 ▸ OPEN FOR TRANSMISSION ▸ ';
+  'UNITY DEVELOPER ▸ SINCE 2020.10 ▸ RINGVERSE: KARVAS COMMAND ▸ NOMOREROLLS PROTOTYPE COMPLETE ▸ HERA-AGENT UNITY / GODOT ▸ HEBE-AGENT-UNITY ▸ GITHUB.COM/NOTNULL92 ▸ OPEN FOR TRANSMISSION ▸ ';
 
 const formatTime = (date) =>
   date.toLocaleTimeString('en-US', {
@@ -1761,7 +1760,7 @@ const MainPortfolio = () => {
         {/* Header — 시스템 상태바 */}
         <div className="portfolio-header">
           <div className="header-title text-glow-strong">
-            <ScrambleText text="> PORTFOLIO TERMINAL v2.0" duration={800} rescrambleOnHover />
+            <ScrambleText text="> PORTFOLIO TERMINAL v3.0" duration={800} rescrambleOnHover />
           </div>
           <div className="header-readouts text-glow">
             <span className="readout">

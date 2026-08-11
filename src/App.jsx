@@ -9,13 +9,15 @@ import './index.css';
 function App() {
   // 같은 세션에서 재방문 시 터미널 생략.
   // ?direct = 즉시 입장, ?resume = 즉시 입장 + 이력서 뷰 오픈 (채용 담당자용)
+  // 모바일은 부팅 연출을 기본 생략 (키 입력 2단계가 이탈 요인 — CLS 개선 겸)
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     try {
       const params = new URLSearchParams(window.location.search);
       return (
         sessionStorage.getItem('tui-authed') === '1' ||
         params.has('direct') ||
-        params.has('resume')
+        params.has('resume') ||
+        window.matchMedia('(max-width: 640px)').matches
       );
     } catch {
       return false;

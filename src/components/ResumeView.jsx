@@ -16,7 +16,7 @@ const METRICS = [
   { value: '30%', label: 'BM 매출 기여', sub: '스텝업 패키지 설계·개발' },
   { value: '35K', label: '라이브 MAU', sub: '모바일 MMORPG 운영 참여' },
   { value: '400억', label: '월 매출 게임 라이브', sub: '6년차 서비스 현역 참여 중' },
-  { value: '4종', label: '오픈소스 공개', sub: 'Unity·Godot·MCP 개발자 도구 · ★33+' },
+  { value: '4종', label: '오픈소스 공개', sub: 'OpenUPM·Godot Asset Store 배포' },
 ];
 
 const CAREERS = [
@@ -104,7 +104,9 @@ const ResumeView = ({ onClose }) => {
         <header className="resume-head">
           <div>
             <h2 className="resume-name">지영준 <span className="resume-alias">YOUNGJUN JI · NOTNULL</span></h2>
-            <p className="resume-role">Unity 게임 클라이언트 개발자 — 경력 6년 (라이브 MMORPG 5년 + 멀티플랫폼 1년)</p>
+            <p className="resume-role">
+              Unity 게임 클라이언트 개발자 — Unity/C# 2020.10~현재 · EOS RED 라이브서비스 2021.09~현재
+            </p>
           </div>
           <ul className="resume-contacts">
             {CONTACTS.map((c) => (

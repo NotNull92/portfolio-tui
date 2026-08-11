@@ -21,8 +21,8 @@ const BOOT_MESSAGES = [
   { text: 'EMBER STUDIO COMPANY (TM) TERMLINK PROTOCOL', delay: 100 },
   { text: '', delay: 200 },
   { text: '> INITIALIZING MAIN SYSTEM...', delay: 150 },
-  { text: '> LOADING UNITY RUNTIME... 6 YEARS OF FIELD DATA FOUND', delay: 150 },
-  { text: '> MOUNTING LIVE-SERVICE RECORDS... MAU 35K VERIFIED', delay: 120 },
+  { text: '> LOADING UNITY RUNTIME... FIELD DATA SINCE 2020.10', delay: 150 },
+  { text: '> MOUNTING LIVE-SERVICE RECORDS... OK', delay: 120 },
   { text: '> SYNCING SIDE PROJECTS... 4 AI DEV TOOLS ONLINE', delay: 130 },
   { text: '> CALIBRATING DICE... NOMOREROLLS PROTOTYPE COMPLETE', delay: 100 },
   { text: '', delay: 150 },
@@ -352,6 +352,19 @@ const Terminal = ({ onAuthenticated }) => {
             >
               <div className="prompt-line text-glow neon-pulse">
                 {'>'} ENTER 키를 누르면 바로 입장합니다.
+              </div>
+              {/* 키 입력 없이도 입장 가능한 가시적 CTA — 채용 담당자 이탈 방지 */}
+              <div className="boot-cta">
+                <button type="button" className="boot-cta-primary" onClick={onAuthenticated}>
+                  ▶ 바로 보기
+                </button>
+                <button
+                  type="button"
+                  className="boot-cta-secondary"
+                  onClick={() => { window.location.search = '?resume'; }}
+                >
+                  📄 이력서
+                </button>
               </div>
               {cmdLog.length > 0 && (
                 <div className="cmd-log">
