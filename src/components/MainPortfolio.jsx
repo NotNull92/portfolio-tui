@@ -238,12 +238,34 @@ const SkillBar = ({ name, pct, note, delay = 0 }) => {
   );
 };
 
+// 첫 화면 성과 카드 — 채용 담당자가 반드시 보는 유일한 화면에 헤드라인 숫자를 박는다
+const STAT_METRICS = [
+  { num: 30, suffix: '%', label: 'BM 매출 기여', sub: '스텝업 패키지 설계·개발' },
+  { num: 35, suffix: 'K', label: '라이브 MAU', sub: '모바일 MMORPG 운영 참여' },
+  { num: 400, suffix: '억', label: '월 매출 게임 라이브', sub: '6년차 서비스 현역 참여 중' },
+  { num: 4, suffix: '종', label: '오픈소스 공개', sub: 'Unity·Godot·MCP · ★33+' },
+];
+
+const StatMetricCard = ({ num, suffix, label, sub, delay }) => {
+  const shown = useCountUp(num, 900 + delay);
+  return (
+    <div className="stat-metric tui-corners">
+      <span className="stat-metric-value text-glow-strong">
+        {shown}
+        <span className="stat-metric-suffix">{suffix}</span>
+      </span>
+      <span className="stat-metric-label">{label}</span>
+      <span className="stat-metric-sub">{sub}</span>
+    </div>
+  );
+};
+
 // Tab components
 const StatTab = () => {
   const personalData = [
     { label: 'NAME:', value: 'YOUNGJUN JI (NOTNULL)' },
     { label: 'ROLE:', value: 'UNITY DEVELOPER' },
-    { label: 'EXPERIENCE:', value: '5 YEARS' },
+    { label: 'EXPERIENCE:', value: '6 YEARS' },
     { label: 'COMPANY:', value: '블루포션게임즈 (EOS RED)' },
     { label: 'STATUS:', value: '재직중 · EMPLOYED', color: '#00ff41' },
   ];
@@ -252,8 +274,13 @@ const StatTab = () => {
     <div className="tab-content">
       <SectionHeader title="PERSONAL DATA" />
       <div className="stat-pitch text-glow">
-        라이브 MMORPG 콘텐츠·BM 개발 3년, 1인 게임 개발, AI 개발툴 오픈소스까지 —
+        라이브 MMORPG 콘텐츠·BM 개발 5년, 1인 게임 개발, AI 개발툴 오픈소스까지 —
         만든 것으로 증명하는 Unity 개발자입니다.
+      </div>
+      <div className="stat-metrics">
+        {STAT_METRICS.map((m, i) => (
+          <StatMetricCard key={m.label} {...m} delay={i * 150} />
+        ))}
       </div>
       <div className="stat-layout">
         <div className="data-grid">
@@ -279,7 +306,7 @@ const StatTab = () => {
         <SkillBar
           name="UNITY / C#"
           pct={95}
-          note="5 YRS · 라이브 MMORPG 3년 · 출시작 4종"
+          note="6 YRS · 라이브 MMORPG 5년 · 출시작 4종"
           delay={0}
         />
         <SkillBar
@@ -1484,7 +1511,7 @@ const ContactTab = ({ onNavigate }) => {
 };
 
 const MARQUEE_TEXT =
-  'UNITY DEVELOPER ▸ 5 YEARS EXPERIENCE ▸ RINGVERSE: KARVAS COMMAND ▸ NOMOREROLLS PROTOTYPE COMPLETE ▸ HERA-AGENT UNITY / GODOT ▸ HEBE-AGENT-UNITY ▸ GITHUB.COM/NOTNULL92 ▸ OPEN FOR TRANSMISSION ▸ ';
+  'UNITY DEVELOPER ▸ 6 YEARS EXPERIENCE ▸ RINGVERSE: KARVAS COMMAND ▸ NOMOREROLLS PROTOTYPE COMPLETE ▸ HERA-AGENT UNITY / GODOT ▸ HEBE-AGENT-UNITY ▸ GITHUB.COM/NOTNULL92 ▸ OPEN FOR TRANSMISSION ▸ ';
 
 const formatTime = (date) =>
   date.toLocaleTimeString('en-US', {

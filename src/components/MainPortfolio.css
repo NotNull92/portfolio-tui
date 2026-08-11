@@ -1565,3 +1565,42 @@
   border-color: rgba(0, 255, 65, 0.8);
   background: rgba(0, 255, 65, 0.1);
 }
+
+/* STAT 성과 카드 — 첫 화면 헤드라인 숫자 4칸 */
+.stat-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.stat-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 14px;
+  border: 1px solid rgba(0, 255, 65, 0.4);
+  background: rgba(0, 255, 65, 0.04);
+}
+
+.stat-metric-value {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-metric-suffix {
+  font-size: 16px;
+  margin-left: 2px;
+}
+
+.stat-metric-label {
+  font-size: 12px;
+  color: #d9ffe6;
+}
+
+.stat-metric-sub {
+  font-size: 10px;
+  opacity: 0.6;
+}

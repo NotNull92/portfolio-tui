@@ -21,7 +21,7 @@ const BOOT_MESSAGES = [
   { text: 'EMBER STUDIO COMPANY (TM) TERMLINK PROTOCOL', delay: 100 },
   { text: '', delay: 200 },
   { text: '> INITIALIZING MAIN SYSTEM...', delay: 150 },
-  { text: '> LOADING UNITY RUNTIME... 5 YEARS OF FIELD DATA FOUND', delay: 150 },
+  { text: '> LOADING UNITY RUNTIME... 6 YEARS OF FIELD DATA FOUND', delay: 150 },
   { text: '> MOUNTING LIVE-SERVICE RECORDS... MAU 35K VERIFIED', delay: 120 },
   { text: '> SYNCING SIDE PROJECTS... 4 AI DEV TOOLS ONLINE', delay: 130 },
   { text: '> CALIBRATING DICE... NOMOREROLLS PROTOTYPE COMPLETE', delay: 100 },
