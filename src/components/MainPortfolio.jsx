@@ -703,7 +703,9 @@ AI agent → hera-agent-unity → Unity Editor
 • 최신 릴리스: v1.0.0 (2026.07.21) — 안정 CLI 계약 + SemVer 채택
 • 유형: 개발자 도구 (Go CLI + Godot 애드온)
 • 라이선스: MIT (오픈소스)
-• 대상: Godot 4.7+ 표준 빌드
+• 플랫폼: Windows / macOS / Linux
+• 대상: Godot 4.7+ 표준 빌드 권장 (최소 4.2 — 4.2~4.6 동작 확인)
+• 설치: Scoop (Windows) · Homebrew (macOS/Linux) · npm
 • 배포: GitHub Releases · Godot Asset Store · Homebrew tap
 • 사용 기술: Go 1.25+, GDScript, EditorPlugin, HTTP RPC
 
@@ -779,6 +781,8 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
 • 최신 릴리스: v0.0.1 (2026.08.06, 초기 공개)
 • 유형: 개발자 도구 (Go 바이너리 1개 + Unity UPM 패키지 1개)
 • 라이선스: Apache-2.0 (오픈소스)
+• 플랫폼: Windows / macOS / Linux
+• 대상: Unity 2022.3+
 • 사용 기술: Go, C#, Unity Editor API, localhost HTTP
 
 [설계 목표]
@@ -834,16 +838,17 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     },
     {
       name: 'WORKFORGE-MCP',
-      description: 'ChatGPT를 Windows 워크스테이션에 안전하게 연결하는 MCP 게이트웨이',
+      description: 'ChatGPT를 로컬 워크스테이션(Windows · macOS)에 안전하게 연결하는 MCP 게이트웨이',
       fullDescription: `"ChatGPT에게 내 PC를 만질 안전한 손을 쥐여주는 MCP 게이트웨이"입니다. ChatGPT가 실제 프로젝트 파일을 읽고, Git 상태를 파악하고, 가드가 걸린 편집을 수행하고, 로컬 이미지를 확인하고, 감독 하에 PowerShell 작업을 실행할 수 있게 합니다.
 
 기존에는 에러 메시지 복사 → 붙여넣기 → 관련 소스 찾기 → 코드 복사 → 수정본 받기 → 다시 붙여넣기 → 빌드 → 다음 에러 복사의 반복이었다면, WorkForge는 이 루프를 "프로젝트 확인하고, 문제 찾아서, 고쳐줘" 한 문장으로 바꿉니다.
 
 [프로젝트 개요]
 • 개발 기간: 2026.08 ~ 진행 중
-• 유형: 개발자 도구 (MCP 서버 / Windows 게이트웨이)
+• 유형: 개발자 도구 (MCP 서버 / 로컬 워크스테이션 게이트웨이)
 • 라이선스: MIT (오픈소스)
-• 대상: Windows + ChatGPT (OpenAI Secure MCP Tunnel)
+• 플랫폼: Windows x64 (포터블 릴리스) · macOS Apple Silicon / Intel (소스 프리뷰, docs/MACOS.md)
+• 대상: ChatGPT (OpenAI Secure MCP Tunnel)
 • 사용 기술: TypeScript, Node.js, PowerShell, MCP (Model Context Protocol)
 
 [제공 기능 — MCP 툴 12종]
@@ -879,9 +884,9 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       media: [
         { src: workforgeLogo, alt: 'workforge-mcp 로고', kind: 'logo' },
       ],
-      tech: ['TypeScript', 'Node.js', 'PowerShell', 'MCP', 'Windows', 'MIT'],
+      tech: ['TypeScript', 'Node.js', 'PowerShell', 'MCP', 'Windows', 'macOS', 'MIT'],
       features: [
-        'ChatGPT ↔ Windows 워크스테이션 MCP 게이트웨이',
+        'ChatGPT ↔ 로컬 워크스테이션 MCP 게이트웨이 (Windows · macOS)',
         'MCP 툴 12종 (파일·Git·PowerShell·이미지)',
         'SHA-256 가드 편집으로 stale 덮어쓰기 차단',
         '권한 상승 없음 · 상주 없음 · 명령 재실행 방지',
@@ -954,7 +959,7 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     {
       name: 'EOS-RED',
       description: '장기 LIVE 서비스 모바일 MMORPG (2021.09 ~ 현재 참여 중)',
-      fullDescription: '장기 Live 서비스 중인 모바일 MMORPG로, 2021년 9월 합류해 현재까지 컨텐츠·BM 개발을 이어가고 있는 프로젝트입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2021.09 - ing (Live 서비스 중)\n• 장르: MMORPG\n• 플랫폼: 모바일\n• 팀 구성: 클라이언트 7 ~ 8인\n• 사용 기술: C#, Unity3D, OSA, UniRx, Dotween 등\n\n[출시 후 성과 지표]\n• MAU: 최대 35,000\n• DAU: 최대 12,000\n• 매출: 최대 400억, 평균 200억\n\n[핵심 기여도]\n• 스텝업 패키지 개발 및 유지 보수: 새로운 BM 시스템 개발로 매출에 기여\n• 상품 1+1 구매 기능 개발 및 유지 보수: 이벤트성 신규 유저 진입을 위한 BM 개발\n• 조건부 팝업 패키지 개발 및 유지 보수: 새로운 BM 시스템 개발\n• 대형/소형 컨텐츠 다수 개발 및 개선\n\n[대표 개발 컨텐츠]\n\n◆ 대형 컨텐츠\n• 길드 경쟁전: 길드원 간 협업 미션 시스템, PVP 경쟁 시스템\n• 길드 경쟁전 전용 PVE 던전: 실시간 협력 던전 시스템\n• 길드 경쟁전 리뉴얼: PVP 중심 경쟁 시스템, 밸런스 조정\n\n◆ BM 시스템\n• 스텝업 상품 시스템: 단계별 구매 유도 BM (매출 30% 기여)\n• 조건부 팝업: 유저 행동 기반 타겟팅 상품 노출 (전환율 45%)\n• 스텝업 패키지 개선: 다단계 구매 시스템 고도화\n\n◆ 시스템 & 편의성\n• 휴면 계정 처리: 유니크 식별자 재사용 시스템 (운영 공수 90% 절감)\n• 캐릭터 즉시 삭제: UniRx 기반 반응형 UI\n• 월드 랭킹 시스템: 서버 부하 85% 감소 최적화\n• VIP 칭호/버프/이펙트: 등급별 차별화 시스템\n• 재화 숫자 표기 개선: UI 가독성 향상\n\n◆ 기타 컨텐츠\n• 길드 추천 시스템: 길드 가입률 30% 증가\n• 보스 던전 리뉴얼: 참여율 35% 증가\n• 콜로세움 개선: 일일 참여율 150% 증가\n• 소울 각인 확장, 펫 레벨 증가, 아이템 획득 세분화 등\n\n[협업 도구]\n• 버전 관리: Git, SVN, Git Fork, Gitea, CDN, Hermes, Jenkins\n• 이슈 트래킹: RedMine\n• 문서화: Notion, Wiki',
+      fullDescription: '장기 Live 서비스 중인 모바일 MMORPG로, 2021년 9월 합류해 현재까지 컨텐츠·BM 개발을 이어가고 있는 프로젝트입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2021.09 - ing (Live 서비스 중)\n• 장르: MMORPG\n• 플랫폼: 모바일 (Android / iOS)\n• 팀 구성: 클라이언트 7 ~ 8인\n• 사용 기술: C#, Unity3D, OSA, UniRx, Dotween 등\n\n[출시 후 성과 지표]\n• MAU: 최대 35,000\n• DAU: 최대 12,000\n• 매출: 최대 400억, 평균 200억\n\n[핵심 기여도]\n• 스텝업 패키지 개발 및 유지 보수: 새로운 BM 시스템 개발로 매출에 기여\n• 상품 1+1 구매 기능 개발 및 유지 보수: 이벤트성 신규 유저 진입을 위한 BM 개발\n• 조건부 팝업 패키지 개발 및 유지 보수: 새로운 BM 시스템 개발\n• 대형/소형 컨텐츠 다수 개발 및 개선\n\n[대표 개발 컨텐츠]\n\n◆ 대형 컨텐츠\n• 길드 경쟁전: 길드원 간 협업 미션 시스템, PVP 경쟁 시스템\n• 길드 경쟁전 전용 PVE 던전: 실시간 협력 던전 시스템\n• 길드 경쟁전 리뉴얼: PVP 중심 경쟁 시스템, 밸런스 조정\n\n◆ BM 시스템\n• 스텝업 상품 시스템: 단계별 구매 유도 BM (매출 30% 기여)\n• 조건부 팝업: 유저 행동 기반 타겟팅 상품 노출 (전환율 45%)\n• 스텝업 패키지 개선: 다단계 구매 시스템 고도화\n\n◆ 시스템 & 편의성\n• 휴면 계정 처리: 유니크 식별자 재사용 시스템 (운영 공수 90% 절감)\n• 캐릭터 즉시 삭제: UniRx 기반 반응형 UI\n• 월드 랭킹 시스템: 서버 부하 85% 감소 최적화\n• VIP 칭호/버프/이펙트: 등급별 차별화 시스템\n• 재화 숫자 표기 개선: UI 가독성 향상\n\n◆ 기타 컨텐츠\n• 길드 추천 시스템: 길드 가입률 30% 증가\n• 보스 던전 리뉴얼: 참여율 35% 증가\n• 콜로세움 개선: 일일 참여율 150% 증가\n• 소울 각인 확장, 펫 레벨 증가, 아이템 획득 세분화 등\n\n[협업 도구]\n• 버전 관리: Git, SVN, Git Fork, Gitea, CDN, Hermes, Jenkins\n• 이슈 트래킹: RedMine\n• 문서화: Notion, Wiki',
       status: 'RELEASED',
       category: ['MOBILE'],
       tags: ['LIVE SERVICE'],
@@ -976,8 +981,27 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     },
     {
       name: 'FREEDRAW',
-      description: 'VR drawing application for MetaQuest 2',
-      fullDescription: 'VR을 이용한 드로잉 컨텐츠. 2021년 전북콘텐츠진흥원 국가지원사업에서 86점을 받았다.',
+      description: '가상 공간에 직접 그리는 VR 3D 드로잉 앱 (Steam 출시)',
+      fullDescription: `"가상 공간에 브러시로 직접 3D 드로잉을 하는 VR 앱"입니다. 그린 작품을 저장하고 다시 불러와 이어 그릴 수 있으며, 전용 갤러리 룸에서 전시·감상하고 사전 배치된 카메라로 드로잉 과정을 영상으로 남길 수 있습니다.
+
+[프로젝트 개요]
+• 출시: 2021.03.03 (Steam 정식 출시)
+• 장르: VR 크리에이티브 툴 (3D 드로잉)
+• 플랫폼: PC VR — SteamVR (Windows 10 64-bit)
+• 소속: 뱅코 게임즈 (개발) / BancoGames (배급)
+• 사용 기술: C#, Unity, SteamVR, Oculus Integration, TCP Socket
+
+[핵심 기여도]
+• VR 3D 드로잉 시스템 개발 — 브러시 툴 + 컬러 팔레트로 공간에 직접 드로잉
+• 저장 / 불러오기 / 이어 그리기 기능
+• 갤러리 룸: 완성 작품을 전시·감상하는 별도 VR 공간
+• 녹화 기능: 사전 배치 카메라 기반으로 드로잉 과정 영상 기록
+• TCP 소켓 기반 모바일 앱 연동 (작품 데이터 동기화)
+• Oculus Rift 빌드를 Quest 대응으로 전환
+
+[성과]
+• 2021년 전북콘텐츠진흥원 국가지원사업 평가 86점
+• Steam 스토어 정식 출시`,
       status: 'RELEASED',
       category: ['ARVR'],
       media: [
@@ -986,10 +1010,12 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       ],
       tech: ['Unity', 'C#', 'SteamVR', 'Oculus Integration', 'TCP Socket'],
       features: [
-        'VR 3D drawing system',
-        'Save/Load/Continue drawing',
-        'Mobile app sync via TCP',
-        'Oculus Rift to Quest conversion',
+        'VR 3D 드로잉 시스템 (브러시 + 컬러 팔레트)',
+        '저장 / 불러오기 / 이어 그리기',
+        '갤러리 룸 전시 + 드로잉 과정 녹화',
+        'TCP 소켓 기반 모바일 앱 연동',
+        'Oculus Rift → Quest 대응 전환',
+        'Steam 정식 출시 (2021.03)',
       ],
       links: [
         { label: 'STEAM', url: 'https://store.steampowered.com/app/1539810/FreeDraw/' },
@@ -998,7 +1024,7 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     {
       name: 'ZOMBIE KINGDOM',
       description: '조선시대 컨셉 모바일 슈팅 게임',
-      fullDescription: '오픈소스 프로젝트를 분석하여 리메이크한 모바일 슈팅 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2020.10 - 2020.12\n• 장르: 모바일 슈팅 게임\n• 플랫폼: 모바일\n• 팀 구성: 클라이언트 1인\n• 사용 기술: C#, Unity3D\n\n[핵심 기여도]\n• 오픈소스 프로젝트 분석 및 리메이크\n• 기존 포스트 아포칼립스 컨셉에서 조선시대 컨셉으로 변경\n• UI 전면 수정, 맵 레벨링, 인게임 내 오브젝트 모델링 변경\n• Json을 이용한 다국어 지원 기능 추가\n• 구글 애드몹, 인앱결제 추가 및 스토어 출시\n\n[출시 후 성과]\n• 전북콘텐츠진흥원 국가지원사업 지원금: 50,000,000\n\n[협업 도구]\n• 버전 관리: Unity Collaborate, Trello\n• 이슈 트래킹: Notion\n• 문서화: Hwp, Word',
+      fullDescription: '오픈소스 프로젝트를 분석하여 리메이크한 모바일 슈팅 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2020.10 - 2020.12\n• 장르: 모바일 슈팅 게임\n• 플랫폼: 모바일 (Android)\n• 팀 구성: 클라이언트 1인\n• 사용 기술: C#, Unity3D\n\n[핵심 기여도]\n• 오픈소스 프로젝트 분석 및 리메이크\n• 기존 포스트 아포칼립스 컨셉에서 조선시대 컨셉으로 변경\n• UI 전면 수정, 맵 레벨링, 인게임 내 오브젝트 모델링 변경\n• Json을 이용한 다국어 지원 기능 추가\n• 구글 애드몹, 인앱결제 추가 및 스토어 출시\n\n[출시 후 성과]\n• 전북콘텐츠진흥원 국가지원사업 지원금: 50,000,000\n\n[협업 도구]\n• 버전 관리: Unity Collaborate, Trello\n• 이슈 트래킹: Notion\n• 문서화: Hwp, Word',
       status: 'RELEASED',
       category: ['MOBILE'],
       tags: ['SOLO'],
