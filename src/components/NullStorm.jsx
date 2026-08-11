@@ -81,6 +81,42 @@ const SFX = {
     beep(880, 0.1, { vol: 0.05, delay: 0.1 });
     beep(1320, 0.22, { vol: 0.05, delay: 0.2 });
   },
+  bossSpawn: () => {
+    beep(110, 0.4, { type: 'sawtooth', vol: 0.07, slide: -30 });
+    beep(220, 0.3, { type: 'square', vol: 0.04, delay: 0.15, slide: -80 });
+  },
+  bossDown: () => {
+    beep(90, 0.6, { type: 'sawtooth', vol: 0.09, slide: -50 });
+    beep(660, 0.12, { vol: 0.05, delay: 0.1 });
+    beep(880, 0.12, { vol: 0.05, delay: 0.24 });
+    beep(1320, 0.3, { vol: 0.06, delay: 0.38 });
+  },
+  shard: () => beep(1400, 0.09, { vol: 0.02, slide: -800 }),
+};
+
+// 보스 SEGFAULT — 매 5웨이브. 회차마다 단단해지고 빨라진다
+const bossSpec = (round) => ({
+  hp: 50 + (round - 1) * 40,
+  moveSpeed: 70 + (round - 1) * 20,
+  summonInterval: Math.max(2600 - (round - 1) * 300, 1500),
+  shardInterval: Math.max(1900 - (round - 1) * 250, 1000),
+  shardSpeed: 180 + (round - 1) * 35,
+});
+
+const makeBoss = (round) => {
+  const spec = bossSpec(round);
+  return {
+    x: W / 2,
+    y: 70,
+    vx: spec.moveSpeed,
+    hp: spec.hp,
+    maxHp: spec.hp,
+    round,
+    summonTimer: 2000,
+    shardTimer: 1400,
+    flash: 0,
+    bob: 0,
+  };
 };
 
 // 웨이브별 난이도 곡선
@@ -105,6 +141,9 @@ const freshGame = () => ({
   ship: { x: W / 2, vx: 0, recoil: 0 },
   bullets: [],
   enemies: [],
+  boss: null,
+  bossDefeated: false,
+  shards: [],
   particles: [],
   popups: [],
   stars: makeStars(),
@@ -324,10 +363,28 @@ const NullStorm = ({ onClose }) => {
         if (s.y > H) { s.y = -8; s.x = Math.random() * W; }
       }
 
-      // 웨이브 / 스폰
+      // 웨이브 / 스폰 — 매 5웨이브는 보스 웨이브 (일반 스폰 대신 SEGFAULT)
       const spec = waveSpec(g.wave);
+      const isBossWave = g.wave % 5 === 0;
+      const advanceWave = () => {
+        g.wave += 1;
+        g.spawned = 0;
+        g.bossDefeated = false;
+        g.intermission = 1400;
+        g.score += g.wave * 50; // 클리어 보너스
+        pushPopup(g, W / 2, H / 2 + 30, `WAVE BONUS +${g.wave * 50}`, '#00ff41', popupSize(g.wave * 50), 900);
+        SFX.wave();
+      };
       if (g.intermission > 0) {
         g.intermission -= dt;
+      } else if (isBossWave) {
+        if (!g.boss && !g.bossDefeated) {
+          g.boss = makeBoss(g.wave / 5);
+          g.shake = 400;
+          SFX.bossSpawn();
+        } else if (g.bossDefeated && g.enemies.length === 0) {
+          advanceWave();
+        }
       } else if (g.spawned < spec.count) {
         g.spawnTimer -= dt;
         if (g.spawnTimer <= 0) {
@@ -347,14 +404,66 @@ const NullStorm = ({ onClose }) => {
           g.spawned += 1;
         }
       } else if (g.enemies.length === 0) {
-        // 웨이브 클리어
-        g.wave += 1;
-        g.spawned = 0;
-        g.intermission = 1400;
-        g.score += g.wave * 50; // 클리어 보너스
-        pushPopup(g, W / 2, H / 2 + 30, `WAVE BONUS +${g.wave * 50}`, '#00ff41', popupSize(g.wave * 50), 900);
-        SFX.wave();
+        advanceWave();
       }
+
+      // 보스 갱신: 유영 + 잡몹 소환 + ERR 파편 투하
+      if (g.boss) {
+        const b = g.boss;
+        const bs = bossSpec(b.round);
+        b.x += b.vx * dts;
+        if (b.x < 80) { b.x = 80; b.vx = bs.moveSpeed; }
+        if (b.x > W - 80) { b.x = W - 80; b.vx = -bs.moveSpeed; }
+        b.bob += dts * 2.2;
+        b.flash = Math.max(b.flash - dt, 0);
+
+        b.summonTimer -= dt;
+        if (b.summonTimer <= 0) {
+          b.summonTimer = bs.summonInterval;
+          for (const off of [-40, 40]) {
+            g.enemies.push({
+              x: Math.max(30, Math.min(W - 30, b.x + off)),
+              y: b.y + 24,
+              type: 'BUG',
+              hp: 1,
+              points: 10,
+              speed: spec.speed * (0.85 + Math.random() * 0.3),
+              wob: Math.random() * Math.PI * 2,
+              flash: 0,
+              knock: 0,
+            });
+          }
+        }
+
+        b.shardTimer -= dt;
+        if (b.shardTimer <= 0) {
+          b.shardTimer = bs.shardInterval;
+          // 기체를 향해 조준 투하 — A/D 회피 요소
+          const t = (SHIP_Y - b.y) / bs.shardSpeed;
+          g.shards.push({
+            x: b.x,
+            y: b.y + 24,
+            vx: Math.max(-140, Math.min(140, (g.ship.x - b.x) / t)),
+            vy: bs.shardSpeed,
+          });
+          SFX.shard();
+        }
+      }
+
+      // 파편: 기체 피격 시에만 피해, 바닥에선 무해 소멸
+      g.shards = g.shards.filter((s) => {
+        s.x += s.vx * dts;
+        s.y += s.vy * dts;
+        if (Math.abs(s.x - g.ship.x) < 18 && Math.abs(s.y - SHIP_Y) < 13) {
+          g.lives -= 1;
+          g.streak = 0;
+          g.shake = 300;
+          g.dmgFlash = 260;
+          SFX.escape();
+          return false;
+        }
+        return s.y < H + 12;
+      });
 
       // 적 이동 + 바닥 판정
       g.enemies = g.enemies.filter((e) => {
@@ -422,6 +531,45 @@ const NullStorm = ({ onClose }) => {
       }
       g.bullets = g.bullets.filter((b) => !b.hit);
       g.enemies = g.enemies.filter((e) => !e.dead);
+
+      // 보스 피격 / 격파
+      if (g.boss) {
+        const b = g.boss;
+        for (const bl of g.bullets) {
+          if (Math.abs(bl.x - b.x) < 58 && Math.abs(bl.y - (b.y + Math.sin(b.bob) * 8)) < 22) {
+            bl.hit = true;
+            b.hp -= 1;
+            b.flash = 70;
+            SFX.hit();
+          }
+        }
+        g.bullets = g.bullets.filter((bl) => !bl.hit);
+        if (b.hp <= 0) {
+          const mult = multiplierOf(g.streak);
+          const gained = 500 * b.round * mult;
+          g.score += gained;
+          g.bombGauge = 100; // 격파 보상: 폭탄 풀차지
+          g.hitstop = 200;
+          g.shake = 450;
+          g.bombFlash = 200;
+          pushPopup(g, b.x, b.y + 30, `SEGFAULT HANDLED +${gained}`, '#ffd700', 26, 1300);
+          for (let i = 0; i < 24; i++) {
+            g.particles.push({
+              x: b.x + (Math.random() - 0.5) * 100,
+              y: b.y + (Math.random() - 0.5) * 40,
+              vx: (Math.random() - 0.5) * 260,
+              vy: (Math.random() - 0.5) * 260,
+              life: 600,
+              char: ['▓', '▒', '░', '*', '×', '+'][i % 6],
+              color: i % 3 === 0 ? '#ffd700' : '#ff5544',
+            });
+          }
+          g.boss = null;
+          g.bossDefeated = true;
+          g.shards = [];
+          SFX.bossDown();
+        }
+      }
       if (g.streak === 0) g.lastMult = 1;
 
       // 파티클 / 팝업
@@ -473,6 +621,34 @@ const NullStorm = ({ onClose }) => {
         ctx.fillText('¦', b.x, b.y + 11);
         ctx.globalAlpha = 1;
         ctx.fillText('¦', b.x, b.y);
+      }
+
+      // 보스 SEGFAULT (유영 + 피격 플래시 + 체력바)
+      if (g.boss) {
+        const b = g.boss;
+        const by = b.y + Math.sin(b.bob) * 8;
+        const col = b.flash > 0 ? '#ffffff' : '#ff5544';
+        ctx.fillStyle = col;
+        ctx.font = 'bold 13px "JetBrains Mono", monospace';
+        ctx.fillText('▓▓▓▓▓▓▓▓▓▓▓▓▓▓', b.x, by - 16);
+        ctx.font = 'bold 19px "JetBrains Mono", monospace';
+        ctx.fillText('▓ SEGFAULT ▓', b.x, by);
+        ctx.font = 'bold 13px "JetBrains Mono", monospace';
+        ctx.fillText('▓▓▓▓▓▓▓▓▓▓▓▓▓▓', b.x, by + 16);
+        // 체력바 (화면 상단 고정)
+        const bw = 300;
+        ctx.strokeStyle = 'rgba(255, 85, 68, 0.8)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(W / 2 - bw / 2, 12, bw, 9);
+        ctx.fillStyle = '#ff5544';
+        ctx.fillRect(W / 2 - bw / 2 + 1, 13, (bw - 2) * (b.hp / b.maxHp), 7);
+      }
+
+      // ERR 파편 (보스 투사체 — 기체 피격 시에만 피해)
+      if (g.shards.length > 0) {
+        ctx.font = 'bold 12px "JetBrains Mono", monospace';
+        ctx.fillStyle = '#ff8866';
+        for (const s of g.shards) ctx.fillText('ERR', s.x, s.y);
       }
 
       // 적 (피격 시 흰색 플래시)
