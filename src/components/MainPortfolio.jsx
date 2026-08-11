@@ -567,16 +567,16 @@ const QuestsTab = () => {
     },
     {
       name: 'RINGVERSE: KARVAS COMMAND',
-      description: '그리드 인벤토리 빌드 × 거점 디펜스 융합 모바일 게임 (1인 개발, 프로젝트 코드명 Inventoria)',
-      fullDescription: `"그리드 인벤토리 빌드 × 거점 디펜스"를 융합한 모바일 라이브서비스 게임입니다. 체스판에 포탑을 배치하고, 각 포탑에 영웅을 파일럿으로 얹고, 포탑 내부 그리드에 아이템을 어떻게 배치·조합하느냐가 곧 전투력이 됩니다.
+      description: '그리드 인벤토리 빌드 × 거점 디펜스 융합 PC 게임 (1인 개발, 프로젝트 코드명 Inventoria)',
+      fullDescription: `"그리드 인벤토리 빌드 × 거점 디펜스"를 융합한 PC 라이브서비스 게임입니다. 체스판에 포탑을 배치하고, 각 포탑에 영웅을 파일럿으로 얹고, 포탑 내부 그리드에 아이템을 어떻게 배치·조합하느냐가 곧 전투력이 됩니다.
 
 태그라인: "뿌리의 끝, 세계의 가장자리 — 여기가 카르바스다."
 
 [프로젝트 개요]
 • 개발 기간: 2026.06 ~ 진행 중 (커밋 747개)
 • 정식 타이틀: RingVerse: Karvas Command (코드명 Inventoria)
-• 장르: 그리드 빌드 × 거점 디펜스 (모바일 라이브서비스)
-• 플랫폼: 모바일 (Android / iOS), PC 빌드 병행
+• 장르: 그리드 빌드 × 거점 디펜스 (PC 라이브서비스)
+• 플랫폼: PC — 출시 예정
 • 팀 구성: 1인 개발 (기획·설계·구현 전담)
 • 사용 기술: Unity 6, C#, UI Toolkit, Addressables, Odin Inspector, Input System
 
@@ -609,7 +609,7 @@ const QuestsTab = () => {
 • 버전 관리: Git (GitHub)`,
       status: 'IN PROGRESS',
       progress: 45,
-      category: ['MOBILE', 'PC'],
+      category: ['PC'],
       tags: ['SOLO'],
       media: [
         { src: ringverseTitleImg, alt: 'RingVerse: Karvas Command 타이틀 화면 — 카르바스 성채와 쥐 떼 벌판' },
@@ -1162,7 +1162,7 @@ const LogsTab = () => {
         { date: '08', title: 'WORKFORGE-MCP 공개', desc: 'ChatGPT를 Windows 워크스테이션에 연결하는 MCP 게이트웨이 오픈소스 공개 (MCP 툴 12종, MIT)' },
         { date: '08', title: 'HEBE-AGENT-UNITY 공개', desc: 'Hera의 경량 실행 에디션 오픈소스 공개 (v0.0.1) — warm exec 240ms, cold 대비 6.08배 단축 벤치마크' },
         { date: '07', title: 'HERA-AGENT-GODOT v1.0.0 릴리스', desc: '안정 CLI 계약 + SemVer 채택, UI 테마 QA·스크린샷 diff 추가, Homebrew tap 배포' },
-        { date: '06', title: 'RINGVERSE: KARVAS COMMAND 개발 시작', desc: '그리드 빌드 × 거점 디펜스 융합 모바일 게임 1인 개발 (코드명 Inventoria)' },
+        { date: '06', title: 'RINGVERSE: KARVAS COMMAND 개발 시작', desc: '그리드 빌드 × 거점 디펜스 융합 PC 게임 1인 개발 (코드명 Inventoria)' },
         { date: '06', title: 'HERA-AGENT-GODOT 개발 시작', desc: 'AI 에이전트용 라이브 Godot 에디터 제어 CLI 개발 (Godot Asset Store 등록)' },
         { date: '05', title: 'HERA-AGENT-UNITY 개발 시작', desc: 'AI 에이전트용 라이브 Unity 에디터 제어 저토큰 CLI 개발 (오픈소스, Apache-2.0) — Stars 22' },
         { date: '04', title: 'NoMoreRolls 개발 시작', desc: '언더테일의 도덕적 선택을 주사위 족보로 번역한 1인 개발 로그라이크 착수' },
