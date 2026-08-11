@@ -59,48 +59,6 @@ const beep = (freq, dur, { type = 'square', vol = 0.04, slide = 0, delay = 0 } =
   }
 };
 
-// 엔진 험 — 속도에 피치가 붙는 연속 저음 (플레이 중에만)
-let hum = null;
-
-const startHum = () => {
-  try {
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sawtooth';
-    osc.frequency.value = 46;
-    gain.gain.value = 0;
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    hum = { osc, gain };
-  } catch {
-    /* 오디오 미지원 환경 무시 */
-  }
-};
-
-const setHum = (speed, active) => {
-  if (!hum) return;
-  try {
-    hum.osc.frequency.setTargetAtTime(40 + speed * 0.09, audioCtx.currentTime, 0.1);
-    hum.gain.gain.setTargetAtTime(sfxMuted || !active ? 0 : 0.016, audioCtx.currentTime, 0.08);
-  } catch {
-    /* 무시 */
-  }
-};
-
-const stopHum = () => {
-  if (!hum) return;
-  try {
-    hum.gain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.05);
-    const h = hum;
-    setTimeout(() => { try { h.osc.stop(); } catch { /* 무시 */ } }, 300);
-  } catch {
-    /* 무시 */
-  }
-  hum = null;
-};
-
 const SFX = {
   thrust: () => beep(140 + Math.random() * 40, 0.06, { type: 'sawtooth', vol: 0.012, slide: 60 }),
   graze: () => beep(2200 + Math.random() * 600, 0.04, { vol: 0.014, slide: -1200 }),
@@ -317,7 +275,6 @@ const NullDive = ({ onClose }) => {
 
     let raf;
     let last = performance.now();
-    startHum();
 
     const tick = (now) => {
       const rawDt = Math.min(now - last, 50);
@@ -525,9 +482,6 @@ const NullDive = ({ onClose }) => {
       g.wallFlash = Math.max(g.wallFlash - rawDt, 0);
       g.deathFlash = Math.max(g.deathFlash - rawDt, 0);
 
-      // 엔진 험: 속도 비례 피치, 대기/사망 시 음소거
-      setHum(d.speed, !g.waiting && !g.dead);
-
       // --- draw ---
       ctx.save();
       if (g.shake > 0) {
@@ -710,10 +664,7 @@ const NullDive = ({ onClose }) => {
     };
 
     raf = requestAnimationFrame(tick);
-    return () => {
-      cancelAnimationFrame(raf);
-      stopHum();
-    };
+    return () => cancelAnimationFrame(raf);
   }, [phase, endGame]);
 
   // 포인터: 홀드 = 부스터
