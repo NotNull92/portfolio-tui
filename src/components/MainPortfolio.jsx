@@ -1185,6 +1185,7 @@ const LogsTab = () => {
       year: '2026',
       events: [
         { date: '08', title: 'NoMoreRolls 프로토타입 완료', desc: '주사위 족보 전투 + Fight/Talk 이중 루트 프로토타입 완성, 플레이 영상 공개' },
+        { date: '08', title: 'WORKFORGE-MCP macOS 지원 추가', desc: 'Apple Silicon / Intel Mac 대상 소스 프리뷰 제공 (docs/MACOS.md) — Windows 포터블 릴리스는 그대로 유지' },
         { date: '08', title: 'WORKFORGE-MCP 공개', desc: 'ChatGPT를 Windows 워크스테이션에 연결하는 MCP 게이트웨이 오픈소스 공개 (MCP 툴 12종, MIT)' },
         { date: '08', title: 'HEBE-AGENT-UNITY 공개', desc: 'Hera의 경량 실행 에디션 오픈소스 공개 (v0.0.1) — warm exec 240ms, cold 대비 6.08배 단축 벤치마크' },
         { date: '07', title: 'HERA-AGENT-GODOT v1.0.0 릴리스', desc: '안정 CLI 계약 + SemVer 채택, UI 테마 QA·스크린샷 diff 추가, Homebrew tap 배포' },
