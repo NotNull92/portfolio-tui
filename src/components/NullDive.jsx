@@ -118,7 +118,8 @@ const freshGame = () => {
     lines: Array.from({ length: 9 }, () => ({ x: Math.random() * W, y: Math.random() * H, len: 20 + Math.random() * 40 })),
     tokensGot: 0,
     bonus: 0,
-    grace: 900, // 시작 직후 충돌 유예
+    waiting: true, // 첫 입력 전까지 물리 정지 — 시작하자마자 추락사하지 않게
+    grace: 900, // 첫 입력 직후 충돌 유예
     thrustSfx: 0,
     ceilMs: 0, // CEILING RUNNER 히든 업적
     nextMilestone: 500,
@@ -282,7 +283,18 @@ const NullDive = ({ onClose }) => {
       const loc = g.worldX / PX_PER_LOC;
       const d = diffAt(loc);
 
-      if (!g.dead) {
+      // 대기 상태: 제자리 호버, 첫 부스터 입력과 함께 다이브 시작
+      if (g.waiting) {
+        if (thrustRef.current) {
+          g.waiting = false;
+          g.vy = -120; // 첫 입력에 살짝 떠오르며 시작
+        } else {
+          g.y = H / 2 + Math.sin(now / 300) * 5;
+          g.vy = 0;
+        }
+      }
+
+      if (!g.dead && !g.waiting) {
         // 물리: 홀드 상승 / 릴리즈 하강
         if (thrustRef.current) {
           g.vy -= THRUST * dts;
@@ -507,6 +519,15 @@ const NullDive = ({ onClose }) => {
         ctx.fillStyle = '#38f8ff';
         ctx.fillText('>', 0, 0);
         ctx.restore();
+      }
+
+      // 대기 안내
+      if (g.waiting) {
+        ctx.font = 'bold 15px "JetBrains Mono", monospace';
+        ctx.fillStyle = '#00ff41';
+        ctx.globalAlpha = 0.55 + 0.45 * Math.sin(now / 220);
+        ctx.fillText('[ HOLD TO BOOST ]', PLAYER_X + 90, g.y - 34);
+        ctx.globalAlpha = 1;
       }
 
       // 파티클
