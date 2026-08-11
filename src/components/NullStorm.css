@@ -1,0 +1,226 @@
+/* NULLSTORM — 아케이드 패널 (NoteBook 패널과 같은 오버레이 문법) */
+
+.arcade-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 13, 2, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.arcade-cabinet {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 18px 12px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(0, 255, 65, 0.07), transparent 70%),
+    #02150a;
+  border: 2px solid #00ff41;
+  box-shadow:
+    0 0 40px rgba(0, 255, 65, 0.25),
+    inset 0 0 60px rgba(0, 255, 65, 0.05);
+  font-family: 'JetBrains Mono', monospace;
+  color: #00ff41;
+}
+
+.arcade-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.arcade-title {
+  font-size: 15px;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.arcade-hiscore {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0.75;
+  letter-spacing: 1px;
+}
+
+.arcade-close {
+  background: transparent;
+  border: 1px solid #00ff4180;
+  color: #00ff41;
+  font-family: inherit;
+  font-size: 12px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.arcade-close:hover {
+  background: rgba(0, 255, 65, 0.2);
+  border-color: #00ff41;
+}
+
+.arcade-screen {
+  position: relative;
+  border: 1px solid rgba(0, 255, 65, 0.35);
+  cursor: crosshair;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  line-height: 0;
+}
+
+.arcade-canvas {
+  width: min(88vw, 600px);
+  aspect-ratio: 600 / 460;
+  display: block;
+}
+
+/* 스플래시 (타이틀 / 게임오버) */
+.arcade-splash {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  line-height: 1.5;
+  background: rgba(2, 15, 6, 0.82);
+  text-align: center;
+  pointer-events: none;
+}
+
+.arcade-logo {
+  font-size: 22px;
+  letter-spacing: 3px;
+  margin: 0;
+}
+
+.arcade-logo.gameover {
+  color: #ff5544;
+  text-shadow: 0 0 12px rgba(255, 85, 68, 0.7);
+}
+
+.arcade-tag {
+  font-size: 12px;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.arcade-blink {
+  font-size: 13px;
+  margin: 6px 0 0;
+  animation: arcade-blink 1.1s step-end infinite;
+}
+
+@keyframes arcade-blink {
+  50% { opacity: 0.15; }
+}
+
+.arcade-howto {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  opacity: 0.65;
+  margin-top: 8px;
+}
+
+.arcade-final {
+  font-size: 16px;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.arcade-record {
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+  font-size: 13px;
+  margin: 0;
+  animation: arcade-blink 0.7s step-end infinite;
+}
+
+/* 모바일 폭탄 버튼 */
+.arcade-bomb-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: rgba(2, 15, 6, 0.8);
+  border: 1px solid rgba(255, 170, 0, 0.6);
+  color: #ffaa00;
+  font-family: inherit;
+  font-size: 12px;
+  padding: 8px 12px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.arcade-bomb-btn:active {
+  background: rgba(255, 170, 0, 0.25);
+}
+
+/* HUD */
+.arcade-hud {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  flex-wrap: wrap;
+}
+
+.hud-item b {
+  font-weight: 700;
+  color: #aaffcc;
+  margin-left: 4px;
+}
+
+.hud-item b.combo-hot {
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+}
+
+.bomb-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 90px;
+}
+
+.bomb-meter {
+  flex: 1;
+  height: 8px;
+  border: 1px solid rgba(255, 170, 0, 0.5);
+  background: rgba(255, 170, 0, 0.08);
+  overflow: hidden;
+}
+
+.bomb-meter i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: #ffaa00;
+  transition: width 0.15s linear;
+}
+
+.bomb-meter i.bomb-ready {
+  background: #ffd700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.9);
+  animation: arcade-blink 0.5s step-end infinite;
+}
+
+.arcade-footer {
+  font-size: 10px;
+  opacity: 0.5;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .arcade-hud { gap: 10px; font-size: 10px; }
+  .arcade-cabinet { padding: 10px 12px 8px; }
+}

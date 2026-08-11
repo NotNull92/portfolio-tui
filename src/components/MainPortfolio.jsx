@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Target, Clock, Briefcase, Mail, BookOpen } from 'lucide-react';
 import NoteBook from './NoteBook';
+import NullStorm from './NullStorm';
 import { NOTES, NOTE_TYPES } from '../data/notes';
 import ScrambleText from './effects/ScrambleText';
 import AsciiRain from './effects/AsciiRain';
@@ -1501,6 +1502,7 @@ const MainPortfolio = () => {
   }, []);
 
   const explComplete = explored.size >= TABS.length;
+  const [arcadeOpen, setArcadeOpen] = useState(false);
 
   const dismissUnlock = () => {
     try {
@@ -1518,9 +1520,10 @@ const MainPortfolio = () => {
       const idx = Number(e.key) - 1;
       if (idx >= 0 && idx < TABS.length) visitTab(TABS[idx].id);
     };
+    if (arcadeOpen) return; // 게임 중에는 탭 단축키 비활성
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [visitTab]);
+  }, [visitTab, arcadeOpen]);
 
   return (
     <motion.div 
@@ -1547,10 +1550,22 @@ const MainPortfolio = () => {
               <span className="readout-label">STATUS</span>{' '}
               <span className="status-online">ONLINE</span>
             </span>
-            <span className="readout" title="탭을 모두 방문하면 시크릿이 해금됩니다">
-              <span className="readout-label">EXPL</span> {explored.size}/{TABS.length}
-              {explComplete && <span className="expl-star"> ★</span>}
-            </span>
+            {explComplete ? (
+              <button
+                type="button"
+                className="readout expl-arcade-btn"
+                title="NULLSTORM 실행"
+                onClick={() => setArcadeOpen(true)}
+              >
+                <span className="readout-label">EXPL</span> {explored.size}/{TABS.length}
+                <span className="expl-star"> ★</span>
+                <span className="expl-play"> ▶ PLAY</span>
+              </button>
+            ) : (
+              <span className="readout" title="탭을 모두 방문하면 시크릿이 해금됩니다">
+                <span className="readout-label">EXPL</span> {explored.size}/{TABS.length}
+              </span>
+            )}
             <span className="readout">
               <span className="readout-label">UPTIME</span> <UptimeClock />
             </span>
@@ -1579,7 +1594,7 @@ const MainPortfolio = () => {
           ))}
         </div>
 
-        {/* 탐험 완료 보상 배너 (1회성) */}
+        {/* 탐험 완료 보상 배너 (1회성) — 히든 아케이드 해금 */}
         <AnimatePresence>
           {explComplete && !unlockSeen && (
             <motion.div
@@ -1588,10 +1603,20 @@ const MainPortfolio = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
             >
-              <span>
-                {'>'} EXPLORATION COMPLETE ★ 전 구역 탐사 완료 — 부팅 화면에 시크릿 커맨드가 숨어 있습니다. (힌트: sudo)
+              <span className="unlock-msg">
+                ★ EXPLORATION COMPLETE — 전 구역 탐사 완료, 히든 아케이드가 해금되었습니다!
               </span>
-              <button type="button" onClick={dismissUnlock}>[OK]</button>
+              <button
+                type="button"
+                className="unlock-play"
+                onClick={() => {
+                  dismissUnlock();
+                  setArcadeOpen(true);
+                }}
+              >
+                ▶ PLAY NULLSTORM
+              </button>
+              <button type="button" className="unlock-dismiss" onClick={dismissUnlock}>[X]</button>
             </motion.div>
           )}
         </AnimatePresence>
@@ -1620,6 +1645,11 @@ const MainPortfolio = () => {
           </div>
         </div>
       </div>
+
+      {/* NULLSTORM 히든 아케이드 */}
+      <AnimatePresence>
+        {arcadeOpen && <NullStorm onClose={() => setArcadeOpen(false)} />}
+      </AnimatePresence>
 
     </motion.div>
   );
