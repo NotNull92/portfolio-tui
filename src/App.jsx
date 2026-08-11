@@ -7,12 +7,15 @@ import AchievementToast from './components/AchievementToast';
 import './index.css';
 
 function App() {
-  // 같은 세션에서 재방문 시 터미널 생략, ?direct 링크는 즉시 입장 (채용 담당자용)
+  // 같은 세션에서 재방문 시 터미널 생략.
+  // ?direct = 즉시 입장, ?resume = 즉시 입장 + 이력서 뷰 오픈 (채용 담당자용)
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     try {
+      const params = new URLSearchParams(window.location.search);
       return (
         sessionStorage.getItem('tui-authed') === '1' ||
-        new URLSearchParams(window.location.search).has('direct')
+        params.has('direct') ||
+        params.has('resume')
       );
     } catch {
       return false;

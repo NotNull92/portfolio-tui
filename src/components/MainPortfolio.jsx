@@ -5,6 +5,7 @@ import NoteBook from './NoteBook';
 import NullStorm from './NullStorm';
 import NullDive from './NullDive';
 import ArcadeHub from './ArcadeHub';
+import ResumeView from './ResumeView';
 import { ACHIEVEMENTS, readUnlocked, unlockAchievement } from '../achievements';
 import { NOTES, NOTE_TYPES } from '../data/notes';
 import ScrambleText from './effects/ScrambleText';
@@ -1624,6 +1625,15 @@ const MainPortfolio = () => {
   // null | 'hub' | 'nullstorm' — 게임 [X]/ESC 는 허브로, 허브 [X]/ESC 는 포트폴리오로
   const [arcadeView, setArcadeView] = useState(null);
 
+  // 채용 담당자 패스트패스: ?resume 으로 접속하면 이력서 뷰가 열린 채 시작
+  const [resumeOpen, setResumeOpen] = useState(() => {
+    try {
+      return new URLSearchParams(window.location.search).has('resume');
+    } catch {
+      return false;
+    }
+  });
+
   const dismissUnlock = () => {
     try {
       sessionStorage.setItem(EXPL_SEEN_KEY, '1');
@@ -1640,10 +1650,10 @@ const MainPortfolio = () => {
       const idx = Number(e.key) - 1;
       if (idx >= 0 && idx < TABS.length) visitTab(TABS[idx].id);
     };
-    if (arcadeView !== null) return; // 아케이드 중에는 탭 단축키 비활성
+    if (arcadeView !== null || resumeOpen) return; // 오버레이 중에는 탭 단축키 비활성
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [visitTab, arcadeView]);
+  }, [visitTab, arcadeView, resumeOpen]);
 
   return (
     <motion.div 
@@ -1694,6 +1704,14 @@ const MainPortfolio = () => {
               <span className="readout-label">UPTIME</span> <UptimeClock />
             </span>
             <FxToggle />
+            <button
+              type="button"
+              className="resume-entry"
+              onClick={() => setResumeOpen(true)}
+              title="채용 담당자용 30초 요약 (인쇄/PDF 가능)"
+            >
+              RESUME
+            </button>
           </div>
         </div>
 
@@ -1786,6 +1804,11 @@ const MainPortfolio = () => {
         {arcadeView === 'nulldive' && (
           <NullDive key="nulldive" onClose={() => setArcadeView('hub')} />
         )}
+      </AnimatePresence>
+
+      {/* 채용 담당자용 RESUME 뷰 */}
+      <AnimatePresence>
+        {resumeOpen && <ResumeView onClose={() => setResumeOpen(false)} />}
       </AnimatePresence>
 
     </motion.div>

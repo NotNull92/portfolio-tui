@@ -1,0 +1,291 @@
+/* RESUME 뷰 — 채용 담당자 패스트패스. 화면에선 터미널 문법, 인쇄에선 흑백 문서 */
+
+.resume-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.resume-sheet {
+  width: min(94vw, 760px);
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 18px 26px 20px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(0, 255, 65, 0.06), transparent 70%),
+    #02150a;
+  border: 2px solid #00ff41;
+  box-shadow:
+    var(--panel-border-glow),
+    inset 0 0 60px rgba(0, 255, 65, 0.04);
+  font-family: 'JetBrains Mono', monospace;
+  color: #c9f2d6;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.resume-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(0, 255, 65, 0.4);
+}
+
+.resume-toolbar-title {
+  flex: 1;
+  color: #00ff41;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.resume-btn {
+  background: transparent;
+  border: 1px solid rgba(0, 255, 65, 0.5);
+  color: #00ff41;
+  font: inherit;
+  font-size: 12px;
+  padding: 3px 9px;
+  cursor: pointer;
+}
+
+.resume-btn:hover {
+  background: rgba(0, 255, 65, 0.15);
+}
+
+.resume-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.resume-name {
+  margin: 0 0 4px;
+  font-size: 22px;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.resume-alias {
+  font-size: 12px;
+  color: #6fdc94;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+.resume-role {
+  margin: 0;
+  color: #9fe8b8;
+}
+
+.resume-contacts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.resume-contacts a {
+  color: #38f8ff;
+  text-decoration: none;
+}
+
+.resume-contacts a:hover {
+  text-decoration: underline;
+}
+
+.resume-label {
+  display: inline-block;
+  min-width: 74px;
+  opacity: 0.55;
+  letter-spacing: 1px;
+  font-size: 10px;
+}
+
+/* 핵심 성과 4칸 */
+.resume-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.resume-metric {
+  border: 1px solid rgba(0, 255, 65, 0.35);
+  background: rgba(0, 255, 65, 0.04);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.resume-metric-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #00ff41;
+}
+
+.resume-metric-label {
+  font-size: 11px;
+  color: #d9ffe6;
+}
+
+.resume-metric-sub {
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+.resume-section-title {
+  margin: 18px 0 8px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: #00ff41;
+  border-bottom: 1px dashed rgba(0, 255, 65, 0.35);
+  padding-bottom: 4px;
+}
+
+.resume-career {
+  margin-bottom: 12px;
+}
+
+.resume-career-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: #ffffff;
+}
+
+.resume-period {
+  font-size: 11px;
+  opacity: 0.65;
+  font-variant-numeric: tabular-nums;
+}
+
+.resume-career-role {
+  margin: 2px 0 4px;
+  color: #9fe8b8;
+  font-size: 12px;
+}
+
+.resume-career ul,
+.resume-side,
+.resume-etc {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.resume-career li,
+.resume-side li,
+.resume-etc li {
+  margin-bottom: 3px;
+}
+
+.resume-side strong {
+  color: #d9ffe6;
+}
+
+.resume-skills {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resume-skills li {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.resume-foot {
+  margin-top: 18px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0, 255, 65, 0.35);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+/* 헤더 진입 버튼 — 초록 반전으로 시인성 확보 */
+.resume-entry {
+  background: #00ff41;
+  border: 1px solid #00ff41;
+  color: #000d02;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 1px 9px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.resume-entry:hover {
+  background: #66ffa0;
+  border-color: #66ffa0;
+}
+
+/* --- 인쇄: CRT 를 전부 벗기고 흑백 문서로 --- */
+@media print {
+  body.resume-open .crt-fx,
+  body.resume-open .cursor-glow,
+  body.resume-open .ach-toast-host,
+  body.resume-open .portfolio-content {
+    display: none !important;
+  }
+
+  body.resume-open {
+    background: #ffffff !important;
+  }
+
+  body.resume-open .resume-overlay {
+    position: static;
+    background: #ffffff;
+    padding: 0;
+    display: block;
+  }
+
+  body.resume-open .resume-sheet {
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    background: #ffffff;
+    border: none;
+    box-shadow: none;
+    color: #111111;
+    font-size: 12px;
+  }
+
+  body.resume-open .resume-sheet * {
+    color: #111111 !important;
+    text-shadow: none !important;
+    background: transparent !important;
+  }
+
+  body.resume-open .resume-metric {
+    border: 1px solid #999999;
+  }
+
+  body.resume-open .resume-section-title,
+  body.resume-open .resume-toolbar {
+    border-color: #999999;
+  }
+
+  body.resume-open .resume-btn,
+  body.resume-open .resume-foot-hint {
+    display: none;
+  }
+}
