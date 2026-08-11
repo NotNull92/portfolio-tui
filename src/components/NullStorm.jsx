@@ -63,6 +63,10 @@ const SFX = {
   fire: () => beep(760 + Math.random() * 120, 0.05, { vol: 0.012, slide: -350 }),
   hit: () => beep(180, 0.05, { type: 'sawtooth', vol: 0.035 }),
   kill: () => beep(240, 0.12, { type: 'sawtooth', vol: 0.05, slide: 380 }),
+  split: () => {
+    beep(520, 0.08, { vol: 0.035, slide: 260 });
+    beep(660, 0.1, { vol: 0.035, delay: 0.07, slide: 300 });
+  },
   escape: () => beep(140, 0.28, { vol: 0.06, slide: -70 }),
   bomb: () => {
     beep(90, 0.5, { type: 'sawtooth', vol: 0.09, slide: -55 });
@@ -120,14 +124,82 @@ const makeBoss = (round) => {
   };
 };
 
+// 적 도감 — Unity 개발자의 실제 공포들
+// minWave 로 등장 시점을 늦춰 웨이브마다 "새 적이 나왔다"는 사건을 만든다
+const ENEMY_TYPES = {
+  NULLREF: {
+    label: 'NULLREF', hp: 1, points: 10, speedMul: 1, wobble: 14,
+    color: '#ff5544', minWave: 1, weight: 5,
+  },
+  GCALLOC: {
+    // GC 스파이크: 빠르고 산만하게 흔들린다
+    label: 'GC.ALLOC', hp: 1, points: 20, speedMul: 1.5, wobble: 30,
+    color: '#ffdd55', minWave: 2, weight: 3.5,
+  },
+  RAYCAST: {
+    // 직선으로 내리꽂힌다 — 흔들림 없음, 최고 속도
+    label: 'RAYCAST', hp: 1, points: 25, speedMul: 2.2, wobble: 0,
+    color: '#38f8ff', minWave: 3, weight: 2.5,
+  },
+  COROUTINE: {
+    // yield 로 좌우를 크게 오간다 — 조준이 까다롭다
+    label: 'COROUTINE', hp: 2, points: 35, speedMul: 0.85, wobble: 95,
+    color: '#a855f7', minWave: 4, weight: 2.5,
+  },
+  PREFAB: {
+    // Instantiate: 처치하면 (CLONE) 2기로 분열한다
+    label: 'PREFAB', hp: 2, points: 30, speedMul: 0.95, wobble: 16,
+    color: '#00ff41', minWave: 6, weight: 2, splits: 2,
+  },
+  DRAWCALL: {
+    // 배칭 실패한 탱커 — 느리지만 4방
+    label: 'DRAWCALL', hp: 4, points: 70, speedMul: 0.6, wobble: 8,
+    color: '#ff8800', minWave: 7, weight: 1.5,
+  },
+  CLONE: {
+    // PREFAB 분열 자식 — 스폰 테이블에는 없다 (weight 0)
+    label: '(CLONE)', hp: 1, points: 15, speedMul: 1.35, wobble: 22,
+    color: '#88ffaa', minWave: 99, weight: 0,
+  },
+};
+
+const pickEnemyType = (wave) => {
+  const pool = Object.entries(ENEMY_TYPES).filter(([, t]) => t.weight > 0 && wave >= t.minWave);
+  const total = pool.reduce((s, [, t]) => s + t.weight, 0);
+  let r = Math.random() * total;
+  for (const [key, t] of pool) {
+    r -= t.weight;
+    if (r <= 0) return key;
+  }
+  return 'NULLREF';
+};
+
+const makeEnemy = (key, x, y, baseSpeed) => {
+  const t = ENEMY_TYPES[key];
+  return {
+    kind: key,
+    type: t.label,
+    x, y,
+    hp: t.hp,
+    maxHp: t.hp,
+    points: t.points,
+    speed: baseSpeed * t.speedMul * (0.85 + Math.random() * 0.3),
+    wobAmp: t.wobble,
+    wob: Math.random() * Math.PI * 2, // 좌우 흔들림 위상
+    color: t.color,
+    splits: t.splits || 0,
+    flash: 0,
+    knock: 0,
+  };
+};
+
 // 웨이브별 난이도 곡선
-// 압박의 축: 물량(스폰 간격, 하한 420ms)이 아니라 낙하 속도로 조인다
+// 압박의 축: 물량(스폰 간격, 하한 340ms)이 아니라 낙하 속도로 조인다
 // — 물량사는 억울하지만 속도사는 "내가 못 잡은 것"이라 재시작을 부른다
 const waveSpec = (wave) => ({
-  count: 8 + wave * 3,
-  spawnInterval: Math.max(650 - (wave - 1) * 60, 420),
-  speed: 30 + wave * 9,
-  npeChance: wave >= 2 ? Math.min(0.15 + wave * 0.04, 0.45) : 0,
+  count: 10 + wave * 4,
+  spawnInterval: Math.max(600 - (wave - 1) * 65, 340),
+  speed: 34 + wave * 10,
 });
 
 const makeStars = () =>
@@ -400,18 +472,9 @@ const NullStorm = ({ onClose }) => {
         g.spawnTimer -= dt;
         if (g.spawnTimer <= 0) {
           g.spawnTimer = spec.spawnInterval * (0.7 + Math.random() * 0.6);
-          const isNpe = Math.random() < spec.npeChance;
-          g.enemies.push({
-            x: 30 + Math.random() * (W - 60),
-            y: -14,
-            type: isNpe ? 'NPE' : 'BUG',
-            hp: isNpe ? 2 : 1,
-            points: isNpe ? 30 : 10,
-            speed: spec.speed * (isNpe ? 0.8 : 1) * (0.85 + Math.random() * 0.3),
-            wob: Math.random() * Math.PI * 2, // 좌우 흔들림 위상
-            flash: 0,
-            knock: 0,
-          });
+          g.enemies.push(
+            makeEnemy(pickEnemyType(g.wave), 40 + Math.random() * (W - 80), -14, spec.speed)
+          );
           g.spawned += 1;
         }
       } else if (g.enemies.length === 0) {
@@ -432,17 +495,9 @@ const NullStorm = ({ onClose }) => {
         if (b.summonTimer <= 0) {
           b.summonTimer = bs.summonInterval;
           for (const off of [-40, 40]) {
-            g.enemies.push({
-              x: Math.max(30, Math.min(W - 30, b.x + off)),
-              y: b.y + 24,
-              type: 'BUG',
-              hp: 1,
-              points: 10,
-              speed: spec.speed * (0.85 + Math.random() * 0.3),
-              wob: Math.random() * Math.PI * 2,
-              flash: 0,
-              knock: 0,
-            });
+            g.enemies.push(
+              makeEnemy('NULLREF', Math.max(40, Math.min(W - 40, b.x + off)), b.y + 24, spec.speed)
+            );
           }
         }
 
@@ -485,7 +540,8 @@ const NullStorm = ({ onClose }) => {
         }
         e.y += e.speed * dts;
         e.wob += dts * 2;
-        e.x += Math.sin(e.wob) * 14 * dts;
+        e.x += Math.sin(e.wob) * e.wobAmp * dts;
+        e.x = Math.max(30, Math.min(W - 30, e.x));
         if (e.y > SHIP_Y - 4) {
           g.lives -= 1;
           g.streak = 0;
@@ -497,10 +553,11 @@ const NullStorm = ({ onClose }) => {
         return true;
       });
 
-      // 충돌 판정
+      // 충돌 판정 — 분열체는 큐에 모았다가 루프 후 투입 (순회 중 배열 변형 방지)
+      const spawnQueue = [];
       for (const b of g.bullets) {
         for (const e of g.enemies) {
-          const ew = e.type.length * 11;
+          const ew = e.type.length * 9; // 모노스페이스 15px 기준 실제 글자폭
           if (Math.abs(b.x - e.x) < ew / 2 + 4 && Math.abs(b.y - e.y) < 13) {
             b.hit = true;
             e.hp -= 1;
@@ -510,13 +567,13 @@ const NullStorm = ({ onClose }) => {
               e.dead = true;
               g.streak += 1;
               g.comboFlash = 300;
-              g.hitstop = Math.max(g.hitstop, e.type === 'NPE' ? 60 : 35);
-              g.shake = Math.max(g.shake, 90);
+              g.hitstop = Math.max(g.hitstop, e.maxHp >= 4 ? 95 : e.maxHp >= 2 ? 60 : 35);
+              g.shake = Math.max(g.shake, e.maxHp >= 4 ? 160 : 90);
               const mult = multiplierOf(g.streak);
               const gained = e.points * mult;
               g.score += gained;
               g.bombGauge = Math.min(g.bombGauge + 8, 100);
-              pushPopup(g, e.x, e.y - 6, `+${gained}`, e.type === 'NPE' ? '#ffaa00' : '#aaffcc', popupSize(gained));
+              pushPopup(g, e.x, e.y - 6, `+${gained}`, e.color, popupSize(gained));
               if (mult > g.lastMult) {
                 // 콤보 배율이 오를수록 팝업도 확 커진다
                 pushPopup(g, e.x, e.y - 30, `COMBO x${mult}!`, '#ffd700', 11 + mult * 2.4, 850);
@@ -524,6 +581,15 @@ const NullStorm = ({ onClose }) => {
               }
               g.lastMult = mult;
               SFX.kill();
+              // PREFAB: Instantiate — 처치하면 (CLONE) 로 분열한다
+              if (e.splits > 0) {
+                for (let s = 0; s < e.splits; s++) {
+                  const child = makeEnemy('CLONE', e.x + (s === 0 ? -26 : 26), e.y, spec.speed);
+                  spawnQueue.push(child);
+                }
+                pushPopup(g, e.x, e.y - 46, 'INSTANTIATE!', '#00ff41', 15, 800);
+                SFX.split();
+              }
               for (let i = 0; i < 5; i++) {
                 g.particles.push({
                   x: e.x, y: e.y,
@@ -531,7 +597,7 @@ const NullStorm = ({ onClose }) => {
                   vy: (Math.random() - 0.5) * 180 - 40,
                   life: 400,
                   char: ['*', '+', '·', '×', '¤'][i],
-                  color: e.type === 'NPE' ? '#ffaa00' : '#ff5544',
+                  color: e.color,
                 });
               }
             } else {
@@ -543,6 +609,7 @@ const NullStorm = ({ onClose }) => {
       }
       g.bullets = g.bullets.filter((b) => !b.hit);
       g.enemies = g.enemies.filter((e) => !e.dead);
+      if (spawnQueue.length) g.enemies.push(...spawnQueue);
 
       // 보스 피격 / 격파
       if (g.boss) {
@@ -664,17 +731,25 @@ const NullStorm = ({ onClose }) => {
         for (const s of g.shards) ctx.fillText('ERR', s.x, s.y);
       }
 
-      // 적 (피격 시 흰색 플래시)
+      // 적 (피격 시 흰색 플래시, 체력 소모 시 흐려진다)
       ctx.font = 'bold 15px "JetBrains Mono", monospace';
       for (const e of g.enemies) {
         if (e.flash > 0) {
           ctx.fillStyle = '#ffffff';
-        } else if (e.type === 'NPE') {
-          ctx.fillStyle = e.hp === 2 ? '#ffaa00' : '#ffdd88';
         } else {
-          ctx.fillStyle = '#ff5544';
+          ctx.fillStyle = e.color;
+          // 남은 체력 비율로 알파 — 몇 대 더 때려야 하는지 한눈에 보인다
+          ctx.globalAlpha = e.maxHp > 1 ? 0.55 + 0.45 * (e.hp / e.maxHp) : 1;
         }
         ctx.fillText(e.type, e.x, e.y);
+        ctx.globalAlpha = 1;
+        // 다체력 적은 아래에 잔여 HP 핍
+        if (e.maxHp > 1 && e.hp > 0) {
+          ctx.font = '9px "JetBrains Mono", monospace';
+          ctx.fillStyle = e.color;
+          ctx.fillText('▮'.repeat(e.hp), e.x, e.y + 13);
+          ctx.font = 'bold 15px "JetBrains Mono", monospace';
+        }
       }
 
       // 기체 (속도 기울임 + 발사 반동 + 머즐 플래시)
@@ -867,13 +942,16 @@ const NullStorm = ({ onClose }) => {
           {phase === 'title' && (
             <div className="arcade-splash">
               <pre className="arcade-logo text-glow-strong">{`███ NULLSTORM ███`}</pre>
-              <p className="arcade-tag">null 탄막을 뿌려 BUG 를 격추하라</p>
+              <p className="arcade-tag">null 탄막을 뿌려 런타임 에러를 격추하라</p>
               <p className="arcade-blink">[ CLICK / SPACE TO START ]</p>
               <div className="arcade-howto">
                 <span>A/D · ←→ — 이동 (터치: 누른 채 드래그)</span>
-                <span>스페이스/클릭 홀드 — 연사</span>
-                <span>B / 우클릭 — 폭탄 (게이지 풀차지 시)</span>
+                <span>스페이스/클릭 홀드 — 연사 · B / 우클릭 — 폭탄</span>
                 <span>적이 바닥에 닿으면 ♥ 감소</span>
+                <span className="howto-bestiary">
+                  NULLREF · GC.ALLOC · RAYCAST · COROUTINE · PREFAB · DRAWCALL
+                </span>
+                <span>웨이브가 깊어질수록 새 에러가 배포된다</span>
               </div>
             </div>
           )}

@@ -54,7 +54,7 @@ const ArcadeHub = ({ onClose, onSelect }) => {
           <button type="button" className="hub-slot" onClick={() => onSelect('nullstorm')}>
             <span className="hub-slot-no">01</span>
             <span className="hub-slot-title">NULLSTORM</span>
-            <span className="hub-slot-desc">null 탄막을 뿌려 BUG 를 격추하라</span>
+            <span className="hub-slot-desc">null 탄막을 뿌려 런타임 에러를 격추하라</span>
             <span className="hub-slot-meta">HI-SCORE {String(readHiscore('nullstorm-hiscore')).padStart(6, '0')}</span>
             <span className="hub-slot-play">[ INSERT COIN ]</span>
           </button>
