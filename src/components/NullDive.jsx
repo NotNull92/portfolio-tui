@@ -59,8 +59,51 @@ const beep = (freq, dur, { type = 'square', vol = 0.04, slide = 0, delay = 0 } =
   }
 };
 
+// 엔진 험 — 속도에 피치가 붙는 연속 저음 (플레이 중에만)
+let hum = null;
+
+const startHum = () => {
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.value = 46;
+    gain.gain.value = 0;
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    hum = { osc, gain };
+  } catch {
+    /* 오디오 미지원 환경 무시 */
+  }
+};
+
+const setHum = (speed, active) => {
+  if (!hum) return;
+  try {
+    hum.osc.frequency.setTargetAtTime(40 + speed * 0.09, audioCtx.currentTime, 0.1);
+    hum.gain.gain.setTargetAtTime(sfxMuted || !active ? 0 : 0.016, audioCtx.currentTime, 0.08);
+  } catch {
+    /* 무시 */
+  }
+};
+
+const stopHum = () => {
+  if (!hum) return;
+  try {
+    hum.gain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.05);
+    const h = hum;
+    setTimeout(() => { try { h.osc.stop(); } catch { /* 무시 */ } }, 300);
+  } catch {
+    /* 무시 */
+  }
+  hum = null;
+};
+
 const SFX = {
   thrust: () => beep(140 + Math.random() * 40, 0.06, { type: 'sawtooth', vol: 0.012, slide: 60 }),
+  graze: () => beep(2200 + Math.random() * 600, 0.04, { vol: 0.014, slide: -1200 }),
   token: () => {
     beep(880, 0.07, { vol: 0.04 });
     beep(1320, 0.09, { vol: 0.04, delay: 0.06 });
@@ -116,6 +159,17 @@ const freshGame = () => {
     particles: [],
     popups: [],
     lines: Array.from({ length: 9 }, () => ({ x: Math.random() * W, y: Math.random() * H, len: 20 + Math.random() * 40 })),
+    // 원경 패럴랙스 — 느리게 흐르는 흐릿한 코드 글리프
+    far: Array.from({ length: 22 }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      c: WALL_CHARS[Math.floor(Math.random() * WALL_CHARS.length)],
+      a: 0.05 + Math.random() * 0.08,
+    })),
+    trail: [], // 커서 고스트 잔상
+    grazeSfx: 0,
+    wallFlash: 0,
+    deathFlash: 0,
     tokensGot: 0,
     bonus: 0,
     waiting: true, // 첫 입력 전까지 물리 정지 — 시작하자마자 추락사하지 않게
@@ -263,6 +317,7 @@ const NullDive = ({ onClose }) => {
 
     let raf;
     let last = performance.now();
+    startHum();
 
     const tick = (now) => {
       const rawDt = Math.min(now - last, 50);
@@ -336,6 +391,7 @@ const NullDive = ({ onClose }) => {
           g.dead = true;
           g.slowmo = 650;
           g.shake = 400;
+          g.deathFlash = 130; // 충돌 순간 화이트 임팩트
           SFX.crash();
           for (let i = 0; i < 18; i++) {
             g.particles.push({
@@ -371,6 +427,14 @@ const NullDive = ({ onClose }) => {
                 color: '#ffd700',
               });
             }
+            // 그레이즈 사운드 (스로틀)
+            g.grazeSfx -= dt;
+            if (g.grazeSfx <= 0) {
+              g.grazeSfx = 130;
+              SFX.graze();
+            }
+          } else {
+            g.grazeSfx = 0;
           }
         }
         // 화면 밖(터널 밖 상하단)도 사망
@@ -408,12 +472,17 @@ const NullDive = ({ onClose }) => {
           return true;
         });
 
-        // 깊이 마일스톤
+        // 깊이 마일스톤 — 벽 플래시 + 속도 상승 표시
         if (loc >= g.nextMilestone) {
           g.popups.push({ x: W / 2, y: 60, text: `DEPTH ${g.nextMilestone} LOC`, life: 900, maxLife: 900, color: '#00ff41', size: 16 });
+          g.popups.push({ x: W / 2, y: 84, text: 'VELOCITY +', life: 700, maxLife: 700, color: '#38f8ff', size: 11 });
+          g.wallFlash = 450;
           g.nextMilestone += 500;
           SFX.milestone();
         }
+
+        // 커서 고스트 잔상
+        g.trail.push({ wx: g.worldX + PLAYER_X, y: g.y, rot: Math.max(-0.5, Math.min(0.5, g.vy / 600)), life: 240 });
         // 업적: 3000 LOC
         if (!g.hit3k && loc + g.bonus >= 3000) {
           g.hit3k = true;
@@ -441,7 +510,23 @@ const NullDive = ({ onClose }) => {
           l.len = 20 + Math.random() * 40;
         }
       }
+      for (const f of g.far) {
+        f.x -= d.speed * 0.35 * dts;
+        if (f.x < -10) {
+          f.x = W + Math.random() * 40;
+          f.y = Math.random() * H;
+        }
+      }
+      g.trail = g.trail.filter((t) => {
+        t.life -= rawDt;
+        return t.life > 0;
+      });
       g.shake = Math.max(g.shake - rawDt, 0);
+      g.wallFlash = Math.max(g.wallFlash - rawDt, 0);
+      g.deathFlash = Math.max(g.deathFlash - rawDt, 0);
+
+      // 엔진 험: 속도 비례 피치, 대기/사망 시 음소거
+      setHum(d.speed, !g.waiting && !g.dead);
 
       // --- draw ---
       ctx.save();
@@ -451,6 +536,18 @@ const NullDive = ({ onClose }) => {
       }
       ctx.fillStyle = '#020f06';
       ctx.fillRect(-12, -12, W + 24, H + 24);
+
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      // 원경 패럴랙스 (벽보다 먼저 — 벽 뒤에 깔린다)
+      ctx.font = '10px "JetBrains Mono", monospace';
+      for (const f of g.far) {
+        ctx.globalAlpha = f.a;
+        ctx.fillStyle = '#00ff41';
+        ctx.fillText(f.c, f.x, f.y);
+      }
+      ctx.globalAlpha = 1;
 
       // 속도감 라인
       ctx.strokeStyle = 'rgba(0, 255, 65, 0.10)';
@@ -462,9 +559,6 @@ const NullDive = ({ onClose }) => {
         ctx.stroke();
       }
 
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-
       // 터널 벽
       for (const seg of g.segs) {
         const sx = seg.x - g.worldX;
@@ -472,10 +566,16 @@ const NullDive = ({ onClose }) => {
         ctx.fillStyle = 'rgba(0, 80, 30, 0.55)';
         ctx.fillRect(sx, -12, SEG + 1, seg.top + 12);
         ctx.fillRect(sx, seg.bottom, SEG + 1, H - seg.bottom + 12);
-        // 벽 경계 하이라이트
-        ctx.fillStyle = '#00ff41';
-        ctx.fillRect(sx, seg.top - 2, SEG + 1, 2);
-        ctx.fillRect(sx, seg.bottom, SEG + 1, 2);
+        // 벽 경계 하이라이트 (마일스톤 순간 골드 플래시)
+        if (g.wallFlash > 0) {
+          ctx.fillStyle = `rgba(255, 215, 0, ${0.4 + (g.wallFlash / 450) * 0.6})`;
+          ctx.fillRect(sx, seg.top - 3, SEG + 1, 3);
+          ctx.fillRect(sx, seg.bottom, SEG + 1, 3);
+        } else {
+          ctx.fillStyle = '#00ff41';
+          ctx.fillRect(sx, seg.top - 2, SEG + 1, 2);
+          ctx.fillRect(sx, seg.bottom, SEG + 1, 2);
+        }
         // 벽 내부 코드 글리프
         ctx.font = '11px "JetBrains Mono", monospace';
         for (const c of seg.chars) {
@@ -501,20 +601,51 @@ const NullDive = ({ onClose }) => {
         ctx.fillText('[DEPRECATED]', sx, o.y);
       }
 
-      // null 토큰
+      // null 토큰 — 바운스 + 트윙클
       ctx.font = 'bold 13px "JetBrains Mono", monospace';
-      ctx.fillStyle = '#a855f7';
       for (const t of g.tokens) {
         const sx = t.x - g.worldX;
         if (sx < -20 || sx > W + 20) continue;
-        ctx.fillText('null', sx, t.y);
+        const bob = Math.sin(now / 260 + t.x * 0.05) * 3;
+        ctx.fillStyle = '#a855f7';
+        ctx.fillText('null', sx, t.y + bob);
+        if (Math.random() < 0.04) {
+          ctx.globalAlpha = 0.8;
+          ctx.fillStyle = '#e9d5ff';
+          ctx.fillText('+', sx + (Math.random() - 0.5) * 22, t.y + bob + (Math.random() - 0.5) * 16);
+          ctx.globalAlpha = 1;
+        }
       }
 
-      // 플레이어 커서 (속도 기울임)
+      // 커서 고스트 잔상
+      for (const t of g.trail) {
+        const sx = t.wx - g.worldX;
+        if (sx < -20) continue;
+        ctx.save();
+        ctx.translate(sx, t.y);
+        ctx.rotate(t.rot);
+        ctx.globalAlpha = (t.life / 240) * 0.3;
+        ctx.font = 'bold 20px "JetBrains Mono", monospace';
+        ctx.fillStyle = '#38f8ff';
+        ctx.fillText('>', 0, 0);
+        ctx.restore();
+      }
+      ctx.globalAlpha = 1;
+
+      // 플레이어 커서 (속도 기울임 + 스쿼시&스트레치 + 부스터 화염)
       if (!g.dead) {
         ctx.save();
         ctx.translate(PLAYER_X, g.y);
         ctx.rotate(Math.max(-0.5, Math.min(0.5, g.vy / 600)));
+        const stretch = Math.min(Math.abs(g.vy) / 900, 0.3);
+        ctx.scale(1 + stretch, 1 - stretch * 0.5);
+        if (thrustRef.current && !g.waiting) {
+          ctx.font = 'bold 14px "JetBrains Mono", monospace';
+          ctx.fillStyle = '#ffaa00';
+          ctx.globalAlpha = 0.7 + Math.random() * 0.3;
+          ctx.fillText('≋', -16, 4);
+          ctx.globalAlpha = 1;
+        }
         ctx.font = 'bold 20px "JetBrains Mono", monospace';
         ctx.fillStyle = '#38f8ff';
         ctx.fillText('>', 0, 0);
@@ -550,6 +681,14 @@ const NullDive = ({ onClose }) => {
       }
       ctx.globalAlpha = 1;
 
+      // 충돌 순간 화이트 임팩트 플래시
+      if (g.deathFlash > 0) {
+        ctx.globalAlpha = (g.deathFlash / 130) * 0.75;
+        ctx.fillStyle = '#eaffea';
+        ctx.fillRect(-12, -12, W + 24, H + 24);
+        ctx.globalAlpha = 1;
+      }
+
       // 사망 붉은 비네트
       if (g.dead) {
         const a = (g.slowmo / 650) * 0.35;
@@ -571,7 +710,10 @@ const NullDive = ({ onClose }) => {
     };
 
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      stopHum();
+    };
   }, [phase, endGame]);
 
   // 포인터: 홀드 = 부스터
