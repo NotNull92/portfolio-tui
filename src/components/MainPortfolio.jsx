@@ -1525,9 +1525,10 @@ const MainPortfolio = () => {
     }
     return s;
   });
+  // 해금 배너도 세션 단위 — 매 세션 6/6 달성 순간마다 다시 띄운다
   const [unlockSeen, setUnlockSeen] = useState(() => {
     try {
-      return localStorage.getItem(EXPL_SEEN_KEY) === '1';
+      return sessionStorage.getItem(EXPL_SEEN_KEY) === '1';
     } catch {
       return true;
     }
@@ -1561,9 +1562,9 @@ const MainPortfolio = () => {
 
   const dismissUnlock = () => {
     try {
-      localStorage.setItem(EXPL_SEEN_KEY, '1');
+      sessionStorage.setItem(EXPL_SEEN_KEY, '1');
     } catch {
-      /* localStorage 사용 불가 시 무시 */
+      /* sessionStorage 사용 불가 시 무시 */
     }
     setUnlockSeen(true);
   };
