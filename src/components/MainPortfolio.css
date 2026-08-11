@@ -1542,28 +1542,29 @@
   100% { transform: scale(1); color: inherit; }
 }
 
-/* CRT 연출 강도 토글 */
+/* CRT 연출 강도 토글 — 눈이 불편한 방문자가 바로 찾아야 하는 버튼 */
 .fx-toggle {
-  background: none;
-  border: 1px solid rgba(0, 255, 65, 0.35);
-  color: inherit;
+  background: rgba(0, 255, 65, 0.08);
+  border: 1px solid rgba(0, 255, 65, 0.7);
+  color: #00ff41;
   font: inherit;
-  padding: 1px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 4px 12px;
   cursor: pointer;
-  opacity: 0.7;
   white-space: nowrap;
-  transition: opacity 0.2s ease, border-color 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .fx-toggle:hover {
-  opacity: 1;
-  border-color: rgba(0, 255, 65, 0.8);
+  background: rgba(0, 255, 65, 0.18);
+  border-color: #00ff41;
 }
 
 .fx-toggle.on {
-  opacity: 1;
-  border-color: rgba(0, 255, 65, 0.8);
-  background: rgba(0, 255, 65, 0.1);
+  border-color: #00ff41;
+  background: rgba(0, 255, 65, 0.16);
 }
 
 /* STAT 성과 카드 — 첫 화면 헤드라인 숫자 4칸 */

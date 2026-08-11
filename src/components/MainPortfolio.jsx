@@ -1614,10 +1614,10 @@ const FxToggle = () => {
       type="button"
       className={`fx-toggle ${max ? 'on' : ''}`}
       onClick={() => setMax((v) => !v)}
-      title={max ? 'CRT 연출 강도: MAX — 누르면 편안한 모드로' : 'CRT 연출 강도: COMFORT — 누르면 풀 CRT 로'}
+      title={max ? 'CRT 글로우·깜빡임 등 효과를 끕니다 (눈이 편한 모드)' : '풀 CRT 연출을 켭니다 (글로우·깜빡임·색수차)'}
       aria-pressed={max}
     >
-      FX {max ? 'MAX' : 'SOFT'}
+      {max ? 'UI 효과 제거' : 'UI 효과 켜기'}
     </button>
   );
 };
@@ -1804,7 +1804,7 @@ const MainPortfolio = () => {
               onClick={() => setResumeOpen(true)}
               title="채용 담당자용 30초 요약 (인쇄/PDF 가능)"
             >
-              RESUME
+              📄 이력서
             </button>
           </div>
         </div>
