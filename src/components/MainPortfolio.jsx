@@ -1638,12 +1638,12 @@ const UptimeClock = () => {
 
 // sub: RPG 라벨의 해독 비용을 없애는 보조 표기 (채용 담당자용 길찾기)
 const TABS = [
-  { id: 'stat', label: 'STAT', sub: 'PROFILE', icon: User },
-  { id: 'logs', label: 'LOGS', sub: 'CAREER', icon: Clock },
-  { id: 'quests', label: 'QUESTS', sub: 'PROJECTS', icon: Target },
-  { id: 'inventory', label: 'INVENTORY', sub: 'SKILLS', icon: Briefcase },
-  { id: 'notes', label: 'NOTES', sub: 'WRITING', icon: BookOpen },
-  { id: 'contact', label: 'CONTACT', icon: Mail },
+  { id: 'stat', label: 'STAT', sub: '프로필', icon: User },
+  { id: 'logs', label: 'LOGS', sub: '경력', icon: Clock },
+  { id: 'quests', label: 'QUESTS', sub: '프로젝트', icon: Target },
+  { id: 'inventory', label: 'INVENTORY', sub: '기술 스택', icon: Briefcase },
+  { id: 'notes', label: 'NOTES', sub: '글', icon: BookOpen },
+  { id: 'contact', label: 'CONTACT', sub: '연락처', icon: Mail },
 ];
 
 // 탐험 도장 — 방문한 탭을 sessionStorage 에 도장 찍는다
