@@ -1606,23 +1606,24 @@
   opacity: 0.6;
 }
 
-/* 탭 보조 표기 — RPG 라벨 해독용 (QUESTS -> PROJECTS 등) */
+/* 탭 보조 표기 — RPG 라벨 해독용 (QUESTS -> 프로젝트 등) */
 .tab-label-wrap {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  line-height: 1.15;
+  align-items: center;
+  line-height: 1.25;
 }
 
 .tab-sub {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 1px;
-  opacity: 0.55;
+  opacity: 0.75;
+  color: #88ddaa;
 }
 
 .tab-button.active .tab-sub,
 .tab-button:hover .tab-sub {
-  opacity: 0.75;
+  opacity: 1;
 }
 
 /* 모달 TL;DR — 3줄만 읽고 닫아도 핵심이 전달되게 */
