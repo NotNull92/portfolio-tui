@@ -831,15 +831,14 @@ const NullStorm = ({ onClose }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      onClick={onClose}
     >
+      {/* 오버레이 클릭 닫기 없음 — 게임 중 오클릭으로 꺼지면 판이 날아간다. 닫기는 [X]/ESC 만 */}
       <motion.div
         className="arcade-cabinet"
         initial={{ scale: 0.92, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.94, opacity: 0 }}
         transition={{ duration: 0.25, ease: [0.19, 1, 0.22, 1] }}
-        onClick={(e) => e.stopPropagation()}
       >
         <div className="arcade-header">
           <span className="arcade-title text-glow-strong">▶ NULLSTORM</span>
