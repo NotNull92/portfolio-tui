@@ -29,16 +29,20 @@ const CursorGlow = () => {
         raf = 0;
       }
     };
+    // FX 강도별 최대 밝기 (index.css 의 --cursor-glow-max 와 동일 값).
+    // mousemove 마다 getComputedStyle 을 부르면 애니메이션으로 스타일이
+    // 무효화된 상태에서 강제 재계산이 일어나 호출당 ~1.7ms — 트랙패드처럼
+    // 이벤트가 조밀한 환경(Mac)에서 프레임 드랍의 원인이 되므로 캐시한다.
+    const maxOpacity = () => (document.documentElement.dataset.fx === 'max' ? '1' : '0.45');
+
     const onMove = (e) => {
       tx = e.clientX;
       ty = e.clientY;
-      // FX 강도에 따라 최대 밝기를 제한 (COMFORT 에서는 은은하게)
-      el.style.opacity = getComputedStyle(document.documentElement)
-        .getPropertyValue('--cursor-glow-max').trim() || '1';
+      el.style.opacity = maxOpacity();
       if (!raf) raf = requestAnimationFrame(loop);
     };
 
-    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mousemove', onMove, { passive: true });
     return () => {
       window.removeEventListener('mousemove', onMove);
       cancelAnimationFrame(raf);
