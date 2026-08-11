@@ -497,7 +497,7 @@ const QuestsTab = () => {
 [프로젝트 개요]
 • 개발 기간: 2026.04 ~ 진행 중 (프로토타입 완료)
 • 장르: 로그라이크 (주사위 기반 전투 + 서사 분기)
-• 플랫폼: Steam (PC), BIC 출품 대상
+• 플랫폼: Steam (PC) — 출시 예정
 • 팀 구성: 1인 개발
 • 사용 기술: C#, Unity, DOTween, Odin Inspector, UniTask
 
