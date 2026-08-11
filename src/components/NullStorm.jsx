@@ -84,10 +84,12 @@ const SFX = {
 };
 
 // 웨이브별 난이도 곡선
+// 압박의 축: 물량(스폰 간격, 하한 420ms)이 아니라 낙하 속도로 조인다
+// — 물량사는 억울하지만 속도사는 "내가 못 잡은 것"이라 재시작을 부른다
 const waveSpec = (wave) => ({
   count: 8 + wave * 3,
-  spawnInterval: Math.max(1000 - wave * 70, 300),
-  speed: 26 + wave * 7,
+  spawnInterval: Math.max(650 - (wave - 1) * 60, 420),
+  speed: 30 + wave * 9,
   npeChance: wave >= 2 ? Math.min(0.15 + wave * 0.04, 0.45) : 0,
 });
 
@@ -113,8 +115,8 @@ const freshGame = () => ({
   lives: 3,
   wave: 1,
   spawned: 0,
-  spawnTimer: 800,
-  intermission: 1200, // 첫 WAVE 배너
+  spawnTimer: 200,
+  intermission: 800, // 첫 WAVE 배너 (짧게 — 시작 10초 안에 첫 콤보가 돌게)
   bombGauge: 0,
   bombFlash: 0,
   bombWave: 0, // 충격파 반경 진행
@@ -124,7 +126,7 @@ const freshGame = () => ({
   fireTimer: 0,
 });
 
-const multiplierOf = (streak) => Math.min(1 + Math.floor(streak / 5), 8);
+const multiplierOf = (streak) => Math.min(1 + Math.floor(streak / 4), 8);
 
 // 플로팅 텍스트 — 수치가 클수록 크게, 갭을 넓게 잡아 손맛을 만든다 (9px ~ 32px)
 const popupSize = (value) => 9 + Math.min(value / 7, 23);
@@ -393,7 +395,7 @@ const NullStorm = ({ onClose }) => {
               const mult = multiplierOf(g.streak);
               const gained = e.points * mult;
               g.score += gained;
-              g.bombGauge = Math.min(g.bombGauge + 6, 100);
+              g.bombGauge = Math.min(g.bombGauge + 8, 100);
               pushPopup(g, e.x, e.y - 6, `+${gained}`, e.type === 'NPE' ? '#ffaa00' : '#aaffcc', popupSize(gained));
               if (mult > g.lastMult) {
                 // 콤보 배율이 오를수록 팝업도 확 커진다
