@@ -576,7 +576,7 @@ const QuestsTab = () => {
 • 개발 기간: 2026.06 ~ 진행 중 (커밋 747개)
 • 정식 타이틀: RingVerse: Karvas Command (코드명 Inventoria)
 • 장르: 그리드 빌드 × 거점 디펜스 (PC 라이브서비스)
-• 플랫폼: PC — 출시 예정
+• 플랫폼: Steam (PC) — 출시 예정
 • 팀 구성: 1인 개발 (기획·설계·구현 전담)
 • 사용 기술: Unity 6, C#, UI Toolkit, Addressables, Odin Inspector, Input System
 
