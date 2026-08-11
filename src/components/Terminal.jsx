@@ -37,6 +37,45 @@ const ERROR_MESSAGES = [
   '> ACCESS DENIED - ZERO CONTEXT: YOUR FINGERS ARE OUT OF SYNC',
 ];
 
+// 시크릿 커맨드 — help 에 전부 나오지는 않는다. 게임 개발자는 이스터에그를 심는 법.
+const SECRET_COMMANDS = {
+  help: [
+    'AVAILABLE COMMANDS: help, whoami, credits, ls, clear, exit',
+    'SOME COMMANDS ARE NOT LISTED. GAME DEVS LOVE SECRETS.',
+  ],
+  whoami: [
+    'GUEST.',
+    '...BUT AFTER READING THIS PORTFOLIO: HIRING MANAGER, PROBABLY.',
+  ],
+  sudo: [
+    'PERMISSION GRANTED... JUST KIDDING. NICE TRY, ADMIN.',
+    'ACHIEVEMENT UNLOCKED ★ CURIOSITY: LV.MAX',
+  ],
+  'sudo su': [
+    'PERMISSION GRANTED... JUST KIDDING. NICE TRY, ADMIN.',
+    'ACHIEVEMENT UNLOCKED ★ CURIOSITY: LV.MAX',
+  ],
+  credits: [
+    'DESIGNED & BUILT BY NOTNULL (YOUNGJUN JI)',
+    'ENGINE: REACT 19 + VITE / FX: FRAMER-MOTION',
+    'NO GAME DEVS WERE HARMED IN THE MAKING OF THIS TERMINAL.',
+  ],
+  ls: [
+    'stat/  logs/  quests/  inventory/  notes/  contact/  secret.txt',
+  ],
+  'cat secret.txt': [
+    'THE REAL SECRET IS SHIPPING. — NOTNULL',
+  ],
+  'rm -rf /': [
+    'DELETING FILESYSTEM... 3%... 12%... 47%...',
+    'JUST KIDDING. THIS TERMINAL IS READ-ONLY. NICE TRY THOUGH.',
+  ],
+  exit: [
+    'THERE IS NO ESCAPE. PRESS ENTER TO GO DEEPER.',
+  ],
+  clear: [],
+};
+
 // Typing Animation Hook
 const useTypingEffect = (text, speed = 30, startDelay = 0) => {
   const [displayedText, setDisplayedText] = useState('');
@@ -120,6 +159,7 @@ const Terminal = ({ onAuthenticated }) => {
   const [errorKey, setErrorKey] = useState(0);
   const [glitch, setGlitch] = useState(false);
   const [skipped, setSkipped] = useState(false);
+  const [cmdLog, setCmdLog] = useState([]);
   const inputRef = useRef(null);
 
   // Show ASCII art first
@@ -171,6 +211,24 @@ const Terminal = ({ onAuthenticated }) => {
   // Handle authentication — 빈 입력 + Enter도 입장 허용 (게이트 이탈 방지)
   const handleAuthenticate = useCallback(() => {
     const value = inputValue.trim().toLowerCase();
+
+    // 시크릿 커맨드는 입장 대신 응답을 출력한다
+    if (value && Object.prototype.hasOwnProperty.call(SECRET_COMMANDS, value)) {
+      if (value === 'clear') {
+        setCmdLog([]);
+      } else {
+        setCmdLog((log) => [...log, { cmd: value, lines: SECRET_COMMANDS[value] }]);
+      }
+      if (value === 'rm -rf /') {
+        setGlitch(true);
+        setTimeout(() => setGlitch(false), 600);
+      }
+      setError('');
+      setInputValue('');
+      inputRef.current?.focus();
+      return;
+    }
+
     if (value === ACCESS_KEY || value === '') {
       setPhase('authenticating');
       setError('');
@@ -293,6 +351,18 @@ const Terminal = ({ onAuthenticated }) => {
               <div className="prompt-line text-glow neon-pulse">
                 {'>'} ENTER 키를 누르면 바로 입장합니다.
               </div>
+              {cmdLog.length > 0 && (
+                <div className="cmd-log">
+                  {cmdLog.map((entry, i) => (
+                    <div key={i} className="cmd-entry">
+                      <div className="terminal-line cmd-echo">{'> '}{entry.cmd}</div>
+                      {entry.lines.map((line, j) => (
+                        <div key={j} className="terminal-line cmd-resp text-glow">{line}</div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              )}
               <div className="input-line">
                 <span className="text-glow">{'>'} </span>
                 <input

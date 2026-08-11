@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Target, Clock, Briefcase, Mail, BookOpen } from 'lucide-react';
 import NoteBook from './NoteBook';
@@ -187,14 +187,37 @@ const GithubStats = ({ repo, variant = 'card' }) => {
   );
 };
 
+// 0 → target 카운트업 (ease-out cubic)
+const useCountUp = (target, duration = 900) => {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    let raf;
+    const t0 = performance.now();
+    const tick = (t) => {
+      const p = Math.min((t - t0) / duration, 1);
+      setVal(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, duration]);
+  return val;
+};
+
 // Pip-Boy 스타일 세그먼트 스킬 바 — 임의 % 대신 근거(note)를 함께 표기
 const SkillBar = ({ name, pct, note, delay = 0 }) => {
   const total = 24;
   const filled = Math.round((pct / 100) * total);
+  const shownPct = useCountUp(pct);
+  const lv = Math.round(pct / 10);
   return (
-    <div className="skill-bar">
+    <div className="skill-bar" title={`EXP SOURCE: ${note}`}>
       <div className="skill-head">
-        <span className="skill-name">{name}</span>
+        <span className="skill-name">
+          <span className="skill-lv">LV.{lv}</span>
+          {name}
+          <span className="skill-pct">[{shownPct}%]</span>
+        </span>
         <span className="skill-note">{note}</span>
       </div>
       <div className="skill-segments">
@@ -1423,20 +1446,81 @@ const TABS = [
   { id: 'contact', label: 'CONTACT', icon: Mail },
 ];
 
+// 탐험 도장 — 방문한 탭을 localStorage 에 도장 찍는다
+const EXPL_KEY = 'tui-explored-tabs';
+const EXPL_SEEN_KEY = 'tui-expl-unlock-seen';
+
+const persistExplored = (set) => {
+  try {
+    localStorage.setItem(EXPL_KEY, JSON.stringify([...set]));
+  } catch {
+    /* localStorage 사용 불가 시 무시 */
+  }
+};
+
+const readExplored = () => {
+  try {
+    const arr = JSON.parse(localStorage.getItem(EXPL_KEY));
+    return new Set(Array.isArray(arr) ? arr : []);
+  } catch {
+    return new Set();
+  }
+};
+
 const MainPortfolio = () => {
   const [activeTab, setActiveTab] = useState('stat');
   const tabs = TABS;
+
+  // 첫 진입 탭(stat)은 마운트 시점에 도장
+  const [explored, setExplored] = useState(() => {
+    const s = readExplored();
+    if (!s.has('stat')) {
+      s.add('stat');
+      persistExplored(s);
+    }
+    return s;
+  });
+  const [unlockSeen, setUnlockSeen] = useState(() => {
+    try {
+      return localStorage.getItem(EXPL_SEEN_KEY) === '1';
+    } catch {
+      return true;
+    }
+  });
+
+  // 탭 전환 + 탐험 도장
+  const visitTab = useCallback((id) => {
+    setActiveTab(id);
+    setExplored((prev) => {
+      if (prev.has(id)) return prev;
+      const next = new Set(prev);
+      next.add(id);
+      persistExplored(next);
+      return next;
+    });
+  }, []);
+
+  const explComplete = explored.size >= TABS.length;
+
+  const dismissUnlock = () => {
+    try {
+      localStorage.setItem(EXPL_SEEN_KEY, '1');
+    } catch {
+      /* localStorage 사용 불가 시 무시 */
+    }
+    setUnlockSeen(true);
+  };
 
   // 숫자키 1~5로 탭 전환
   useEffect(() => {
     const onKey = (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
       const idx = Number(e.key) - 1;
-      if (idx >= 0 && idx < TABS.length) setActiveTab(TABS[idx].id);
+      if (idx >= 0 && idx < TABS.length) visitTab(TABS[idx].id);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  }, [visitTab]);
 
   return (
     <motion.div 
@@ -1463,6 +1547,10 @@ const MainPortfolio = () => {
               <span className="readout-label">STATUS</span>{' '}
               <span className="status-online">ONLINE</span>
             </span>
+            <span className="readout" title="탭을 모두 방문하면 시크릿이 해금됩니다">
+              <span className="readout-label">EXPL</span> {explored.size}/{TABS.length}
+              {explComplete && <span className="expl-star"> ★</span>}
+            </span>
             <span className="readout">
               <span className="readout-label">UPTIME</span> <UptimeClock />
             </span>
@@ -1474,8 +1562,8 @@ const MainPortfolio = () => {
           {tabs.map((tab, i) => (
             <button
               key={tab.id}
-              className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
-              onClick={() => setActiveTab(tab.id)}
+              className={`tab-button ${activeTab === tab.id ? 'active' : ''} ${explored.has(tab.id) ? 'visited' : ''}`}
+              onClick={() => visitTab(tab.id)}
             >
               {activeTab === tab.id && (
                 <motion.span
@@ -1491,6 +1579,23 @@ const MainPortfolio = () => {
           ))}
         </div>
 
+        {/* 탐험 완료 보상 배너 (1회성) */}
+        <AnimatePresence>
+          {explComplete && !unlockSeen && (
+            <motion.div
+              className="unlock-banner"
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+            >
+              <span>
+                {'>'} EXPLORATION COMPLETE ★ 전 구역 탐사 완료 — 부팅 화면에 시크릿 커맨드가 숨어 있습니다. (힌트: sudo)
+              </span>
+              <button type="button" onClick={dismissUnlock}>[OK]</button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Tab Content */}
         <div className="tab-container">
           <AnimatePresence mode="wait">
@@ -1499,7 +1604,7 @@ const MainPortfolio = () => {
             {activeTab === 'quests' && <motion.div key="quests" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><QuestsTab /></motion.div>}
             {activeTab === 'inventory' && <motion.div key="inventory" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><InventoryTab /></motion.div>}
             {activeTab === 'notes' && <motion.div key="notes" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><NotesTab /></motion.div>}
-            {activeTab === 'contact' && <motion.div key="contact" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><ContactTab onNavigate={setActiveTab} /></motion.div>}
+            {activeTab === 'contact' && <motion.div key="contact" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><ContactTab onNavigate={visitTab} /></motion.div>}
           </AnimatePresence>
         </div>
 

@@ -1343,3 +1343,57 @@
   }
   
 }
+
+/* --- Gamification: 탐험 도장 / 스킬 레벨 --- */
+.expl-star {
+  color: #ffd700;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.7);
+}
+
+.tab-button.visited .tab-fkey {
+  border-color: rgba(0, 255, 65, 0.75);
+  color: #33ff66;
+  opacity: 0.85;
+}
+
+.unlock-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px dashed rgba(255, 215, 0, 0.55);
+  background: rgba(255, 215, 0, 0.05);
+  color: #ffd700;
+  font-size: 12px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+}
+
+.unlock-banner button {
+  background: none;
+  border: none;
+  color: #ffd700;
+  cursor: pointer;
+  font: inherit;
+  white-space: nowrap;
+}
+
+.unlock-banner button:hover {
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.9);
+}
+
+.skill-lv {
+  font-size: 10px;
+  border: 1px solid rgba(0, 255, 65, 0.5);
+  padding: 1px 5px;
+  margin-right: 8px;
+  color: #33ff66;
+  letter-spacing: 1px;
+}
+
+.skill-pct {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-left: 8px;
+}

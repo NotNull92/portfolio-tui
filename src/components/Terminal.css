@@ -170,3 +170,22 @@
     width: 80px;
   }
 }
+
+/* Secret command log — 부팅 게이트 이스터에그 출력 */
+.cmd-log {
+  margin: 8px 0;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.cmd-entry {
+  margin-bottom: 6px;
+}
+
+.cmd-echo {
+  opacity: 0.55;
+}
+
+.cmd-resp {
+  color: #88ffaa;
+}
