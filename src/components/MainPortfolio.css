@@ -1623,3 +1623,25 @@
 .tab-button:hover .tab-sub {
   opacity: 0.75;
 }
+
+/* 모달 TL;DR — 3줄만 읽고 닫아도 핵심이 전달되게 */
+.modal-tldr {
+  border-left: 3px solid #00ff41;
+  background: rgba(0, 255, 65, 0.05);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.tldr-key {
+  display: inline-block;
+  min-width: 44px;
+  margin-right: 8px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #ffd700;
+  opacity: 0.9;
+}

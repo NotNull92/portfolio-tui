@@ -390,6 +390,17 @@ const ProjectModal = ({ project, onClose }) => {
             <ProjectMedia media={project.media} name={project.name} variant="modal" />
           </div>
 
+          {project.tldr && (
+            <div className="modal-section">
+              <span className="modal-label">TL;DR:</span>
+              <div className="modal-tldr">
+                <div><span className="tldr-key">무엇</span>{project.tldr.what}</div>
+                <div><span className="tldr-key">역할</span>{project.tldr.role}</div>
+                <div><span className="tldr-key">성과</span>{project.tldr.result}</div>
+              </div>
+            </div>
+          )}
+
           <div className="modal-section">
             <span className="modal-label">DESCRIPTION:</span>
             <p className="modal-description">{project.fullDescription || project.description}</p>
@@ -517,6 +528,11 @@ const QuestsTab = () => {
   const inProgressProjects = [
     {
       name: 'NoMoreRolls',
+      tldr: {
+        what: '언더테일의 도덕적 선택을 주사위 족보 메커닉으로 번역한 로그라이크 (Steam 출시 예정)',
+        role: '1인 개발 — 기획(GDD 23섹션)·전투·연출·아키텍처 전부',
+        result: '프로토타입 완성·플레이 영상 공개 (족보 판정 10종 + Fight/Talk 이중 루트)',
+      },
       description: '언더테일의 도덕적 전투 선택을 주사위 족보 메카닉으로 번역한 1인 개발 로그라이크 (프로토타입 완료)',
       fullDescription: `"언더테일의 도덕적 전투 선택을 주사위 족보 메카닉으로 번역한 1인 개발 로그라이크"입니다. 적과 전투(Fight)하거나 대화(Talk)하는 이중 루트 시스템이 핵심이며, 10체 고유 영혼의 트라우마를 기믹이라는 게임적 장치로 표현합니다.
 
@@ -595,6 +611,11 @@ const QuestsTab = () => {
     },
     {
       name: 'RINGVERSE: KARVAS COMMAND',
+      tldr: {
+        what: '그리드 인벤토리 빌드 × 거점 디펜스 PC 게임 (Steam 출시 예정)',
+        role: '1인 개발 — Unity 6 · UI Toolkit · HSM 아키텍처 · 데이터 주도 설계',
+        result: '커밋 747개 진행 중 · 결정론 전투 재현 검증 · 자작 툴(hera) 도그푸딩',
+      },
       description: '그리드 인벤토리 빌드 × 거점 디펜스 융합 PC 게임 (1인 개발, 프로젝트 코드명 Inventoria)',
       fullDescription: `"그리드 인벤토리 빌드 × 거점 디펜스"를 융합한 PC 라이브서비스 게임입니다. 체스판에 포탑을 배치하고, 각 포탑에 영웅을 파일럿으로 얹고, 포탑 내부 그리드에 아이템을 어떻게 배치·조합하느냐가 곧 전투력이 됩니다.
 
@@ -657,6 +678,11 @@ const QuestsTab = () => {
   const releasedProjects = [
     {
       name: 'HERA-AGENT-UNITY',
+      tldr: {
+        what: 'AI 에이전트가 라이브 Unity 에디터를 직접 제어하는 저토큰 CLI',
+        role: '단독 설계·개발 (Go + C#, Apache-2.0 오픈소스)',
+        result: 'GitHub ★22+ · 상주 스키마 0토큰 — MCP 서버 대비 토큰 소모 수십분의 1',
+      },
       description: 'AI 코딩 에이전트가 라이브 Unity 에디터를 제어하는 저토큰(Low-token) CLI',
       fullDescription: `"AI 코딩 에이전트가 실행 중인 Unity 에디터를 직접 제어하는 저토큰 CLI"입니다. Codex, Claude, Cursor, Copilot, AntiGravity 등의 에이전트가 Python 서버 없이, 셸 명령만으로 라이브 Unity 에디터를 조사하고 변경할 수 있게 합니다.
 
@@ -723,6 +749,11 @@ AI agent → hera-agent-unity → Unity Editor
     },
     {
       name: 'HERA-AGENT-GODOT',
+      tldr: {
+        what: 'Godot 4용 라이브 에디터 제어 CLI — Unity판의 형제 프로젝트 (포팅 아닌 재설계)',
+        role: '단독 개발 (Go + GDScript, MIT 오픈소스)',
+        result: 'v1.0.0 안정 계약(SemVer) · Godot Asset Store 등록 · Homebrew/Scoop/npm 배포',
+      },
       description: 'AI 에이전트가 라이브 Godot 4.7+ 에디터를 제어하는 저토큰 CLI (v1.0.0 안정 계약 · Godot Asset Store 등록)',
       fullDescription: `"AI 코딩 에이전트에게 라이브 Godot 에디터의 눈·손·증거를 제공하는 저토큰 CLI"입니다. hera-agent-unity의 형제 프로젝트로, 같은 저토큰·셸 네이티브 철학을 Godot 전용으로 새로 설계했습니다(포팅이 아님).
 
@@ -801,6 +832,11 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     },
     {
       name: 'HEBE-AGENT-UNITY',
+      tldr: {
+        what: 'AI 에이전트용 Unity 실행 런타임 — Hera의 경량 실행 에디션',
+        role: '단독 개발 (Go + C#, Apache-2.0 오픈소스)',
+        result: 'warm exec 240ms — cold 대비 6.08배 단축 · 99개 명령 측정 실패 0건 벤치 공개',
+      },
       description: 'AI 에이전트를 위한 빠르고 복구 가능한 Unity 실행 런타임 (warm exec 240ms 측정)',
       fullDescription: `"AI 코딩 에이전트를 위한 빠르고 복구 가능한 Unity 실행 런타임"입니다. 단순한 에디터 원격 제어가 아니라, 반복되는 C# 시작 비용을 캐시로 제거하는 데 집중한 경량 실행 런타임입니다. hera-agent-unity의 경량 실행 에디션으로, Hera의 검증된 localhost 실행 코어와 에이전트 루프에 필요한 도구만 남기고 MCP·타입 툴 계약·승인 플로우·배치·문서 번들·UI/에셋 파이프라인은 의도적으로 제외했습니다.
 
@@ -866,6 +902,11 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     },
     {
       name: 'WORKFORGE-MCP',
+      tldr: {
+        what: 'ChatGPT를 로컬 워크스테이션에 연결하는 MCP 게이트웨이',
+        role: '단독 개발 — 보안 설계(SHA-256 편집 가드·권한 경계·로그 마스킹) 포함',
+        result: 'MCP 툴 12종 · Windows/macOS 지원 · MIT 오픈소스',
+      },
       description: 'ChatGPT를 로컬 워크스테이션(Windows · macOS)에 안전하게 연결하는 MCP 게이트웨이',
       fullDescription: `"ChatGPT에게 내 PC를 만질 안전한 손을 쥐여주는 MCP 게이트웨이"입니다. ChatGPT가 실제 프로젝트 파일을 읽고, Git 상태를 파악하고, 가드가 걸린 편집을 수행하고, 로컬 이미지를 확인하고, 감독 하에 PowerShell 작업을 실행할 수 있게 합니다.
 
@@ -927,6 +968,11 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     },
     {
       name: 'MENTAL ROBO',
+      tldr: {
+        what: '리듬 입력 × 토크쇼를 결합한 코미디 로봇 스탠드업 게임',
+        role: '3인 팀 메인 개발 — 48시간 게임잼',
+        result: 'Global Game Jam 2024 Seoul 완성작 출품',
+      },
       description: '리듬 입력과 토크 쇼를 결합한 코미디 로봇 스탠드업 게임 (GGJ 2024)',
       fullDescription: `"리듬 입력과 토크 쇼를 결합한 코미디 로봇 스탠드업 게임"입니다. 게임잼 주제 "Make Me Laugh"에 맞춰, 청중의 성향을 파악하고 적절한 농담 주제를 선택하여 최고의 코미디언 로봇이 되는 48시간 게임잼 완성작입니다.
 
@@ -986,6 +1032,11 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     },
     {
       name: 'EOS-RED',
+      tldr: {
+        what: '월 매출 최대 400억 라이브 모바일 MMORPG (6년차 운영 중)',
+        role: '클라이언트 개발 5년 — 컨텐츠·BM·빌드/패치·점검 담당',
+        result: '스텝업 BM 매출 기여 30% · 서버 부하 85% 감소 · MAU 35K 서비스 유지',
+      },
       description: '장기 LIVE 서비스 모바일 MMORPG (2021.09 ~ 현재 참여 중)',
       fullDescription: '장기 Live 서비스 중인 모바일 MMORPG로, 2021년 9월 합류해 현재까지 컨텐츠·BM 개발을 이어가고 있는 프로젝트입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2021.09 - ing (Live 서비스 중)\n• 장르: MMORPG\n• 플랫폼: 모바일 (Android / iOS)\n• 팀 구성: 클라이언트 7 ~ 8인\n• 사용 기술: C#, Unity3D, OSA, UniRx, Dotween 등\n\n[출시 후 성과 지표]\n• MAU: 최대 35,000\n• DAU: 최대 12,000\n• 매출: 최대 400억, 평균 200억\n\n[핵심 기여도]\n• 스텝업 패키지 개발 및 유지 보수: 새로운 BM 시스템 개발로 매출에 기여\n• 상품 1+1 구매 기능 개발 및 유지 보수: 이벤트성 신규 유저 진입을 위한 BM 개발\n• 조건부 팝업 패키지 개발 및 유지 보수: 새로운 BM 시스템 개발\n• 대형/소형 컨텐츠 다수 개발 및 개선\n\n[대표 개발 컨텐츠]\n\n◆ 대형 컨텐츠\n• 길드 경쟁전: 길드원 간 협업 미션 시스템, PVP 경쟁 시스템\n• 길드 경쟁전 전용 PVE 던전: 실시간 협력 던전 시스템\n• 길드 경쟁전 리뉴얼: PVP 중심 경쟁 시스템, 밸런스 조정\n\n◆ BM 시스템\n• 스텝업 상품 시스템: 단계별 구매 유도 BM (매출 30% 기여)\n• 조건부 팝업: 유저 행동 기반 타겟팅 상품 노출 (전환율 45%)\n• 스텝업 패키지 개선: 다단계 구매 시스템 고도화\n\n◆ 시스템 & 편의성\n• 휴면 계정 처리: 유니크 식별자 재사용 시스템 (운영 공수 90% 절감)\n• 캐릭터 즉시 삭제: UniRx 기반 반응형 UI\n• 월드 랭킹 시스템: 서버 부하 85% 감소 최적화\n• VIP 칭호/버프/이펙트: 등급별 차별화 시스템\n• 재화 숫자 표기 개선: UI 가독성 향상\n\n◆ 기타 컨텐츠\n• 길드 추천 시스템: 길드 가입률 30% 증가\n• 보스 던전 리뉴얼: 참여율 35% 증가\n• 콜로세움 개선: 일일 참여율 150% 증가\n• 소울 각인 확장, 펫 레벨 증가, 아이템 획득 세분화 등\n\n[협업 도구]\n• 버전 관리: Git, SVN, Git Fork, Gitea, CDN, Hermes, Jenkins\n• 이슈 트래킹: RedMine\n• 문서화: Notion, Wiki',
       status: 'RELEASED',
@@ -1009,6 +1060,11 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     },
     {
       name: 'FREEDRAW',
+      tldr: {
+        what: 'VR 공간에 브러시로 직접 그리는 3D 드로잉 앱',
+        role: '개발 · Rift→Quest 포팅 · TCP 모바일 관전 연동',
+        result: 'Steam 정식 출시 (2021.03) · 국가지원사업 평가 86점',
+      },
       description: '가상 공간에 직접 그리는 VR 3D 드로잉 앱 (Steam 출시)',
       fullDescription: `"가상 공간에 브러시로 직접 3D 드로잉을 하는 VR 앱"입니다. 그린 작품을 저장하고 다시 불러와 이어 그릴 수 있으며, 전용 갤러리 룸에서 전시·감상하고 사전 배치된 카메라로 드로잉 과정을 영상으로 남길 수 있습니다.
 
@@ -1051,6 +1107,11 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     },
     {
       name: 'ZOMBIE KINGDOM',
+      tldr: {
+        what: '조선시대 컨셉으로 전면 리메이크한 모바일 탄막 슈팅',
+        role: '1인 리메이크 — 컨셉 전환·다국어 시스템·수익화(애드몹/IAP)',
+        result: 'Android 스토어 출시 · 국가지원사업 지원금 5,000만원',
+      },
       description: '조선시대 컨셉 모바일 슈팅 게임',
       fullDescription: '오픈소스 프로젝트를 분석하여 리메이크한 모바일 슈팅 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2020.10 - 2020.12\n• 장르: 모바일 슈팅 게임\n• 플랫폼: 모바일 (Android)\n• 팀 구성: 클라이언트 1인\n• 사용 기술: C#, Unity3D\n\n[핵심 기여도]\n• 오픈소스 프로젝트 분석 및 리메이크\n• 기존 포스트 아포칼립스 컨셉에서 조선시대 컨셉으로 변경\n• UI 전면 수정, 맵 레벨링, 인게임 내 오브젝트 모델링 변경\n• Json을 이용한 다국어 지원 기능 추가\n• 구글 애드몹, 인앱결제 추가 및 스토어 출시\n\n[출시 후 성과]\n• 전북콘텐츠진흥원 국가지원사업 지원금: 50,000,000\n\n[협업 도구]\n• 버전 관리: Unity Collaborate, Trello\n• 이슈 트래킹: Notion\n• 문서화: Hwp, Word',
       status: 'RELEASED',
@@ -1073,6 +1134,11 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
     },
     {
       name: 'ACTION GOLF',
+      tldr: {
+        what: '아두이노 자이로 센서로 실제 스윙을 인식하는 모바일 골프 게임',
+        role: '2인 팀 — 블루투스 통신 리팩토링 · 상점 BM 추가',
+        result: '센서 반응 속도·안정성 개선 · Android 출시',
+      },
       description: '자이로 센서 기반 모바일 골프 게임',
       fullDescription: '자이로 센서를 이용한 모바일 골프 게임입니다.\n\n[프로젝트 개요]\n• 개발 기간: 2021.01 - 2021.04\n• 장르: 자이로 센서를 이용한 모바일 골프 게임\n• 플랫폼: 모바일 (Android)\n• 팀 구성: 클라이언트 2인\n• 사용 기술: C#, Unity3D, 아두이노, Bluetooth Plugin\n\n[핵심 기여도]\n• UI 코드 개선 및 리뉴얼\n• 상점 시스템 추가\n• 블루투스 센서 연결 및 데이터 전송 코드 개선 및 최적화\n\n[팀 내 역할]\n• 메인 개발자에게 프로젝트를 넘겨받아 작업 진행\n\n[협업 도구]\n• 버전 관리: Unity Collaborate, Trello\n• 이슈 트래킹: Notion\n• 문서화: Notion',
       status: 'RELEASED',
