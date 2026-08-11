@@ -1570,12 +1570,13 @@ const UptimeClock = () => {
   return <span className="uptime-display">{formatTime(currentTime)}</span>;
 };
 
+// sub: RPG 라벨의 해독 비용을 없애는 보조 표기 (채용 담당자용 길찾기)
 const TABS = [
-  { id: 'stat', label: 'STAT', icon: User },
-  { id: 'logs', label: 'LOGS', icon: Clock },
-  { id: 'quests', label: 'QUESTS', icon: Target },
-  { id: 'inventory', label: 'INVENTORY', icon: Briefcase },
-  { id: 'notes', label: 'NOTES', icon: BookOpen },
+  { id: 'stat', label: 'STAT', sub: 'PROFILE', icon: User },
+  { id: 'logs', label: 'LOGS', sub: 'CAREER', icon: Clock },
+  { id: 'quests', label: 'QUESTS', sub: 'PROJECTS', icon: Target },
+  { id: 'inventory', label: 'INVENTORY', sub: 'SKILLS', icon: Briefcase },
+  { id: 'notes', label: 'NOTES', sub: 'WRITING', icon: BookOpen },
   { id: 'contact', label: 'CONTACT', icon: Mail },
 ];
 
@@ -1759,7 +1760,10 @@ const MainPortfolio = () => {
               )}
               <span className="tab-fkey">{i + 1}</span>
               <tab.icon size={16} />
-              <span>[ {tab.label} ]</span>
+              <span className="tab-label-wrap">
+                <span>[ {tab.label} ]</span>
+                {tab.sub && <span className="tab-sub">{tab.sub}</span>}
+              </span>
             </button>
           ))}
         </div>

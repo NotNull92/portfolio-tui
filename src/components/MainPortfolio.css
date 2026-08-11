@@ -1604,3 +1604,22 @@
   font-size: 10px;
   opacity: 0.6;
 }
+
+/* 탭 보조 표기 — RPG 라벨 해독용 (QUESTS -> PROJECTS 등) */
+.tab-label-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+}
+
+.tab-sub {
+  font-size: 8px;
+  letter-spacing: 2px;
+  opacity: 0.5;
+}
+
+.tab-button.active .tab-sub,
+.tab-button:hover .tab-sub {
+  opacity: 0.75;
+}
