@@ -1534,18 +1534,20 @@ const MainPortfolio = () => {
     }
   });
 
-  // 탭 전환 + 탐험 도장
+  // 카운터 팝 트리거 — 값이 바뀔 때마다 key 리마운트로 CSS 애니메이션 재시작
+  const [explPop, setExplPop] = useState(0);
+
+  // 탭 전환 + 탐험 도장 (새 도장이 찍힐 때만 카운터 팝)
   const visitTab = useCallback((id) => {
     setActiveTab(id);
-    setExplored((prev) => {
-      if (prev.has(id)) return prev;
-      const next = new Set(prev);
-      next.add(id);
-      persistExplored(next);
-      if (next.size >= TABS.length) unlockAchievement('full-scan');
-      return next;
-    });
-  }, []);
+    if (explored.has(id)) return;
+    const next = new Set(explored);
+    next.add(id);
+    persistExplored(next);
+    setExplored(next);
+    setExplPop(Date.now());
+    if (next.size >= TABS.length) unlockAchievement('full-scan');
+  }, [explored]);
 
   // 업적 시스템 이전에 탐험을 끝낸 방문자 소급 처리
   // (토스트 리스너가 형제 컴포넌트라 마운트 완료 후로 지연)
@@ -1618,7 +1620,11 @@ const MainPortfolio = () => {
                 <span className="expl-play"> ▶ PLAY</span>
               </button>
             ) : (
-              <span className="readout" title="탭을 모두 방문하면 시크릿이 해금됩니다">
+              <span
+                key={explPop}
+                className={`readout ${explPop ? 'expl-pop' : ''}`}
+                title="탭을 모두 방문하면 시크릿이 해금됩니다"
+              >
                 <span className="readout-label">EXPL</span> {explored.size}/{TABS.length}
               </span>
             )}
