@@ -1489,21 +1489,23 @@ const TABS = [
   { id: 'contact', label: 'CONTACT', icon: Mail },
 ];
 
-// 탐험 도장 — 방문한 탭을 localStorage 에 도장 찍는다
+// 탐험 도장 — 방문한 탭을 sessionStorage 에 도장 찍는다
+// 재접속(새 탭/브라우저 재시작)마다 초기화: 매 세션 탐험을 새로 시작한다.
+// 업적·하이스코어는 localStorage 라 세션이 바뀌어도 유지된다.
 const EXPL_KEY = 'tui-explored-tabs';
 const EXPL_SEEN_KEY = 'tui-expl-unlock-seen';
 
 const persistExplored = (set) => {
   try {
-    localStorage.setItem(EXPL_KEY, JSON.stringify([...set]));
+    sessionStorage.setItem(EXPL_KEY, JSON.stringify([...set]));
   } catch {
-    /* localStorage 사용 불가 시 무시 */
+    /* sessionStorage 사용 불가 시 무시 */
   }
 };
 
 const readExplored = () => {
   try {
-    const arr = JSON.parse(localStorage.getItem(EXPL_KEY));
+    const arr = JSON.parse(sessionStorage.getItem(EXPL_KEY));
     return new Set(Array.isArray(arr) ? arr : []);
   } catch {
     return new Set();
