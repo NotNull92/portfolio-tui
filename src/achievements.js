@@ -24,6 +24,12 @@ export const readUnlocked = () => {
   }
 };
 
+// 아케이드 2번 슬롯(NULLDIVE) 해금 기준 — 스킬 무관 업적만으로 도달 가능한 개수
+export const SLOT2_THRESHOLD = 5;
+
+export const isSlot2Unlocked = () =>
+  ACHIEVEMENTS.filter((a) => readUnlocked()[a.id]).length >= SLOT2_THRESHOLD;
+
 export const unlockAchievement = (id) => {
   const def = ACHIEVEMENTS.find((a) => a.id === id);
   if (!def) return false;
@@ -36,6 +42,15 @@ export const unlockAchievement = (id) => {
     /* localStorage 사용 불가 시 무시 */
   }
   window.dispatchEvent(new CustomEvent('tui-achievement', { detail: def }));
+  // 5개째 달성 순간: 2번 슬롯 해금 토스트
+  const count = ACHIEVEMENTS.filter((a) => cur[a.id]).length;
+  if (count === SLOT2_THRESHOLD) {
+    window.dispatchEvent(
+      new CustomEvent('tui-achievement', {
+        detail: { id: 'arcade-slot-2', title: 'NULLDIVE', label: 'NEW GAME UNLOCKED' },
+      })
+    );
+  }
   return true;
 };
 

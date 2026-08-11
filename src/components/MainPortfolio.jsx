@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { User, Target, Clock, Briefcase, Mail, BookOpen } from 'lucide-react';
 import NoteBook from './NoteBook';
 import NullStorm from './NullStorm';
+import ArcadeHub from './ArcadeHub';
 import { ACHIEVEMENTS, readUnlocked, unlockAchievement } from '../achievements';
 import { NOTES, NOTE_TYPES } from '../data/notes';
 import ScrambleText from './effects/ScrambleText';
@@ -1552,7 +1553,8 @@ const MainPortfolio = () => {
   }, []);
 
   const explComplete = explored.size >= TABS.length;
-  const [arcadeOpen, setArcadeOpen] = useState(false);
+  // null | 'hub' | 'nullstorm' — 게임 [X]/ESC 는 허브로, 허브 [X]/ESC 는 포트폴리오로
+  const [arcadeView, setArcadeView] = useState(null);
 
   const dismissUnlock = () => {
     try {
@@ -1570,10 +1572,10 @@ const MainPortfolio = () => {
       const idx = Number(e.key) - 1;
       if (idx >= 0 && idx < TABS.length) visitTab(TABS[idx].id);
     };
-    if (arcadeOpen) return; // 게임 중에는 탭 단축키 비활성
+    if (arcadeView !== null) return; // 아케이드 중에는 탭 단축키 비활성
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [visitTab, arcadeOpen]);
+  }, [visitTab, arcadeView]);
 
   return (
     <motion.div 
@@ -1605,7 +1607,7 @@ const MainPortfolio = () => {
                 type="button"
                 className="readout expl-arcade-btn"
                 title="NULLSTORM 실행"
-                onClick={() => setArcadeOpen(true)}
+                onClick={() => setArcadeView('hub')}
               >
                 <span className="readout-label">EXPL</span> {explored.size}/{TABS.length}
                 <span className="expl-star"> ★</span>
@@ -1661,10 +1663,10 @@ const MainPortfolio = () => {
                 className="unlock-play"
                 onClick={() => {
                   dismissUnlock();
-                  setArcadeOpen(true);
+                  setArcadeView('hub');
                 }}
               >
-                ▶ PLAY NULLSTORM
+                ▶ OPEN ARCADE
               </button>
               <button type="button" className="unlock-dismiss" onClick={dismissUnlock}>[X]</button>
             </motion.div>
@@ -1696,9 +1698,18 @@ const MainPortfolio = () => {
         </div>
       </div>
 
-      {/* NULLSTORM 히든 아케이드 */}
-      <AnimatePresence>
-        {arcadeOpen && <NullStorm onClose={() => setArcadeOpen(false)} />}
+      {/* 히든 아케이드 — 허브(게임 선택) → 게임, 게임을 닫으면 허브로 복귀 */}
+      <AnimatePresence mode="wait">
+        {arcadeView === 'hub' && (
+          <ArcadeHub
+            key="hub"
+            onClose={() => setArcadeView(null)}
+            onSelect={(id) => setArcadeView(id)}
+          />
+        )}
+        {arcadeView === 'nullstorm' && (
+          <NullStorm key="nullstorm" onClose={() => setArcadeView('hub')} />
+        )}
       </AnimatePresence>
 
     </motion.div>

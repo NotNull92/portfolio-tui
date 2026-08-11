@@ -59,7 +59,7 @@ const AchievementToast = () => {
           >
             <span className="ach-star">★</span>
             <span className="ach-body">
-              <span className="ach-label">ACHIEVEMENT UNLOCKED</span>
+              <span className="ach-label">{current.label || 'ACHIEVEMENT UNLOCKED'}</span>
               <span className="ach-title">{current.title}</span>
             </span>
           </motion.div>
