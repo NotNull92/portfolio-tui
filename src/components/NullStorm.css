@@ -3,7 +3,7 @@
 .arcade-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 13, 2, 0.94);
+  background: var(--overlay-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,7 +21,7 @@
     #02150a;
   border: 2px solid #00ff41;
   box-shadow:
-    0 0 40px rgba(0, 255, 65, 0.25),
+    var(--panel-border-glow),
     inset 0 0 60px rgba(0, 255, 65, 0.05);
   font-family: 'JetBrains Mono', monospace;
   color: #00ff41;

@@ -32,7 +32,9 @@ const CursorGlow = () => {
     const onMove = (e) => {
       tx = e.clientX;
       ty = e.clientY;
-      el.style.opacity = '1';
+      // FX 강도에 따라 최대 밝기를 제한 (COMFORT 에서는 은은하게)
+      el.style.opacity = getComputedStyle(document.documentElement)
+        .getPropertyValue('--cursor-glow-max').trim() || '1';
       if (!raf) raf = requestAnimationFrame(loop);
     };
 

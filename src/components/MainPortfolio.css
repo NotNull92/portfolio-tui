@@ -296,10 +296,11 @@
   border: 1px solid rgba(0, 255, 65, 0.18);
 }
 
+/* 스킬 바는 화면에서 가장 넓은 발광 면적이라 FX 강도의 영향이 크다 */
 .seg.on {
-  background: #00ff41;
-  border-color: #00ff41;
-  box-shadow: 0 0 6px rgba(0, 255, 65, 0.6);
+  background: var(--seg-fill);
+  border-color: var(--seg-fill);
+  box-shadow: var(--seg-glow);
   animation: seg-on 0.25s both;
   animation-delay: calc(var(--i) * 40ms);
 }
@@ -801,7 +802,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 13, 2, 0.94);
+  /* 긴 글을 읽는 면이라 뒤 배경이 비치지 않게 충분히 덮는다 */
+  background: var(--overlay-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1538,4 +1540,28 @@
     text-shadow: 0 0 8px rgba(255, 51, 51, 0.6);
   }
   100% { transform: scale(1); color: inherit; }
+}
+
+/* CRT 연출 강도 토글 */
+.fx-toggle {
+  background: none;
+  border: 1px solid rgba(0, 255, 65, 0.35);
+  color: inherit;
+  font: inherit;
+  padding: 1px 7px;
+  cursor: pointer;
+  opacity: 0.7;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.fx-toggle:hover {
+  opacity: 1;
+  border-color: rgba(0, 255, 65, 0.8);
+}
+
+.fx-toggle.on {
+  opacity: 1;
+  border-color: rgba(0, 255, 65, 0.8);
+  background: rgba(0, 255, 65, 0.1);
 }

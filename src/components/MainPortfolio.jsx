@@ -1493,6 +1493,41 @@ const formatTime = (date) =>
     second: '2-digit',
   });
 
+// CRT 연출 강도 토글 — 기본 COMFORT, MAX 는 원래의 풀 CRT
+// 눈이 편한 쪽을 기본값으로 두고, 강한 연출은 원하는 사람만 켠다
+const FX_KEY = 'tui-fx';
+
+const FxToggle = () => {
+  const [max, setMax] = useState(() => {
+    try {
+      return localStorage.getItem(FX_KEY) === 'max';
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.fx = max ? 'max' : 'comfort';
+    try {
+      localStorage.setItem(FX_KEY, max ? 'max' : 'comfort');
+    } catch {
+      /* localStorage 사용 불가 시 무시 */
+    }
+  }, [max]);
+
+  return (
+    <button
+      type="button"
+      className={`fx-toggle ${max ? 'on' : ''}`}
+      onClick={() => setMax((v) => !v)}
+      title={max ? 'CRT 연출 강도: MAX — 누르면 편안한 모드로' : 'CRT 연출 강도: COMFORT — 누르면 풀 CRT 로'}
+      aria-pressed={max}
+    >
+      FX {max ? 'MAX' : 'SOFT'}
+    </button>
+  );
+};
+
 // 1초마다 이 컴포넌트만 리렌더 (MainPortfolio 전체 트리 리렌더 방지)
 const UptimeClock = () => {
   const [currentTime, setCurrentTime] = useState(() => new Date());
@@ -1658,6 +1693,7 @@ const MainPortfolio = () => {
             <span className="readout">
               <span className="readout-label">UPTIME</span> <UptimeClock />
             </span>
+            <FxToggle />
           </div>
         </div>
 
