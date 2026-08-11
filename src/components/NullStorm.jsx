@@ -99,7 +99,8 @@ const SFX = {
   shard: () => beep(1400, 0.09, { vol: 0.02, slide: -800 }),
 };
 
-// 보스 SEGFAULT — 매 5웨이브. 회차마다 단단해지고 빨라진다
+// 보스 FAKE NULL — 매 5웨이브. 회차마다 단단해지고 빨라진다
+// (Destroy() 된 오브젝트가 == null 은 true 인데 참조는 살아있는 그 함정)
 const bossSpec = (round) => ({
   hp: 50 + (round - 1) * 40,
   moveSpeed: 70 + (round - 1) * 20,
@@ -446,7 +447,7 @@ const NullStorm = ({ onClose }) => {
         if (s.y > H) { s.y = -8; s.x = Math.random() * W; }
       }
 
-      // 웨이브 / 스폰 — 매 5웨이브는 보스 웨이브 (일반 스폰 대신 SEGFAULT)
+      // 웨이브 / 스폰 — 매 5웨이브는 보스 웨이브 (일반 스폰 대신 FAKE NULL)
       const spec = waveSpec(g.wave);
       const isBossWave = g.wave % 5 === 0;
       const advanceWave = () => {
@@ -631,7 +632,7 @@ const NullStorm = ({ onClose }) => {
           g.hitstop = 200;
           g.shake = 450;
           g.bombFlash = 200;
-          pushPopup(g, b.x, b.y + 30, `SEGFAULT HANDLED +${gained}`, '#ffd700', 26, 1300);
+          pushPopup(g, b.x, b.y + 30, `TRULY DESTROYED +${gained}`, '#ffd700', 26, 1300);
           for (let i = 0; i < 24; i++) {
             g.particles.push({
               x: b.x + (Math.random() - 0.5) * 100,
@@ -703,7 +704,7 @@ const NullStorm = ({ onClose }) => {
         ctx.fillText('¦', b.x, b.y);
       }
 
-      // 보스 SEGFAULT (유영 + 피격 플래시 + 체력바)
+      // 보스 FAKE NULL (유영 + 피격 플래시 + 체력바)
       if (g.boss) {
         const b = g.boss;
         const by = b.y + Math.sin(b.bob) * 8;
@@ -712,7 +713,7 @@ const NullStorm = ({ onClose }) => {
         ctx.font = 'bold 13px "JetBrains Mono", monospace';
         ctx.fillText('▓▓▓▓▓▓▓▓▓▓▓▓▓▓', b.x, by - 16);
         ctx.font = 'bold 19px "JetBrains Mono", monospace';
-        ctx.fillText('▓ SEGFAULT ▓', b.x, by);
+        ctx.fillText('▓ FAKE NULL ▓', b.x, by);
         ctx.font = 'bold 13px "JetBrains Mono", monospace';
         ctx.fillText('▓▓▓▓▓▓▓▓▓▓▓▓▓▓', b.x, by + 16);
         // 체력바 (화면 상단 고정)

@@ -8,7 +8,8 @@ export const ACHIEVEMENTS = [
   { id: 'first-patch', title: 'FIRST PATCH', desc: 'NULLSTORM 첫 판을 완주했다' },
   { id: 'boom', title: 'BOOM', desc: '폭탄을 사용했다' },
   { id: 'overclocked', title: 'OVERCLOCKED', desc: '콤보 x8 에 도달했다' },
-  { id: 'segfault-handled', title: 'SEGFAULT HANDLED', desc: '보스 SEGFAULT 를 격파했다' },
+  // id 는 저장 키라 유지 (바꾸면 기존 달성 기록이 초기화된다)
+  { id: 'segfault-handled', title: 'TRULY DESTROYED', desc: '보스 FAKE NULL 을 격파했다' },
   { id: 'score-5000', title: 'SCORE 5000', desc: '단판 5000점을 넘겼다' },
   { id: 'record-breaker', title: 'RECORD BREAKER', desc: '하이스코어를 3회 갱신했다' },
   { id: 'dive-in', title: 'DIVE IN', desc: 'NULLDIVE 를 실행했다' },
