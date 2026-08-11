@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { unlockAchievement, noteRecordBroken } from '../achievements';
 import './NullStorm.css';
 
 // NULLSTORM — 탄막 슈터 (EXPL 6/6 해금 보상)
@@ -159,6 +160,7 @@ const freshGame = () => ({
   bombGauge: 0,
   bombFlash: 0,
   bombWave: 0, // 충격파 반경 진행
+  hit5k: false, // SCORE 5000 업적 1회 체크용
   dmgFlash: 0,
   shake: 0,
   hitstop: 0,
@@ -201,6 +203,11 @@ const NullStorm = ({ onClose }) => {
     sfxMuted = muted;
   }, [muted]);
 
+  // 업적: 아케이드 첫 실행
+  useEffect(() => {
+    unlockAchievement('insert-coin');
+  }, []);
+
   const startGame = useCallback(() => {
     gameRef.current = freshGame();
     setPhase('playing');
@@ -232,16 +239,20 @@ const NullStorm = ({ onClose }) => {
     g.shake = 350;
     g.hitstop = 150;
     SFX.bomb();
+    unlockAchievement('boom');
   }, []);
 
   const endGame = useCallback(() => {
     const g = gameRef.current;
     setFinalScore(g.score);
+    unlockAchievement('first-patch');
+    if (g.score >= 5000) unlockAchievement('score-5000');
     const prev = readHiscore();
     if (g.score > prev) {
       writeHiscore(g.score);
       setHiscore(g.score);
       setIsNewRecord(true);
+      noteRecordBroken();
       SFX.record();
     } else {
       setIsNewRecord(false);
@@ -509,6 +520,7 @@ const NullStorm = ({ onClose }) => {
               if (mult > g.lastMult) {
                 // 콤보 배율이 오를수록 팝업도 확 커진다
                 pushPopup(g, e.x, e.y - 30, `COMBO x${mult}!`, '#ffd700', 11 + mult * 2.4, 850);
+                if (mult >= 8) unlockAchievement('overclocked');
               }
               g.lastMult = mult;
               SFX.kill();
@@ -568,6 +580,7 @@ const NullStorm = ({ onClose }) => {
           g.bossDefeated = true;
           g.shards = [];
           SFX.bossDown();
+          unlockAchievement('segfault-handled');
         }
       }
       if (g.streak === 0) g.lastMult = 1;
@@ -747,6 +760,12 @@ const NullStorm = ({ onClose }) => {
         ctx.fillRect(-12, -12, W + 24, H + 24);
       }
       ctx.restore();
+
+      // 업적: 단판 5000점 (플레이 중 즉시)
+      if (!g.hit5k && g.score >= 5000) {
+        g.hit5k = true;
+        unlockAchievement('score-5000');
+      }
 
       // --- HUD (직접 DOM 갱신) ---
       if (scoreElRef.current) scoreElRef.current.textContent = String(g.score).padStart(6, '0');

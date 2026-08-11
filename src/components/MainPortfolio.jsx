@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { User, Target, Clock, Briefcase, Mail, BookOpen } from 'lucide-react';
 import NoteBook from './NoteBook';
 import NullStorm from './NullStorm';
+import { ACHIEVEMENTS, readUnlocked, unlockAchievement } from '../achievements';
 import { NOTES, NOTE_TYPES } from '../data/notes';
 import ScrambleText from './effects/ScrambleText';
 import AsciiRain from './effects/AsciiRain';
@@ -439,6 +440,43 @@ const ProjectTags = ({ tags }) => {
         </span>
       ))}
     </div>
+  );
+};
+
+// QUESTS 탭 하단 업적 목록 — 미달성 조건 노출이 재방문 동기가 된다
+const AchievementsSection = () => {
+  const [unlocked, setUnlocked] = useState(readUnlocked);
+
+  useEffect(() => {
+    const refresh = () => setUnlocked(readUnlocked());
+    window.addEventListener('tui-achievement', refresh);
+    return () => window.removeEventListener('tui-achievement', refresh);
+  }, []);
+
+  const count = ACHIEVEMENTS.filter((a) => unlocked[a.id]).length;
+
+  return (
+    <>
+      <SectionHeader
+        title={`ACHIEVEMENTS ${count}/${ACHIEVEMENTS.length}`}
+        style={{ marginTop: '30px' }}
+      />
+      <div className="ach-grid">
+        {ACHIEVEMENTS.map((a) => {
+          const got = Boolean(unlocked[a.id]);
+          const showInfo = got || !a.hidden;
+          return (
+            <div key={a.id} className={`ach-card ${got ? 'unlocked' : 'locked'}`}>
+              <span className="ach-card-star">{got ? '★' : '☆'}</span>
+              <div className="ach-card-body">
+                <span className="ach-card-title">{showInfo ? a.title : '???'}</span>
+                <span className="ach-card-desc">{showInfo ? a.desc : '히든 업적'}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
@@ -1100,6 +1138,8 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
         </>
       )}
 
+      <AchievementsSection />
+
       {selectedProject && (
         <ProjectModal
           project={selectedProject}
@@ -1497,8 +1537,18 @@ const MainPortfolio = () => {
       const next = new Set(prev);
       next.add(id);
       persistExplored(next);
+      if (next.size >= TABS.length) unlockAchievement('full-scan');
       return next;
     });
+  }, []);
+
+  // 업적 시스템 이전에 탐험을 끝낸 방문자 소급 처리
+  // (토스트 리스너가 형제 컴포넌트라 마운트 완료 후로 지연)
+  useEffect(() => {
+    if (explored.size < TABS.length) return;
+    const t = setTimeout(() => unlockAchievement('full-scan'), 600);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const explComplete = explored.size >= TABS.length;

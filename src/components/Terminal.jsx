@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrambleText from './effects/ScrambleText';
 import AsciiRain from './effects/AsciiRain';
+import { unlockAchievement } from '../achievements';
 import './Terminal.css';
 
 import vaultBoyImg from '../assets/notnull-logo.png';
@@ -214,6 +215,7 @@ const Terminal = ({ onAuthenticated }) => {
 
     // 시크릿 커맨드는 입장 대신 응답을 출력한다
     if (value && Object.prototype.hasOwnProperty.call(SECRET_COMMANDS, value)) {
+      unlockAchievement('curiosity');
       if (value === 'clear') {
         setCmdLog([]);
       } else {

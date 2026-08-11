@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import Terminal from './components/Terminal';
 import MainPortfolio from './components/MainPortfolio';
 import CursorGlow from './components/effects/CursorGlow';
+import AchievementToast from './components/AchievementToast';
 import './index.css';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         )}
       </AnimatePresence>
       <CursorGlow />
+      <AchievementToast />
       <div className="crt-fx" aria-hidden="true">
         <div className="crt-sweep" />
         <div className="crt-vignette" />

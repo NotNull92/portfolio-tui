@@ -1459,3 +1459,62 @@
 .expl-play {
   font-weight: 700;
 }
+
+/* --- ACHIEVEMENTS (QUESTS 탭 하단) --- */
+.ach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+}
+
+.ach-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid rgba(0, 255, 65, 0.25);
+  background: rgba(0, 255, 65, 0.03);
+}
+
+.ach-card.unlocked {
+  border-color: rgba(255, 215, 0, 0.6);
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.ach-card-star {
+  font-size: 18px;
+  opacity: 0.35;
+}
+
+.ach-card.unlocked .ach-card-star {
+  opacity: 1;
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+}
+
+.ach-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ach-card-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.ach-card.unlocked .ach-card-title {
+  color: #ffd700;
+}
+
+.ach-card.locked .ach-card-title,
+.ach-card.locked .ach-card-desc {
+  opacity: 0.55;
+}
+
+.ach-card-desc {
+  font-size: 11px;
+  color: #88ddaa;
+}
