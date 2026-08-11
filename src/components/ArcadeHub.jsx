@@ -60,12 +60,12 @@ const ArcadeHub = ({ onClose, onSelect }) => {
           </button>
 
           {slot2Open ? (
-            <button type="button" className="hub-slot" disabled>
+            <button type="button" className="hub-slot" onClick={() => onSelect('nulldive')}>
               <span className="hub-slot-no">02</span>
               <span className="hub-slot-title">NULLDIVE</span>
               <span className="hub-slot-desc">레거시 코드의 심연으로 다이브하라</span>
-              <span className="hub-slot-meta">MAX DEPTH 000000 LOC</span>
-              <span className="hub-slot-play">[ LOADING... ]</span>
+              <span className="hub-slot-meta">MAX DEPTH {readHiscore('nulldive-hiscore')} LOC</span>
+              <span className="hub-slot-play">[ INSERT COIN ]</span>
             </button>
           ) : (
             <div className="hub-slot locked">

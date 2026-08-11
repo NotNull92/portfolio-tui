@@ -11,6 +11,11 @@ export const ACHIEVEMENTS = [
   { id: 'segfault-handled', title: 'SEGFAULT HANDLED', desc: '보스 SEGFAULT 를 격파했다' },
   { id: 'score-5000', title: 'SCORE 5000', desc: '단판 5000점을 넘겼다' },
   { id: 'record-breaker', title: 'RECORD BREAKER', desc: '하이스코어를 3회 갱신했다' },
+  { id: 'dive-in', title: 'DIVE IN', desc: 'NULLDIVE 를 실행했다' },
+  { id: 'first-crash', title: 'FIRST CRASH', desc: 'NULLDIVE 첫 충돌 — 통과의례다' },
+  { id: 'null-collector', title: 'NULL COLLECTOR', desc: '단판에 null 토큰 10개 수집' },
+  { id: 'depth-3000', title: 'DEPTH 3000 LOC', desc: '단판 깊이 3000 LOC 도달' },
+  { id: 'ceiling-runner', title: 'CEILING RUNNER', desc: '천장에 붙은 채 5초 연속 생존', hidden: true },
 ];
 
 const KEY = 'tui-achievements';

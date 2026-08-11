@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { User, Target, Clock, Briefcase, Mail, BookOpen } from 'lucide-react';
 import NoteBook from './NoteBook';
 import NullStorm from './NullStorm';
+import NullDive from './NullDive';
 import ArcadeHub from './ArcadeHub';
 import { ACHIEVEMENTS, readUnlocked, unlockAchievement } from '../achievements';
 import { NOTES, NOTE_TYPES } from '../data/notes';
@@ -1709,6 +1710,9 @@ const MainPortfolio = () => {
         )}
         {arcadeView === 'nullstorm' && (
           <NullStorm key="nullstorm" onClose={() => setArcadeView('hub')} />
+        )}
+        {arcadeView === 'nulldive' && (
+          <NullDive key="nulldive" onClose={() => setArcadeView('hub')} />
         )}
       </AnimatePresence>
 
