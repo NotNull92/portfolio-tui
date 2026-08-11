@@ -648,7 +648,7 @@ const NullStorm = ({ onClose }) => {
           g.bossDefeated = true;
           g.shards = [];
           SFX.bossDown();
-          unlockAchievement('segfault-handled');
+          unlockAchievement('truly-destroyed');
         }
       }
       if (g.streak === 0) g.lastMult = 1;
