@@ -126,6 +126,13 @@ const freshGame = () => ({
 
 const multiplierOf = (streak) => Math.min(1 + Math.floor(streak / 5), 8);
 
+// 플로팅 텍스트 — 수치가 클수록 크게, 갭을 넓게 잡아 손맛을 만든다 (9px ~ 32px)
+const popupSize = (value) => 9 + Math.min(value / 7, 23);
+
+const pushPopup = (g, x, y, text, color, size, life = 600) => {
+  g.popups.push({ x, y, text, color, size, life, maxLife: life });
+};
+
 const NullStorm = ({ onClose }) => {
   const [phase, setPhase] = useState('title'); // title | playing | gameover
   const [finalScore, setFinalScore] = useState(0);
@@ -165,7 +172,7 @@ const NullStorm = ({ onClose }) => {
     for (const e of g.enemies) {
       g.score += e.points * mult;
       g.streak += 1;
-      g.popups.push({ x: e.x, y: e.y, text: `+${e.points * mult}`, life: 700, color: '#ffd700' });
+      pushPopup(g, e.x, e.y, `+${e.points * mult}`, '#ffd700', popupSize(e.points * mult), 700);
       for (let i = 0; i < 4; i++) {
         g.particles.push({
           x: e.x, y: e.y,
@@ -343,7 +350,7 @@ const NullStorm = ({ onClose }) => {
         g.spawned = 0;
         g.intermission = 1400;
         g.score += g.wave * 50; // 클리어 보너스
-        g.popups.push({ x: W / 2, y: H / 2 + 30, text: `WAVE BONUS +${g.wave * 50}`, life: 900, color: '#00ff41' });
+        pushPopup(g, W / 2, H / 2 + 30, `WAVE BONUS +${g.wave * 50}`, '#00ff41', popupSize(g.wave * 50), 900);
         SFX.wave();
       }
 
@@ -387,9 +394,10 @@ const NullStorm = ({ onClose }) => {
               const gained = e.points * mult;
               g.score += gained;
               g.bombGauge = Math.min(g.bombGauge + 6, 100);
-              g.popups.push({ x: e.x, y: e.y - 6, text: `+${gained}`, life: 600, color: e.type === 'NPE' ? '#ffaa00' : '#aaffcc' });
+              pushPopup(g, e.x, e.y - 6, `+${gained}`, e.type === 'NPE' ? '#ffaa00' : '#aaffcc', popupSize(gained));
               if (mult > g.lastMult) {
-                g.popups.push({ x: e.x, y: e.y - 26, text: `COMBO x${mult}!`, life: 850, color: '#ffd700' });
+                // 콤보 배율이 오를수록 팝업도 확 커진다
+                pushPopup(g, e.x, e.y - 30, `COMBO x${mult}!`, '#ffd700', 11 + mult * 2.4, 850);
               }
               g.lastMult = mult;
               SFX.kill();
@@ -510,9 +518,11 @@ const NullStorm = ({ onClose }) => {
       }
       ctx.globalAlpha = 1;
 
-      // 점수/콤보 팝업
-      ctx.font = 'bold 12px "JetBrains Mono", monospace';
+      // 점수/콤보 팝업 — 수치 비례 크기 + 등장 오버슈트 팝
       for (const p of g.popups) {
+        const age = p.maxLife - p.life;
+        const pop = age < 90 ? 0.4 + (age / 90) * 0.85 : Math.max(1.25 - (age - 90) * 0.002, 1);
+        ctx.font = `bold ${Math.round(p.size * pop)}px "JetBrains Mono", monospace`;
         ctx.globalAlpha = Math.min(p.life / 300, 1);
         ctx.fillStyle = p.color;
         ctx.fillText(p.text, p.x, p.y);
