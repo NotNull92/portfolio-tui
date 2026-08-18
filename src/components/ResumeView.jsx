@@ -56,7 +56,7 @@ const SHIPPED = [
     role: '클라이언트 개발 (팀 7~8인) — 길드 경쟁전·전용 PVE 던전·BM 3종·빌드/패치·점검',
     scale: '프로젝트 지표 — MAU 최대 3.5만 / DAU 1.2만 · 월 매출 최대 400억 (6년차 서비스)',
     links: [
-      { label: 'GOOGLE PLAY', url: 'https://play.google.com/store/apps/details?id=com.bluepotiongames.eosm&pcampaignid=web_share' },
+      { label: 'GOOGLE PLAY', url: 'https://play.google.com/store/apps/details?id=com.bluepotiongames.eosm' },
     ],
   },
   {

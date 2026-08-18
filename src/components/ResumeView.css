@@ -723,6 +723,10 @@ body.resume-open .crt-container::after {
     display: block;
   }
 
+  /* 8년 미만 경력은 1~2페이지가 권장선이다. A4 기본 여백 기준 본문 높이가
+     약 1046px/장이라, 화면 값 그대로 두면 2.1장이 되어 셋째 장에 꼬리만
+     100px 남는다. 아래 값들은 그 꼬리를 없애 2장 안에 떨어뜨리기 위한 것.
+     (측정: 조정 전 2192px / 2.10장 → 조정 후 1903px / 1.82장) */
   body.resume-open .resume-sheet {
     width: 100%;
     max-height: none;
@@ -730,7 +734,46 @@ body.resume-open .crt-container::after {
     border-radius: 0;
     box-shadow: none;
     padding: 0;
-    font-size: 11px;
+    font-size: 10.5px;
+    line-height: 1.5;
+  }
+
+  body.resume-open .resume-head {
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+  }
+
+  body.resume-open .resume-name {
+    font-size: 24px;
+    margin-bottom: 3px;
+  }
+
+  body.resume-open .resume-pitch { margin-top: 5px; }
+  body.resume-open .resume-stack { margin-top: 7px; }
+
+  body.resume-open .resume-metrics { margin-bottom: 12px; }
+  body.resume-open .resume-metric { padding: 7px 10px 8px; }
+  body.resume-open .resume-metric-value { font-size: 20px; }
+
+  body.resume-open .resume-section-title {
+    margin: 12px 0 7px;
+    padding-bottom: 5px;
+  }
+
+  body.resume-open .resume-ships { gap: 5px; }
+  body.resume-open .resume-ship { padding: 7px 10px 8px; }
+  body.resume-open .resume-ship-name { font-size: 13px; }
+
+  body.resume-open .resume-career { margin-bottom: 10px; }
+  body.resume-open .resume-career-head { font-size: 13px; }
+
+  body.resume-open .resume-career li,
+  body.resume-open .resume-side li,
+  body.resume-open .resume-etc li { margin-bottom: 3px; }
+
+  body.resume-open .resume-foot {
+    margin-top: 12px;
+    padding-top: 8px;
   }
 
   body.resume-open .resume-toolbar {
