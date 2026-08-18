@@ -1,7 +1,11 @@
 /* RESUME 뷰 — 채용 담당자 패스트패스.
    이 화면만 사이트의 CRT 초록 테마에서 완전히 이탈한다. 흰 종이 + 대비 확보된
    컬러 팔레트로, 처음 보는 사람이 30초 안에 읽을 수 있는 문서를 목표로 한다.
-   본문은 한글 가독성을 위해 산세리프, 수치·라벨만 모노스페이스를 유지한다. */
+   본문은 한글 가독성을 위해 산세리프, 수치·라벨만 모노스페이스를 유지한다.
+
+   [색 규칙] 액센트는 초록 하나로 통일한다. 링크만 파랑.
+   섹션마다 색을 바꾸면 위계가 아니라 노이즈가 되고, 6초 스캔에서 "어디부터
+   읽어야 하는지" 신호가 사라진다. 강조는 색이 아니라 크기·굵기·여백으로 준다. */
 
 .resume-overlay {
   position: fixed;
@@ -19,23 +23,23 @@
   --r-ink: #1f2933;        /* 본문 */
   --r-ink-strong: #0b1620; /* 이름·회사명 */
   --r-muted: #5b6770;      /* 기간·보조 설명 */
-  --r-line: #dde4e0;       /* 구분선 */
-  --r-card: #f5f8f6;       /* 카드 배경 */
-  --r-chip: #eef2f5;       /* 라벨 칩 */
+  --r-faint: #8b959c;      /* 섹션 번호 등 최약 정보 */
+  --r-line: #e0e6e3;       /* 구분선 */
+  --r-card: #f6f9f7;       /* 카드 배경 */
+  --r-chip: #eef2f0;       /* 라벨 칩 */
 
-  --r-green: #0f6b3a;      /* 브랜드 액센트 — CAREER */
-  --r-blue: #0b5394;       /* 수치 · PROJECTS */
-  --r-violet: #5b3fa8;     /* SKILLS */
-  --r-amber: #8a5300;      /* ETC */
+  --r-accent: #0f6b3a;      /* 유일한 액센트 */
+  --r-accent-dark: #0b5330;
+  --r-accent-soft: #e7f2ec; /* 액센트 배경 */
   --r-link: #1155cc;
 }
 
 .resume-sheet {
-  width: min(94vw, 780px);
+  width: min(94vw, 820px);
   max-height: 92vh;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 0 34px 26px;
+  padding: 0 36px 26px;
   background: var(--r-paper);
   border: none;
   border-radius: 6px;
@@ -47,6 +51,8 @@
   font-size: 14px;
   line-height: 1.7;
   text-shadow: none;
+  /* 한글은 음절 단위로 끊기면 읽기 흐름이 깨진다 — 어절 단위 줄바꿈 */
+  word-break: keep-all;
 }
 
 /* 스크롤바도 라이트 문서에 맞춘다 (초록 테마 스크롤바 상속 차단) */
@@ -60,7 +66,7 @@
 .resume-sheet::-webkit-scrollbar-thumb:hover { background: #a7b2ac; }
 
 .resume-sheet :focus-visible {
-  outline: 2px solid var(--r-blue);
+  outline: 2px solid var(--r-link);
   outline-offset: 2px;
 }
 
@@ -71,67 +77,74 @@
   z-index: 2;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 0 -34px 18px;
-  padding: 14px 34px 12px;
+  gap: 8px;
+  margin: 0 -36px 20px;
+  padding: 13px 36px 11px;
   background: var(--r-paper);
   border-bottom: 1px solid var(--r-line);
 }
 
 .resume-toolbar-title {
   flex: 1;
-  color: var(--r-green);
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--r-accent);
   font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.5px;
+  font-size: 12px;
+  letter-spacing: 1.4px;
 }
 
 .resume-btn {
-  background: #ffffff;
-  border: 1px solid #c3ccc7;
+  background: var(--r-accent);
+  border: 1px solid var(--r-accent);
   border-radius: 4px;
-  color: #33404a;
+  color: #ffffff;
   font: inherit;
   font-size: 12px;
   font-weight: 600;
-  padding: 5px 12px;
+  padding: 5px 13px;
   cursor: pointer;
+  white-space: nowrap;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .resume-btn:hover {
-  background: #eef2f5;
+  background: var(--r-accent-dark);
+  border-color: var(--r-accent-dark);
+}
+
+.resume-btn-ghost {
+  background: #ffffff;
+  border-color: #c8d1cc;
+  color: #33404a;
+}
+
+.resume-btn-ghost:hover {
+  background: #eef2f0;
   border-color: #9aa8a1;
+  color: #33404a;
 }
 
-/* PRINT 버튼은 채용 담당자가 가장 많이 누를 동선 — 채워서 강조 */
-.resume-btn:first-of-type {
-  background: var(--r-green);
-  border-color: var(--r-green);
-  color: #ffffff;
-}
-
-.resume-btn:first-of-type:hover {
-  background: #0c5a30;
-  border-color: #0c5a30;
-}
-
-/* --- 헤드 --- */
+/* --- 헤드 : 6초 스캔의 첫 착지점 --- */
 .resume-head {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  align-items: flex-start;
+  gap: 24px;
   flex-wrap: wrap;
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--r-ink-strong);
   margin-bottom: 20px;
 }
 
+.resume-identity { flex: 1 1 380px; min-width: 0; }
+
 .resume-name {
-  margin: 0 0 4px;
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1.3;
+  margin: 0 0 5px;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.25;
   color: var(--r-ink-strong);
-  letter-spacing: -0.2px;
+  letter-spacing: -0.3px;
 }
 
 .resume-alias {
@@ -144,18 +157,100 @@
 
 .resume-role {
   margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #29363f;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.resume-role-sep { color: var(--r-faint); font-weight: 400; }
+
+.resume-tenure {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--r-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 재직 상태 — 초록 점 하나로. 채용 담당자가 가장 먼저 확인하는 사실 */
+.resume-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--r-accent);
+  background: var(--r-accent-soft);
+  border-radius: 999px;
+  padding: 1px 9px;
+}
+
+.resume-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--r-accent);
+}
+
+.resume-pitch {
+  margin: 9px 0 0;
   font-size: 13.5px;
-  color: #37474f;
+  line-height: 1.65;
+  color: var(--r-ink);
+  max-width: 52ch;
+}
+
+.resume-pitch strong {
+  color: var(--r-accent);
+  font-weight: 700;
+}
+
+/* 스택 칩 — 스캔 3순위(엔진·언어 매칭)를 헤더에서 끝낸다 */
+.resume-stack {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.resume-stack li {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #2f3d46;
+  background: var(--r-chip);
+  border: 1px solid #dde4e0;
+  border-radius: 3px;
+  padding: 2px 8px;
+  line-height: 1.6;
+}
+
+.resume-stack li:first-child,
+.resume-stack li:nth-child(2) {
+  color: var(--r-accent);
+  background: var(--r-accent-soft);
+  border-color: #c9e2d5;
 }
 
 .resume-contacts {
   list-style: none;
-  margin: 0;
+  margin: 2px 0 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: 13px;
+  gap: 3px;
+  font-size: 12.5px;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .resume-contacts li {
@@ -165,6 +260,8 @@
 }
 
 .resume-contacts a {
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: var(--r-link);
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -176,91 +273,207 @@
 .resume-label {
   font-family: 'JetBrains Mono', monospace;
   display: inline-block;
-  min-width: 66px;
+  min-width: 62px;
   color: var(--r-muted);
   letter-spacing: 1px;
-  font-size: 10.5px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 700;
 }
 
-/* --- 핵심 성과 4칸 — 숫자는 블루 계열로 시선 유도 --- */
-.resume-metrics {
+/* --- 개인 기여 지표 4칸 --- */
+.resume-metrics { margin-bottom: 26px; }
+
+.resume-metrics-cap {
+  margin: 0 0 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--r-faint);
+  text-transform: uppercase;
+}
+
+.resume-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
   gap: 10px;
-  margin-bottom: 22px;
 }
 
 .resume-metric {
   border: 1px solid var(--r-line);
-  border-left: 3px solid var(--r-blue);
+  border-top: 3px solid var(--r-accent);
   border-radius: 4px;
   background: var(--r-card);
-  padding: 11px 14px;
+  padding: 11px 14px 12px;
   display: flex;
   flex-direction: column;
   gap: 1px;
 }
 
-/* 카드마다 액센트를 살짝 돌려 4개가 한 덩어리로 뭉개지지 않게 */
-.resume-metric[data-i='1'] { border-left-color: var(--r-green); }
-.resume-metric[data-i='2'] { border-left-color: var(--r-violet); }
-.resume-metric[data-i='3'] { border-left-color: var(--r-amber); }
-
 .resume-metric-value {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 24px;
+  font-size: 27px;
   font-weight: 700;
-  line-height: 1.25;
-  color: var(--r-blue);
+  line-height: 1.2;
+  color: var(--r-accent);
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
 }
-
-.resume-metric[data-i='1'] .resume-metric-value { color: var(--r-green); }
-.resume-metric[data-i='2'] .resume-metric-value { color: var(--r-violet); }
-.resume-metric[data-i='3'] .resume-metric-value { color: var(--r-amber); }
 
 .resume-metric-label {
   font-size: 12.5px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--r-ink-strong);
 }
 
 .resume-metric-sub {
   font-size: 11.5px;
+  line-height: 1.5;
   color: var(--r-muted);
 }
 
-/* --- 섹션 --- */
-.resume-block { --r-accent: var(--r-green); }
-.resume-block[data-accent='project'] { --r-accent: var(--r-blue); }
-.resume-block[data-accent='skill'] { --r-accent: var(--r-violet); }
-.resume-block[data-accent='etc'] { --r-accent: var(--r-amber); }
-
+/* --- 섹션 헤더 : 01~05 번호로 읽는 순서를 눈에 보이게 --- */
 .resume-section-title {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 22px 0 10px;
+  align-items: baseline;
+  gap: 9px;
+  margin: 26px 0 12px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--r-accent, var(--r-green));
+  letter-spacing: 1.8px;
+  color: var(--r-ink-strong);
   border-bottom: 1px solid var(--r-line);
-  padding-bottom: 6px;
+  padding-bottom: 7px;
 }
 
-.resume-section-title::before {
-  content: '';
-  width: 3px;
-  height: 13px;
-  background: var(--r-accent, var(--r-green));
-  border-radius: 2px;
+.resume-section-no {
+  color: var(--r-accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: var(--r-accent-soft);
+  border-radius: 3px;
+  padding: 1px 6px;
 }
 
-.resume-career {
-  margin-bottom: 16px;
+.resume-section-en { flex: none; }
+
+.resume-section-ko {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--r-faint);
 }
+
+/* --- 01 SHIPPED : 게임 이력서의 1순위 블록 --- */
+.resume-ships {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.resume-ship {
+  border: 1px solid var(--r-line);
+  border-left: 3px solid var(--r-accent);
+  border-radius: 4px;
+  background: var(--r-card);
+  padding: 10px 14px 11px;
+}
+
+.resume-ship-top {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.resume-ship-name {
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--r-ink-strong);
+  letter-spacing: -0.1px;
+}
+
+/* 플랫폼 배지 — "무엇으로 출시했나"를 이름 옆에서 바로 읽게 */
+.resume-ship-platform {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: var(--r-accent);
+  background: var(--r-accent-soft);
+  border: 1px solid #c9e2d5;
+  border-radius: 3px;
+  padding: 1px 7px;
+  white-space: nowrap;
+}
+
+.resume-ship-period {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--r-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.resume-ship-genre {
+  margin: 2px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--r-muted);
+}
+
+.resume-ship-role {
+  margin: 5px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--r-ink);
+}
+
+.resume-ship-scale {
+  margin: 5px 0 0;
+  font-size: 11.5px;
+  line-height: 1.65;
+  color: var(--r-muted);
+}
+
+/* 링크 알약 — 리크루터가 실제로 누를 유일한 물건이라 눈에 띄어야 한다 */
+.resume-pills {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.resume-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: var(--r-link);
+  background: #eef4fd;
+  border: 1px solid #c6d9f5;
+  border-radius: 3px;
+  padding: 1px 7px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.resume-pill:hover {
+  background: #dde9fb;
+  border-color: #9dbdec;
+  color: #0b3d99;
+}
+
+/* --- 02 CAREER --- */
+.resume-career { margin-bottom: 16px; }
+.resume-career:last-child { margin-bottom: 0; }
 
 .resume-career-head {
   display: flex;
@@ -269,8 +482,8 @@
   gap: 12px;
   flex-wrap: wrap;
   color: var(--r-ink-strong);
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 15.5px;
+  font-weight: 800;
 }
 
 .resume-period {
@@ -285,37 +498,67 @@
 }
 
 .resume-career-role {
-  margin: 3px 0 6px;
-  color: var(--r-accent, var(--r-green));
-  font-size: 13px;
-  font-weight: 600;
+  margin: 2px 0 7px;
+  color: var(--r-accent);
+  font-size: 12.5px;
+  font-weight: 700;
 }
 
 .resume-career ul,
 .resume-side,
 .resume-etc {
   margin: 0;
-  padding-left: 19px;
+  padding-left: 18px;
 }
 
 .resume-career li,
 .resume-side li,
 .resume-etc li {
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   color: var(--r-ink);
 }
 
 .resume-career li::marker,
 .resume-side li::marker,
 .resume-etc li::marker {
-  color: var(--r-accent, var(--r-green));
+  color: var(--r-accent);
+}
+
+/* --- 03 SIDE --- */
+.resume-side li { margin-bottom: 9px; }
+
+.resume-side-head {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  flex-wrap: wrap;
 }
 
 .resume-side strong {
   color: var(--r-ink-strong);
   font-weight: 700;
+  font-size: 13.5px;
 }
 
+.resume-side-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--r-muted);
+  background: var(--r-chip);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+
+.resume-side-desc {
+  display: block;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--r-ink);
+}
+
+/* --- 04 SKILLS --- */
 .resume-skills {
   list-style: none;
   margin: 0;
@@ -332,24 +575,44 @@
 .resume-skills .resume-label {
   flex: none;
   min-width: 0;
-  color: #3d4a54;
+  color: #33404a;
   background: var(--r-chip);
   border-radius: 3px;
   padding: 1px 8px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   font-size: 11.5px;
+  font-weight: 700;
 }
 
+/* --- 푸터 --- */
 .resume-foot {
-  margin-top: 22px;
-  padding-top: 12px;
+  margin-top: 24px;
+  padding-top: 13px;
   border-top: 1px solid var(--r-line);
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  align-items: baseline;
+  gap: 14px;
   flex-wrap: wrap;
   font-size: 12px;
   color: var(--r-muted);
+}
+
+.resume-foot-main {
+  flex: 1 1 380px;
+  line-height: 1.65;
+}
+
+.resume-foot-main strong {
+  color: var(--r-accent);
+  font-weight: 700;
+}
+
+.resume-foot-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--r-faint);
+  white-space: nowrap;
 }
 
 /* --- 이력서가 열려 있는 동안엔 CRT 이펙트를 전부 끈다 ---
@@ -401,11 +664,11 @@ body.resume-open .crt-container::after {
     font-size: 13.5px;
   }
 
-  .resume-toolbar { margin: 0 -18px 16px; padding: 12px 18px 10px; gap: 8px; }
+  .resume-toolbar { margin: 0 -18px 16px; padding: 12px 18px 10px; gap: 7px; }
 
   /* 좁은 폭에서 제목이 두 줄로 접히며 버튼을 밀어내지 않도록 */
   .resume-toolbar-title {
-    font-size: 11.5px;
+    font-size: 11px;
     min-width: 0;
     white-space: nowrap;
     overflow: hidden;
@@ -413,8 +676,14 @@ body.resume-open .crt-container::after {
   }
 
   .resume-btn { padding: 5px 10px; font-size: 11.5px; }
-  .resume-name { font-size: 22px; }
-  .resume-metrics { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .resume-name { font-size: 23px; }
+  .resume-head { gap: 14px; }
+  .resume-contacts { font-size: 12px; }
+  .resume-metrics-grid { grid-template-columns: repeat(auto-fit, minmax(142px, 1fr)); }
+  .resume-metric-value { font-size: 24px; }
+
+  /* 좁은 폭에서 기간이 오른쪽 끝으로 튀지 않도록 흐름에 맞춘다 */
+  .resume-ship-period { margin-left: 0; }
 }
 
 /* --- 인쇄: 화면과 같은 문서를 그대로, 장식만 제거 --- */
@@ -461,7 +730,7 @@ body.resume-open .crt-container::after {
     border-radius: 0;
     box-shadow: none;
     padding: 0;
-    font-size: 11.5px;
+    font-size: 11px;
   }
 
   body.resume-open .resume-toolbar {
@@ -475,8 +744,31 @@ body.resume-open .crt-container::after {
     display: none;
   }
 
+  /* 인쇄본에서도 링크 주소를 잃지 않게 — 종이에 뽑히면 클릭할 수 없으므로 */
+  body.resume-open .resume-pill::after {
+    content: ' (' attr(href) ')';
+    font-size: 8.5px;
+    font-weight: 400;
+    color: #5b6770;
+    word-break: break-all;
+  }
+
+  body.resume-open .resume-pill {
+    background: none;
+    border: none;
+    padding: 0 4px 0 0;
+    color: #0b1620;
+  }
+
   body.resume-open .resume-career,
-  body.resume-open .resume-metric {
+  body.resume-open .resume-ship,
+  body.resume-open .resume-metric,
+  body.resume-open .resume-side li {
     break-inside: avoid;
+  }
+
+  body.resume-open .resume-section-title {
+    break-after: avoid;
+    margin-top: 16px;
   }
 }

@@ -1288,6 +1288,30 @@
   letter-spacing: 1px;
 }
 
+/* 오버레이를 여는 액션 항목 (이력서) — 채용 담당자의 1순위 동선이라
+   탭 이동 항목처럼 점선으로 흐리게 두지 않고 실선 + 배경으로 세운다 */
+.contact-item.action {
+  width: 100%;
+  font-family: 'JetBrains Mono', monospace;
+  text-align: left;
+  cursor: pointer;
+  border-color: #00ff41;
+  background: rgba(0, 255, 65, 0.09);
+}
+
+/* hover 가 있는 환경에서만 '이력서 열기' 라벨 자리를 비워둔다.
+   터치 기기에선 라벨이 뜨지 않으므로 빈 여백만 남아 값 텍스트가 억지로 접힌다 */
+@media (hover: hover) {
+  .contact-item.action { padding-right: 104px; }
+}
+
+.contact-item.action::after {
+  content: '▸ 이력서 열기';
+  right: 18px;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
 .contact-icon {
   font-size: 18px;
   font-family: 'JetBrains Mono', monospace;
@@ -1567,12 +1591,43 @@
   background: rgba(0, 255, 65, 0.16);
 }
 
-/* STAT 성과 카드 — 첫 화면 헤드라인 숫자 4칸 */
+/* STAT 성과 카드 — 첫 화면 헤드라인 숫자 4칸 (전부 개인 기여) */
+.stat-metrics-cap {
+  margin: 0 0 8px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  opacity: 0.55;
+}
+
 .stat-metrics {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
+}
+
+/* 프로젝트 규모 — 개인 성과 카드에서 떼어내 라벨을 붙여 따로 낸다 */
+.stat-scale {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 0 24px;
+  padding: 8px 12px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #a8e6c0;
+  border-left: 2px solid rgba(0, 255, 65, 0.35);
+  background: rgba(0, 255, 65, 0.02);
+}
+
+.stat-scale-label {
+  flex: none;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  padding: 1px 7px;
+  border: 1px solid rgba(0, 255, 65, 0.35);
+  opacity: 0.85;
 }
 
 .stat-metric {
@@ -1604,6 +1659,7 @@
 .stat-metric-sub {
   font-size: 10px;
   opacity: 0.6;
+  word-break: keep-all;
 }
 
 /* 탭 보조 표기 — RPG 라벨 해독용 (QUESTS -> 프로젝트 등) */

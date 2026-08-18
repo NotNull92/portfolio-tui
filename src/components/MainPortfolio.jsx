@@ -239,12 +239,19 @@ const SkillBar = ({ name, pct, note, delay = 0 }) => {
 };
 
 // 첫 화면 성과 카드 — 채용 담당자가 반드시 보는 유일한 화면에 헤드라인 숫자를 박는다
+// 첫 화면 헤드라인 숫자 — 전부 "내가 직접 설계·구현한 결과"만 넣는다.
+// 회사·프로젝트 규모(MAU·매출)는 아래 STAT_SCALE 로 분리해 라벨을 달아 낸다.
+// 둘을 한 줄에 섞으면 채용 담당자는 개인 성과를 부풀린 것으로 읽고, 그 순간
+// 나머지 숫자의 신뢰도까지 함께 떨어진다. (RESUME 뷰도 같은 원칙으로 정리돼 있다)
 const STAT_METRICS = [
+  { num: 4, suffix: '종', label: '상용 게임 출시', sub: '모바일 3 · PC VR 1 (Steam·Play)' },
   { num: 30, suffix: '%', label: 'BM 매출 기여', sub: '스텝업 패키지 설계·개발' },
-  { num: 35, suffix: 'K', label: '라이브 MAU', sub: '모바일 MMORPG 운영 참여' },
-  { num: 400, suffix: '억', label: '월 매출 게임 라이브', sub: '6년차 서비스 현역 참여 중' },
+  { num: 85, suffix: '%↓', label: '서버 부하 감소', sub: '월드 랭킹 갱신 구조 재설계' },
   { num: 4, suffix: '종', label: '오픈소스 공개', sub: 'OpenUPM·Godot Asset Store 배포' },
 ];
+
+// 참여한 서비스의 규모. 개인 성과 칸과 섞지 않고 라벨을 달아 따로 표기한다.
+const STAT_SCALE = 'EOS RED — MAU 최대 3.5만 / DAU 1.2만 · 월 매출 최대 400억, 6년차 라이브 서비스 현역';
 
 const StatMetricCard = ({ num, suffix, label, sub, delay }) => {
   const shown = useCountUp(num, 900 + delay);
@@ -277,11 +284,16 @@ const StatTab = () => {
         라이브 MMORPG 콘텐츠·BM 개발 5년, 1인 게임 개발, AI 개발툴 오픈소스까지 —
         만든 것으로 증명하는 Unity 개발자입니다.
       </div>
+      <p className="stat-metrics-cap">직접 설계·구현해 만든 결과</p>
       <div className="stat-metrics">
         {STAT_METRICS.map((m, i) => (
           <StatMetricCard key={m.label} {...m} delay={i * 150} />
         ))}
       </div>
+      <p className="stat-scale">
+        <span className="stat-scale-label">참여 프로젝트 규모</span>
+        <span>{STAT_SCALE}</span>
+      </p>
       <div className="stat-layout">
         <div className="data-grid">
           {personalData.map((row, i) => (
@@ -1497,8 +1509,17 @@ const NotesTab = () => {
 };
 
 // Contact Tab - 연락처
-const ContactTab = ({ onNavigate }) => {
+// RESUME 는 외부 링크가 아니라 이력서 오버레이를 여는 액션이다 — 채용 담당자가
+// 가장 먼저 누를 항목이라 목록 맨 위에 둔다. (메일로 PDF 를 요청하게 만들던
+// 예전 동선은 링크가 죽은 것처럼 읽혀서 폐기했다. 이력서 뷰 안에서 바로 PDF 저장 가능)
+const ContactTab = ({ onNavigate, onOpenResume }) => {
   const contacts = [
+    {
+      label: 'RESUME',
+      value: '30초 요약 · PDF 저장 가능',
+      action: onOpenResume,
+      icon: '[▼]'
+    },
     {
       label: 'GITHUB',
       value: 'github.com/NotNull92',
@@ -1524,12 +1545,6 @@ const ContactTab = ({ onNavigate }) => {
       icon: '[::]'
     },
     {
-      label: 'RESUME',
-      value: 'PDF 준비 중 — 메일로 요청해 주세요',
-      url: 'mailto:fatiger92@gmail.com?subject=%5BResume%20Request%5D%20Portfolio%20방문',
-      icon: '[▼]'
-    },
-    {
       label: 'NOTES',
       value: `개인 서가 — 아티클 · 시 · 단상 ${NOTES.length}편`,
       tab: 'notes',
@@ -1542,18 +1557,22 @@ const ContactTab = ({ onNavigate }) => {
       <SectionHeader title="CONTACT TRANSMISSION" />
       <div className="contact-list">
         {contacts.map((contact, idx) => {
-          // tab 항목은 외부 링크가 아니라 내부 탭 이동이므로 button 으로 낸다
-          const isInternal = Boolean(contact.tab);
+          // tab(내부 탭 이동)·action(오버레이 열기) 항목은 링크가 아니므로 button 으로 낸다
+          const isInternal = Boolean(contact.tab || contact.action);
           const Tag = isInternal ? motion.button : motion.a;
           const linkProps = isInternal
-            ? { type: 'button', onClick: () => onNavigate?.(contact.tab) }
+            ? {
+                type: 'button',
+                onClick: () =>
+                  contact.action ? contact.action() : onNavigate?.(contact.tab),
+              }
             : { href: contact.url, target: '_blank', rel: 'noopener noreferrer' };
 
           return (
             <Tag
               key={idx}
               {...linkProps}
-              className={`contact-item ${isInternal ? 'internal' : ''}`}
+              className={`contact-item ${contact.action ? 'action' : contact.tab ? 'internal' : ''}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
@@ -1868,7 +1887,7 @@ const MainPortfolio = () => {
             {activeTab === 'quests' && <motion.div key="quests" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><QuestsTab /></motion.div>}
             {activeTab === 'inventory' && <motion.div key="inventory" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><InventoryTab /></motion.div>}
             {activeTab === 'notes' && <motion.div key="notes" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><NotesTab /></motion.div>}
-            {activeTab === 'contact' && <motion.div key="contact" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><ContactTab onNavigate={visitTab} /></motion.div>}
+            {activeTab === 'contact' && <motion.div key="contact" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="tab-wrapper"><ContactTab onNavigate={visitTab} onOpenResume={() => setResumeOpen(true)} /></motion.div>}
           </AnimatePresence>
         </div>
 
