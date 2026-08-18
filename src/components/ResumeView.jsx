@@ -5,7 +5,8 @@ import './ResumeView.css';
 // RESUME — 채용 담당자용 패스트패스 (한 화면 요약)
 // 원본 이력서 PDF 는 민감 정보(연락처·주소 등) 때문에 게시하지 않고,
 // 알맹이만 발췌해 웹 뷰로 제공한다. 연락처는 이메일·GitHub 만.
-// Ctrl+P 인쇄 시 CRT 장식이 빠진 흑백 문서로 출력된다 (ResumeView.css @media print)
+// 이 뷰만 사이트의 CRT 초록 테마를 벗고 흰 바탕 문서로 렌더된다 — 채용 담당자 시인성 우선.
+// CRT 이펙트 레이어는 body.resume-open 동안 꺼진다 (ResumeView.css)
 
 const CONTACTS = [
   { label: 'EMAIL', value: 'fatiger92@gmail.com', href: 'mailto:fatiger92@gmail.com' },
@@ -119,8 +120,8 @@ const ResumeView = ({ onClose }) => {
         </header>
 
         <section className="resume-metrics" aria-label="핵심 성과">
-          {METRICS.map((m) => (
-            <div className="resume-metric" key={m.label}>
+          {METRICS.map((m, i) => (
+            <div className="resume-metric" key={m.label} data-i={i}>
               <span className="resume-metric-value">{m.value}</span>
               <span className="resume-metric-label">{m.label}</span>
               <span className="resume-metric-sub">{m.sub}</span>
@@ -128,7 +129,7 @@ const ResumeView = ({ onClose }) => {
           ))}
         </section>
 
-        <section>
+        <section className="resume-block" data-accent="career">
           <h3 className="resume-section-title">CAREER</h3>
           {CAREERS.map((c) => (
             <article className="resume-career" key={c.company}>
@@ -144,7 +145,7 @@ const ResumeView = ({ onClose }) => {
           ))}
         </section>
 
-        <section>
+        <section className="resume-block" data-accent="project">
           <h3 className="resume-section-title">SIDE PROJECTS / OPEN SOURCE</h3>
           <ul className="resume-side">
             {SIDE_PROJECTS.map((p) => (
@@ -153,7 +154,7 @@ const ResumeView = ({ onClose }) => {
           </ul>
         </section>
 
-        <section>
+        <section className="resume-block" data-accent="skill">
           <h3 className="resume-section-title">SKILLS</h3>
           <ul className="resume-skills">
             {SKILLS.map((s) => (
@@ -165,7 +166,7 @@ const ResumeView = ({ onClose }) => {
           </ul>
         </section>
 
-        <section>
+        <section className="resume-block" data-accent="etc">
           <h3 className="resume-section-title">ETC</h3>
           <ul className="resume-etc">
             {ETC.map((e) => <li key={e}>{e}</li>)}
