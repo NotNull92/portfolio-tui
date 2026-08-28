@@ -163,6 +163,12 @@ const Terminal = ({ onAuthenticated }) => {
   const [cmdLog, setCmdLog] = useState([]);
   const inputRef = useRef(null);
 
+  // 부팅 화면 동안 body/CRT 오버레이를 Neon 톤으로 (Terminal.css의 body.boot-neon 규칙)
+  useEffect(() => {
+    document.body.classList.add('boot-neon');
+    return () => document.body.classList.remove('boot-neon');
+  }, []);
+
   // Show ASCII art first
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -385,6 +391,7 @@ const Terminal = ({ onAuthenticated }) => {
                   type="text"
                   className="terminal-input text-glow"
                   value={inputValue}
+                  style={{ width: `${inputValue.length + 0.5}ch` }}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleKeyDown}
                   autoComplete="off"

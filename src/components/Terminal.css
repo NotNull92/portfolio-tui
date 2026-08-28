@@ -1,4 +1,8 @@
-/* Terminal Container */
+/* Terminal — Neon Cinematic 리스킨 (리디자인 B 팔레트)
+   bg #02040a · green #00ffa3 · cyan #00e0ff
+   클래스 구조는 원본 그대로 — Terminal.jsx 수정 불필요.
+   index.css 전역(#00ff41)은 .terminal-container 스코프 오버라이드로 덮는다. */
+
 .terminal-container {
   position: relative;
   display: flex;
@@ -9,6 +13,69 @@
   height: 100%;
   padding: 20px;
   overflow: hidden;
+  /* Neon B 배경 — index.css의 body 그린 라디얼보다 우선하도록 !important */
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 35%, #04101a 0%, #02040a 60%, #010208 100%) !important;
+  color: #dbe9f0;
+}
+
+/* body의 CRT 그린 배경(#000d02 라디얼)도 부팅 화면 동안 네온 톤으로 교체.
+   Terminal 마운트 시 body.boot-neon 토글 (Terminal.jsx) — ResumeView의 body.resume-open 패턴 */
+body.boot-neon {
+  background-color: #02040a;
+  background-image: radial-gradient(ellipse 120% 90% at 50% 35%, #04101a 0%, #02040a 60%, #010208 100%);
+}
+
+/* 부팅 중 CRT 오버레이의 그린 틴트(#00ff41 계열)를 중립/시안으로 — 메인 화면엔 영향 없음 */
+body.boot-neon .crt-container::after {
+  background: rgba(0, 224, 255, 0.015);
+}
+body.boot-neon .crt-frame {
+  box-shadow:
+    0 0 0 60px #010208,
+    inset 0 0 90px rgba(0, 0, 0, 0.55),
+    inset 0 0 3px rgba(0, 224, 255, 0.14);
+}
+body.boot-neon .crt-sweep {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 224, 255, 0.035) 45%,
+    rgba(0, 224, 255, 0.07) 50%,
+    rgba(0, 224, 255, 0.035) 55%,
+    transparent
+  );
+}
+body.boot-neon .cursor-glow {
+  background: radial-gradient(
+    circle,
+    rgba(0, 255, 163, 0.06),
+    rgba(0, 224, 255, 0.02) 45%,
+    transparent 65%
+  );
+}
+
+/* 전역 그린(#00ff41) 오버라이드 — 터미널 화면 안에서만 */
+.terminal-container .text-glow {
+  color: #00ffa3;
+  text-shadow: 0 0 6px rgba(0, 255, 163, 0.45), 0 0 16px rgba(0, 255, 163, 0.2);
+}
+.terminal-container .text-glow-strong {
+  color: #00ffa3;
+  text-shadow:
+    -1px 0 rgba(0, 224, 255, 0.35),
+    1px 0 rgba(255, 43, 109, 0.25),
+    0 0 8px rgba(0, 255, 163, 0.7),
+    0 0 24px rgba(0, 255, 163, 0.35);
+}
+.terminal-container .cursor-blink { color: #00e0ff; }
+.terminal-container .terminal-input {
+  color: #00ffa3;
+  caret-color: #00e0ff;
+}
+/* AsciiRain 캔버스(#00ff41 하드코딩)를 CSS만으로 네온 톤으로 시프트 */
+.terminal-container canvas {
+  filter: hue-rotate(23deg) saturate(1.05);
 }
 
 .terminal-content {
@@ -28,7 +95,6 @@
   margin-bottom: 30px;
 }
 
-/* ASCII Art Styling */
 .ascii-art {
   font-size: 14px;
   line-height: 1.2;
@@ -37,26 +103,15 @@
 }
 
 @media (max-width: 768px) {
-  .header-section {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .ascii-art {
-    font-size: 8px;
-  }
+  .header-section { flex-direction: column; gap: 10px; }
+  .ascii-art { font-size: 8px; }
 }
-
 @media (max-width: 480px) {
-  .ascii-art {
-    font-size: 6px;
-  }
+  .ascii-art { font-size: 6px; }
 }
 
 /* Boot Sequence */
-.boot-sequence {
-  margin-bottom: 20px;
-}
+.boot-sequence { margin-bottom: 20px; }
 
 .terminal-line {
   font-size: 16px;
@@ -65,29 +120,23 @@
 }
 
 @media (max-width: 768px) {
-  .terminal-line {
-    font-size: 14px;
-    min-height: 20px;
-  }
+  .terminal-line { font-size: 14px; min-height: 20px; }
 }
 
 /* Input Section */
-.input-section {
-  margin-top: 20px;
-}
+.input-section { margin-top: 20px; }
 
 .prompt-line {
   font-size: 14px;
   margin-bottom: 15px;
-  padding: 10px;
-  border: 1px solid #00ff4180;
-  background: rgba(0, 255, 65, 0.05);
+  padding: 10px 14px;
+  border: 1px solid rgba(0, 255, 163, 0.5);
+  background: rgba(0, 255, 163, 0.05);
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
 }
 
 @media (max-width: 768px) {
-  .prompt-line {
-    font-size: 12px;
-  }
+  .prompt-line { font-size: 12px; }
 }
 
 .input-line {
@@ -96,59 +145,62 @@
   font-size: 16px;
   padding: 10px 0;
 }
-
+/* 커서(█)가 입력 텍스트 바로 뒤에 붙도록 — flex:1 제거.
+   Terminal.jsx의 input에 아래 인라인 스타일 추가 필요:
+   style={{ width: `${inputValue.length + 0.5}ch` }}
+   (네이티브 캐럿은 숨기고 █ 스팬이 커서 역할) */
 .input-line .terminal-input {
-  flex: 1;
+  flex: 0 0 auto;
+  min-width: 1ch;
   font-size: 16px;
+  caret-color: transparent;
 }
 
 .error-line {
   font-size: 14px;
   margin-top: 10px;
-  padding: 10px;
-  border: 1px solid #ff333380;
-  background: rgba(255, 51, 51, 0.1);
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 43, 109, 0.55);
+  background: rgba(255, 43, 109, 0.08);
+}
+.terminal-container .error-line,
+.terminal-container .error-line .text-glow {
+  color: #ff2b6d;
+  text-shadow: 0 0 8px rgba(255, 43, 109, 0.4);
 }
 
 /* Authenticating */
-.authenticating {
-  font-size: 16px;
-  margin-top: 15px;
-}
+.authenticating { font-size: 16px; margin-top: 15px; }
 
 /* Skip Hint */
 .skip-hint {
   margin-top: 14px;
   font-size: 11px;
   letter-spacing: 2px;
-  opacity: 0.4;
+  opacity: 0.45;
+  color: #00e0ff;
   animation: cursor-blink 1.6s step-end infinite;
 }
 
-/* Vault Boy Image */
+/* Vault Boy Image — Neon 리스킨에서는 제거 (ASCII 로고와 톤 안 맞음) */
 .vault-boy-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
+  display: none;
 }
 
 .vault-boy-img {
   width: 150px;
   height: auto;
-  /* CRT 녹색 톤 효과 — 원본 이미지가 어두워 밝기를 끌어올린다 */
+  /* Neon 그린(#00ffa3) 톤 — 기존 CRT 그린에서 hue만 시프트 */
   filter:
     sepia(100%)
-    hue-rotate(50deg)
+    hue-rotate(73deg)
     saturate(200%)
     brightness(1.45)
     contrast(1.15);
-  /* 글로우 효과 */
-  box-shadow: 
-    0 0 10px rgba(0, 255, 65, 0.5),
-    0 0 20px rgba(0, 255, 65, 0.3),
-    0 0 30px rgba(0, 255, 65, 0.2);
-  /* 6.7Hz 깜빡임은 FX 강도를 따른다 (COMFORT 에서는 정지) */
+  box-shadow:
+    0 0 10px rgba(0, 255, 163, 0.5),
+    0 0 20px rgba(0, 255, 163, 0.3),
+    0 0 30px rgba(0, 224, 255, 0.15);
   will-change: opacity;
   animation: var(--flicker-anim);
 }
@@ -159,38 +211,20 @@
   100% { opacity: 0.98; }
 }
 
-@media (max-width: 768px) {
-  .vault-boy-img {
-    width: 100px;
-  }
-}
+@media (max-width: 768px) { .vault-boy-img { width: 100px; } }
+@media (max-width: 480px) { .vault-boy-img { width: 80px; } }
 
-@media (max-width: 480px) {
-  .vault-boy-img {
-    width: 80px;
-  }
-}
-
-/* Secret command log — 부팅 게이트 이스터에그 출력 */
+/* Secret command log */
 .cmd-log {
   margin: 8px 0;
   max-height: 40vh;
   overflow-y: auto;
 }
+.cmd-entry { margin-bottom: 6px; }
+.cmd-echo { opacity: 0.55; }
+.terminal-container .cmd-resp { color: #7df0ff; }
 
-.cmd-entry {
-  margin-bottom: 6px;
-}
-
-.cmd-echo {
-  opacity: 0.55;
-}
-
-.cmd-resp {
-  color: #88ffaa;
-}
-
-/* 부팅 화면 가시적 CTA — 키 입력 없이 입장/이력서 */
+/* 부팅 화면 가시적 CTA — Neon B 버튼 스타일 (클립 코너) */
 .boot-cta {
   display: flex;
   gap: 12px;
@@ -202,28 +236,30 @@
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   font-weight: 700;
-  letter-spacing: 1px;
-  padding: 8px 18px;
+  letter-spacing: 1.5px;
+  padding: 10px 22px;
   cursor: pointer;
+  white-space: nowrap;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .boot-cta-primary {
-  background: #00ff41;
-  border: 1px solid #00ff41;
-  color: #000d02;
+  background: #00ffa3;
+  border: 1px solid #00ffa3;
+  color: #021b10;
 }
-
 .boot-cta-primary:hover {
-  background: #66ffa0;
-  border-color: #66ffa0;
+  background: #7dffce;
+  border-color: #7dffce;
 }
 
 .boot-cta-secondary {
-  background: rgba(0, 255, 65, 0.08);
-  border: 1px solid rgba(0, 255, 65, 0.6);
-  color: #00ff41;
+  background: transparent;
+  border: 1px solid rgba(0, 224, 255, 0.5);
+  color: #00e0ff;
 }
-
 .boot-cta-secondary:hover {
-  background: rgba(0, 255, 65, 0.18);
+  background: rgba(0, 224, 255, 0.08);
+  border-color: #00e0ff;
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Terminal from './components/Terminal';
-import MainPortfolio from './components/MainPortfolio';
+import NeonPortfolio from './components/NeonPortfolio';
 import CursorGlow from './components/effects/CursorGlow';
 import AchievementToast from './components/AchievementToast';
 import './index.css';
@@ -42,7 +42,7 @@ function App() {
             onAuthenticated={handleAuthenticated} 
           />
         ) : (
-          <MainPortfolio
+          <NeonPortfolio
             key="portfolio"
           />
         )}

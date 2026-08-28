@@ -14,7 +14,9 @@ const AsciiRain = ({ opacity = 0.25, fontSize = 14, speed = 1 }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // reduced-motion 이면 끄지 않고 속도만 절반으로 — OS 설정 하나로 배경이 통째로 사라지지 않게
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const speedMul = reduced ? 0.5 : 1;
     const canvas = canvasRef.current;
     const parent = canvas.parentElement;
     if (!parent) return;
@@ -37,12 +39,12 @@ const AsciiRain = ({ opacity = 0.25, fontSize = 14, speed = 1 }) => {
       cols = Array.from({ length: Math.ceil(W / gap) }, (_, i) => ({
         x: i * gap,
         y: Math.random() * H,
-        v: (0.6 + Math.random()) * fontSize * speed * 20, // px/s (기존 20fps 스텝과 동일 체감 속도)
+        v: (0.6 + Math.random()) * fontSize * speed * speedMul * 20, // px/s (기존 20fps 스텝과 동일 체감 속도)
         ch: GLYPHS[(Math.random() * GLYPHS.length) | 0],
         swap: Math.random() * 90,
       }));
-      ctx.fillStyle = '#000d02';
-      ctx.fillRect(0, 0, W, H);
+      // 캔버스는 투명하게 유지 — 배경색은 부모(.terminal-container 등)가 담당
+      ctx.clearRect(0, 0, W, H);
     };
 
     const step = (now) => {
@@ -52,8 +54,11 @@ const AsciiRain = ({ opacity = 0.25, fontSize = 14, speed = 1 }) => {
       if (dt <= 0) return;
       const dts = dt / 1000;
       // 페이드 알파를 dt 에 비례시켜 60Hz/120Hz 에서 트레일 길이가 같게 유지
-      ctx.fillStyle = `rgba(0, 13, 2, ${Math.min(0.16 * (dt / 50), 0.35)})`;
+      // 트레일 페이드: 색을 덧칠하지 않고 알파를 깎아 부모 배경이 그대로 비치게 한다
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = `rgba(0, 0, 0, ${Math.min(0.16 * (dt / 50), 0.35)})`;
       ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'source-over';
       ctx.font = `${fontSize}px "JetBrains Mono", monospace`;
       for (const c of cols) {
         c.y += c.v * dts;
