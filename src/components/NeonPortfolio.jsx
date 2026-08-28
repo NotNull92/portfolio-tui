@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import ResumeView from './ResumeView';
 import { METRICS, WORKS, OSS, CAREERS, SKILL_GROUPS, MARQUEE } from '../data/neon';
-import heroBg from '../assets/hf/hero-bg.png';
-import dividerImg from '../assets/hf/divider.png';
-import workspaceImg from '../assets/hf/workspace.png';
-import arcadeImg from '../assets/hf/arcade.png';
+import heroBg from '../assets/hf/hero-bg.webp';
+import dividerImg from '../assets/hf/divider.webp';
+import workspaceImg from '../assets/hf/workspace.webp';
+import arcadeImg from '../assets/hf/arcade.webp';
 import './NeonPortfolio.css';
 
 // 리디자인 B — Neon Cinematic
