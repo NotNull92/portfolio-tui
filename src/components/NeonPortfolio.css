@@ -26,7 +26,8 @@
   inset: 0;
   pointer-events: none;
   z-index: 40;
-  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07) 1px, transparent 1px, transparent 4px);
+  /* 0.07 → 0.03: 흰 본문 위 줄무늬가 미세 떨림처럼 보여 눈 피로 유발 */
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.03) 1px, transparent 1px, transparent 4px);
   background-size: 100% 4px;
   animation: np-scan-drift 40s linear infinite;
 }
@@ -49,13 +50,13 @@
 .np-logo em { font-style: normal; color: #00ffa3; }
 .np-nav-links {
   display: flex; gap: 24px; margin-left: auto;
-  font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 2px;
 }
 .np-nav-links a { color: #8fa8b8; transition: color 0.2s ease; }
 .np-nav-links a:hover { color: #00ffa3; }
 .np-hire {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
   padding: 9px 18px; border: 1px solid #00ffa3; color: #00ffa3;
   clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
   transition: background 0.2s ease;
@@ -79,7 +80,7 @@
 .np-hero-canvas {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  mix-blend-mode: screen; opacity: 0.35;
+  mix-blend-mode: screen; opacity: 0.2;
 }
 .np-hero-shade {
   position: absolute; inset: 0;
@@ -95,13 +96,13 @@
 }
 .np-kicker {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12px; letter-spacing: 4px; color: #00e0ff; margin-bottom: 20px;
+  font-size: 14.5px; letter-spacing: 4px; color: #00e0ff; margin-bottom: 20px;
 }
 .np-h1 {
   font-family: 'Rajdhani', sans-serif;
   font-size: clamp(42px, 5.4vw, 74px);
   line-height: 1.12; font-weight: 700; letter-spacing: 0.5px;
-  color: #e4f3f7; max-width: 26ch;
+  color: #cfe3ea; max-width: 26ch;
   /* 7초 주기 skew·색수차 글리치는 대형 헤드라인에서 눈 피로 유발 → 정적 글로우로 고정 */
   text-shadow: 0 2px 12px rgba(2, 4, 10, 0.8), 0 0 28px rgba(0, 255, 163, 0.18);
 }
@@ -126,7 +127,7 @@
 .np-why-label {
   display: block; margin-bottom: 6px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10.5px; letter-spacing: 2px; color: #00ffa3;
+  font-size: 13px; letter-spacing: 2px; color: #00ffa3;
 }
 .np-metrics { display: flex; gap: 34px; margin-top: 44px; flex-wrap: wrap; }
 .np-metric { display: flex; flex-direction: column; gap: 2px; }
@@ -139,16 +140,16 @@
 .np-metric-num em { font-style: normal; font-size: 24px; color: #00e0ff; }
 .np-metric-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; letter-spacing: 1px; color: #8fa8b8;
+  font-size: 13px; letter-spacing: 1px; color: #8fa8b8;
 }
 .np-metric-sub {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; letter-spacing: 0.3px; color: #5d7b8c;
+  font-size: 12px; letter-spacing: 0.3px; color: #5d7b8c;
 }
 .np-cta-row { display: flex; gap: 14px; margin-top: 44px; flex-wrap: wrap; }
 .np-btn {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px; font-weight: 700; letter-spacing: 2px;
+  font-size: 15.5px; font-weight: 700; letter-spacing: 2px;
   padding: 14px 30px; cursor: pointer; display: inline-block;
   clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
   transition: background 0.2s ease, border-color 0.2s ease;
@@ -172,7 +173,7 @@
 .np-ticker-track span {
   padding-right: 60px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; letter-spacing: 3px; color: #3d6b7a;
+  font-size: 13px; letter-spacing: 3px; color: #3d6b7a;
 }
 
 /* ---------- SECTION COMMON ---------- */
@@ -184,7 +185,7 @@
 .np-eyebrow { display: flex; align-items: center; gap: 18px; margin-bottom: 12px; }
 .np-eyebrow span {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12px; letter-spacing: 3px; color: #00e0ff;
+  font-size: 14.5px; letter-spacing: 3px; color: #00e0ff;
 }
 .np-eyebrow i {
   flex: 1; height: 1px;
@@ -246,29 +247,29 @@
 .np-work-meta { display: flex; align-items: center; gap: 12px; }
 .np-badge {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+  font-size: 12px; font-weight: 700; letter-spacing: 1.5px; white-space: nowrap;
   padding: 4px 12px;
 }
 .np-badge-green { color: #00ffa3; border: 1px solid rgba(0, 255, 163, 0.4); background: rgba(0, 255, 163, 0.08); }
 .np-badge-amber { color: #ffaa00; border: 1px solid rgba(255, 170, 0, 0.4); background: rgba(255, 170, 0, 0.08); }
-.np-work-period { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; color: #5d7b8c; }
+.np-work-period { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 1px; color: #5d7b8c; }
 .np-work-body h3 {
   font-family: 'Rajdhani', sans-serif;
   font-size: 36px; font-weight: 700; line-height: 1.05;
   text-transform: uppercase; color: #eafcff; letter-spacing: 0.5px;
 }
-.np-work-genre { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.5px; color: #00e0ff; }
+.np-work-genre { font-family: 'JetBrains Mono', monospace; font-size: 14.5px; letter-spacing: 0.5px; color: #00e0ff; }
 .np-work-pitch { font-size: 15px; line-height: 1.75; color: #b9d2e0; word-break: keep-all; }
 .np-work-body ul { list-style: none; display: flex; flex-direction: column; gap: 6px; margin: 2px 0 0; padding: 0; }
 .np-work-body li {
-  font-size: 13px; line-height: 1.65; color: #8fb4c8;
+  font-size: 15.5px; line-height: 1.65; color: #8fb4c8;
   padding-left: 18px; position: relative; word-break: keep-all;
 }
 .np-work-body li::before { content: '▸'; position: absolute; left: 0; color: #00ffa3; }
 .np-work-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
 .np-work-links a {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
   padding: 8px 16px; border: 1px solid rgba(0, 255, 163, 0.45); color: #00ffa3;
   transition: background 0.2s ease;
 }
@@ -316,7 +317,7 @@
   display: inline-flex; align-items: center; gap: 8px;
   margin-bottom: 40px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  font-size: 13px; font-weight: 700; letter-spacing: 1px;
   padding: 8px 16px;
   border: 1px dashed rgba(0, 255, 163, 0.4); color: #00ffa3;
   transition: background 0.2s ease;
@@ -339,10 +340,10 @@
 .np-tool img { width: 52px; height: 52px; object-fit: contain; }
 .np-tool strong {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px; font-weight: 700; color: #eafcff; letter-spacing: 0.3px;
+  font-size: 15.5px; font-weight: 700; color: #eafcff; letter-spacing: 0.3px;
 }
-.np-tool-desc { font-size: 12px; line-height: 1.6; color: #8fb4c8; word-break: keep-all; flex: 1; }
-.np-tool-stats { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #00ffa3; }
+.np-tool-desc { font-size: 14.5px; line-height: 1.6; color: #8fb4c8; word-break: keep-all; flex: 1; }
+.np-tool-stats { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #00ffa3; }
 
 /* ---------- RECORD ---------- */
 .np-record {
@@ -356,10 +357,10 @@
 .np-careers article { border-left: 2px solid rgba(0, 255, 163, 0.4); padding-left: 22px; }
 .np-career-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .np-career-head h3 { font-size: 18px; font-weight: 800; color: #eafcff; }
-.np-career-head span { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5d7b8c; }
-.np-career-team { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00ffa3; margin: 4px 0 10px; }
+.np-career-head span { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #5d7b8c; }
+.np-career-team { font-family: 'JetBrains Mono', monospace; font-size: 14.5px; color: #00ffa3; margin: 4px 0 10px; }
 .np-careers ul { list-style: none; display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; }
-.np-careers li { font-size: 13px; line-height: 1.7; color: #8fb4c8; word-break: keep-all; }
+.np-careers li { font-size: 15.5px; line-height: 1.7; color: #8fb4c8; word-break: keep-all; }
 .np-stack { display: flex; flex-direction: column; gap: 16px; }
 .np-stack-card {
   padding: 16px 20px;
@@ -368,15 +369,15 @@
 }
 .np-stack-card span {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #00e0ff;
+  font-size: 12px; font-weight: 700; letter-spacing: 2px; color: #00e0ff;
 }
-.np-stack-card p { font-size: 13.5px; line-height: 1.7; color: #b9d2e0; margin-top: 6px; word-break: keep-all; }
+.np-stack-card p { font-size: 16px; line-height: 1.7; color: #b9d2e0; margin-top: 6px; word-break: keep-all; }
 .np-status {
   padding: 16px 20px;
   border: 1px dashed rgba(0, 255, 163, 0.35);
   display: flex; align-items: center; gap: 12px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12px; color: #00ffa3; letter-spacing: 1px;
+  font-size: 14.5px; color: #00ffa3; letter-spacing: 1px;
 }
 .np-status i {
   width: 8px; height: 8px; border-radius: 50%;
@@ -421,7 +422,7 @@
 .np-colophon {
   margin-top: 60px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10.5px; letter-spacing: 2px; color: #3d6b7a;
+  font-size: 13px; letter-spacing: 2px; color: #3d6b7a;
 }
 
 /* ---------- RESPONSIVE ---------- */
