@@ -125,10 +125,10 @@ const SIDE_PROJECTS = [
     links: [{ label: '플레이 영상', url: 'https://youtu.be/kqOMakdCoEc' }],
   },
   {
-    name: 'RINGVERSE: KARVAS COMMAND',
+    name: 'MONSTEL (몬스텔)',
     tag: '1인 개발',
-    desc: '그리드 빌드 × 거점 디펜스 PC 게임 — 개발 진행 중, Steam 출시 예정',
-    links: [],
+    desc: '괴물 호텔 모바일 방치형 타이쿤 (Godot 4 · C#) — 핵심 루프 구현 완료, Android 실기 테스트 중',
+    links: [{ label: '플레이 영상', url: 'https://youtu.be/v9x-yhMg6Eo' }],
   },
   {
     name: 'hera-agent-unity / hera-agent-godot',
@@ -140,12 +140,13 @@ const SIDE_PROJECTS = [
     ],
   },
   {
-    name: 'hebe-agent-unity · workforge-mcp',
+    name: 'hebe-agent-unity · workforge-mcp · heraAgent',
     tag: '오픈소스',
-    desc: 'Unity 실행 런타임(warm 240ms, cold 대비 6.08배 단축) · ChatGPT용 MCP 게이트웨이(툴 12종)',
+    desc: 'Unity 실행 런타임(warm 240ms, cold 대비 6.08배 단축) · ChatGPT용 MCP 게이트웨이(툴 12종) · 터미널 코딩 에이전트(alpha)',
     links: [
       { label: 'HEBE', url: 'https://github.com/NotNull92/hebe-agent-unity' },
       { label: 'WORKFORGE', url: 'https://github.com/NotNull92/workforge-mcp' },
+      { label: 'HERAAGENT', url: 'https://github.com/NotNull92/heraAgent' },
     ],
   },
   {
@@ -248,7 +249,7 @@ const ResumeView = ({ onClose }) => {
             </p>
             <p className="resume-pitch">
               라이브 MMORPG 콘텐츠·BM 개발 <strong>5년</strong>,
-              상용 출시 <strong>4종</strong>, 개발자 도구 오픈소스 <strong>4종</strong> —
+              상용 출시 <strong>4종</strong>, 개발자 도구 오픈소스 <strong>5종</strong> —
               만든 것으로 증명하는 개발자입니다.
             </p>
             <ul className="resume-stack" aria-label="핵심 기술 스택">

@@ -4,7 +4,7 @@ import nmrTitle from '../assets/projects/nomorerolls-title.webp';
 import nmrBattle from '../assets/projects/nomorerolls-battle.webp';
 import nmrCorridor from '../assets/projects/nomorerolls-corridor.webp';
 import nmrTalk from '../assets/projects/nomorerolls-talk.webp';
-import ringverseTitle from '../assets/projects/ringverse-title.webp';
+import monstelPlay from '../assets/projects/monstel-play.webp';
 import eosredKeyart from '../assets/projects/eosred-keyart.webp';
 import freedrawDrawing from '../assets/projects/freedraw-drawing.webp';
 import freedrawGallery from '../assets/projects/freedraw-gallery.webp';
@@ -16,6 +16,7 @@ import golfTitle from '../assets/projects/actiongolf-title.webp';
 import golfLobby from '../assets/projects/actiongolf-lobby.webp';
 import golfShop from '../assets/projects/actiongolf-shop.webp';
 import golfSensor from '../assets/projects/actiongolf-sensor.webp';
+import heraAgentLogo from '../assets/projects/hera-agent-logo.webp';
 import heraUnityLogo from '../assets/projects/hera-unity-logo.webp';
 import heraGodotLogo from '../assets/projects/hera-godot-logo.webp';
 import hebeLogo from '../assets/projects/hebe-logo.webp';
@@ -25,7 +26,7 @@ export const METRICS = [
   { num: 4, suffix: '종', label: '상용 게임 출시', sub: '모바일 3 · PC VR 1 (Steam·Play)' },
   { num: 30, suffix: '%', label: 'BM 매출 기여', sub: '스텝업 패키지 설계·개발' },
   { num: 85, suffix: '%↓', label: '서버 부하 감소', sub: '월드 랭킹 갱신 구조 재설계' },
-  { num: 4, suffix: '종', label: '오픈소스 공개', sub: 'OpenUPM·Godot Asset Store 배포' },
+  { num: 5, suffix: '종', label: '오픈소스 공개', sub: 'OpenUPM·Godot Asset Store 배포' },
 ];
 
 export const WORKS = [
@@ -46,15 +47,15 @@ export const WORKS = [
     links: [],
   },
   {
-    name: 'RINGVERSE: KARVAS COMMAND', badge: 'IN DEVELOPMENT', badgeTone: 'amber',
-    period: 'IN DEV · Steam 출시 예정', genre: 'GRID BUILD × BASE DEFENSE · 1인 개발',
-    pitch: '그리드 인벤토리 빌드 × 거점 디펜스 PC 게임 (Steam 출시 예정)',
+    name: 'MONSTEL', badge: 'IN DEVELOPMENT', badgeTone: 'amber',
+    period: 'IN DEV · Android 실기 테스트 중', genre: 'MOBILE IDLE TYCOON · GODOT · 1인 개발',
+    pitch: '괴물 손님을 같은 종족끼리 이어 객실로 보내고 프런트에서 요금을 받는 모바일 방치형 호텔 타이쿤',
     points: [
-      '1인 개발 — Unity 6 · UI Toolkit · HSM 아키텍처 · 데이터 주도 설계',
-      '커밋 747개 진행 중 · 결정론 전투 재현 검증 · 자작 툴(hera) 도그푸딩',
+      '1인 개발 — Godot 4 .NET(C#) · 도트 스프라이트 · 10층 타워·직원 뽑기·업적 15종 구현',
+      '커밋 366개 · Android 실기 테스트 중 · 자작 툴(hera-agent-godot)로 튜토리얼 자동 QA',
     ],
-    media: [{ src: ringverseTitle, alt: 'RingVerse: Karvas Command 타이틀' }],
-    links: [],
+    media: [{ src: monstelPlay, alt: '몬스텔 플레이 화면 — 운송·정산, 업그레이드, 직원 뽑기, 워터파크 호텔' }],
+    links: [{ label: 'GAMEPLAY VIDEO', url: 'https://youtu.be/v9x-yhMg6Eo' }],
   },
   {
     name: 'EOS-RED', badge: 'SHIPPED', badgeTone: 'green',
@@ -116,6 +117,7 @@ export const WORKS = [
 ];
 
 export const OSS = [
+  { name: 'heraAgent', repo: 'NotNull92/heraAgent', logo: heraAgentLogo, url: 'https://github.com/NotNull92/heraAgent', desc: '터미널 CLI/TUI 코딩 에이전트 · Windows·macOS · alpha', license: 'Apache-2.0' },
   { name: 'hera-agent-unity', repo: 'NotNull92/hera-agent-unity', logo: heraUnityLogo, url: 'https://github.com/NotNull92/hera-agent-unity', desc: '라이브 Unity 에디터를 제어하는 저토큰 CLI · OpenUPM', license: 'Apache-2.0' },
   { name: 'hera-agent-godot', repo: 'NotNull92/hera-agent-godot', logo: heraGodotLogo, url: 'https://github.com/NotNull92/hera-agent-godot', desc: 'Godot 4 에디터 제어 CLI · v1.0.0 · Asset Store', license: 'MIT' },
   { name: 'hebe-agent-unity', repo: 'NotNull92/hebe-agent-unity', logo: hebeLogo, url: 'https://github.com/NotNull92/hebe-agent-unity', desc: 'Unity 실행 런타임 · warm exec 240ms', license: 'Apache-2.0' },
@@ -151,4 +153,4 @@ export const SKILL_GROUPS = [
 ];
 
 export const MARQUEE =
-  'GAME CREATOR ▸ UNITY CLIENT DEVELOPER ▸ SINCE 2020.10 ▸ RINGVERSE: KARVAS COMMAND ▸ NOMOREROLLS PROTOTYPE COMPLETE ▸ HERA-AGENT UNITY / GODOT ▸ HEBE-AGENT-UNITY ▸ GITHUB.COM/NOTNULL92 ▸ OPEN FOR TRANSMISSION ▸ ';
+  'GAME CREATOR ▸ UNITY CLIENT DEVELOPER ▸ SINCE 2020.10 ▸ MONSTEL ▸ NOMOREROLLS PROTOTYPE COMPLETE ▸ HERA-AGENT UNITY / GODOT ▸ HEBE-AGENT-UNITY ▸ HERAAGENT ▸ GITHUB.COM/NOTNULL92 ▸ OPEN FOR TRANSMISSION ▸ ';

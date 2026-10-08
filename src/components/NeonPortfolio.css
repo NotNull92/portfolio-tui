@@ -323,7 +323,7 @@
   transition: background 0.2s ease;
 }
 .np-deepdive:hover { background: rgba(0, 255, 163, 0.08); border-style: solid; }
-.np-tool-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.np-tool-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
 .np-tool {
   display: flex; flex-direction: column; gap: 12px;
   padding: 22px 20px;

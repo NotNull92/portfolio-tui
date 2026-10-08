@@ -241,7 +241,7 @@ const NeonPortfolio = () => {
           <div className="np-eyebrow"><span>OPEN SOURCE DEV TOOLS</span><i /></div>
           <h2 className="np-h2">게임을 만들다,<em> 도구까지 만들었다</em></h2>
           <p className="np-tools-lede">
-            AI 에이전트로 게임을 개발하며 부딪힌 문제를 직접 풀어 배포한 4종 — OpenUPM · Godot Asset Store 공식 등록.
+            AI 에이전트로 게임을 개발하며 부딪힌 문제를 직접 풀어 배포한 5종 — OpenUPM · Godot Asset Store 공식 등록.
           </p>
           <a
             className="np-deepdive"
