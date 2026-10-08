@@ -40,7 +40,7 @@ const STACK = ['Unity', 'C#', 'UniRx / UniTask', 'Addressables', 'UI Toolkit', '
 
 // 전부 "내가 설계·구현한 결과". 회사 규모 지표는 여기 넣지 않는다.
 const IMPACT = [
-  { value: '30%', label: 'BM 매출 기여', sub: '스텝업 패키지 설계·개발' },
+  { value: '30%', label: 'BM 매출 비중', sub: '스텝업 패키지 설계·개발' },
   { value: '45%', label: '상품 팝업 전환율', sub: '유저 행동 기반 조건부 노출' },
   { value: '85%↓', label: '월드 랭킹 서버 부하', sub: '랭킹 갱신 구조 재설계' },
   { value: '90%↓', label: '휴면 계정 운영 공수', sub: '유니크 식별자 재사용 시스템' },
@@ -99,7 +99,7 @@ const CAREERS = [
     team: '레드클라이언트팀 · Unity 클라이언트 개발',
     bullets: [
       '길드 경쟁전과 전용 PVE 던전 개발·리뉴얼 — 협업 미션 5종 설계, 서버·기획과 스펙 조율',
-      'BM 시스템 3종 개발 — 스텝업 패키지(매출 기여 30%)·조건부 팝업(전환율 45%)·1+1 상품',
+      'BM 시스템 3종 개발 — 스텝업 패키지(BM 매출 비중 30%)·조건부 팝업(전환율 45%)·1+1 상품',
       '월드 랭킹 갱신 구조를 재설계해 서버 부하 85% 감소, 휴면 계정 처리 자동화로 운영 공수 90% 절감',
       '길드 추천 시스템(가입률 +30%)·보스 던전 리뉴얼(참여율 +35%)·콜로세움 개선(일일 참여율 +150%)',
       '국내 클라이언트 점검, Android/iOS 빌드 및 패치 배포, BTS 이슈 대응 담당',
@@ -119,16 +119,16 @@ const CAREERS = [
 
 const SIDE_PROJECTS = [
   {
-    name: 'NoMoreRolls',
-    tag: '1인 개발',
-    desc: '주사위 족보 로그라이크 — 언더테일식 Fight/Talk 이중 루트. 프로토타입 완료, Steam 출시 예정',
-    links: [{ label: '플레이 영상', url: 'https://youtu.be/kqOMakdCoEc' }],
-  },
-  {
     name: 'MONSTEL (몬스텔)',
     tag: '1인 개발',
-    desc: '괴물 호텔 모바일 방치형 타이쿤 (Godot 4 · C#) — 핵심 루프 구현 완료, Android 실기 테스트 중',
+    desc: '괴물 호텔 모바일 방치형 타이쿤 (Godot 4 · C#) — 접수→운송→정산→업그레이드→자동화 성장 루프, 층 조합 특수 호텔 6종, 직원 뽑기·업적 카드. Android 실기 테스트 중',
     links: [{ label: '플레이 영상', url: 'https://youtu.be/v9x-yhMg6Eo' }],
+  },
+  {
+    name: 'NoMoreRolls',
+    tag: '1인 개발',
+    desc: '주사위 족보 로그라이크 — 언더테일식 Fight/Talk 이중 루트. 2026 스마일게이트 IndieGo 출품, Steam 출시 예정',
+    links: [{ label: '플레이 영상', url: 'https://youtu.be/kqOMakdCoEc' }],
   },
   {
     name: 'hera-agent-unity / hera-agent-godot',

@@ -24,15 +24,26 @@ import workforgeLogo from '../assets/projects/workforge-logo.webp';
 
 export const METRICS = [
   { num: 4, suffix: '종', label: '상용 게임 출시', sub: '모바일 3 · PC VR 1 (Steam·Play)' },
-  { num: 30, suffix: '%', label: 'BM 매출 기여', sub: '스텝업 패키지 설계·개발' },
+  { num: 30, suffix: '%', label: 'BM 매출 비중', sub: '스텝업 패키지 설계·개발' },
   { num: 85, suffix: '%↓', label: '서버 부하 감소', sub: '월드 랭킹 갱신 구조 재설계' },
   { num: 5, suffix: '종', label: '오픈소스 공개', sub: 'OpenUPM·Godot Asset Store 배포' },
 ];
 
 export const WORKS = [
   {
+    name: 'MONSTEL', badge: 'IN DEVELOPMENT', badgeTone: 'amber',
+    period: 'IN DEV · Android 실기 테스트 중', genre: 'MOBILE IDLE TYCOON · GODOT · 1인 개발',
+    pitch: '괴물 손님을 같은 종족끼리 이어 객실로 보내고 프런트에서 요금을 받는 모바일 방치형 호텔 타이쿤',
+    points: [
+      '1인 개발 — 접수→운송→정산→업그레이드→자동화로 이어지는 하이브리드 캐주얼 성장 루프 (Godot 4 .NET · C#)',
+      '층 조합으로 바뀌는 특수 호텔 6종 · 직원 뽑기·업적 카드 연출 · 자작 툴(hera-agent-godot)로 튜토리얼 자동 QA',
+    ],
+    media: [{ src: monstelPlay, alt: '몬스텔 플레이 화면 — 운송·정산, 업그레이드, 직원 뽑기, 워터파크 호텔' }],
+    links: [{ label: 'GAMEPLAY VIDEO', url: 'https://youtu.be/v9x-yhMg6Eo' }],
+  },
+  {
     name: 'NoMoreRolls', badge: 'IN DEVELOPMENT', badgeTone: 'amber',
-    period: 'IN DEV · Steam 출시 예정', genre: 'ROGUELIKE · DICE PEDIGREE · 1인 개발',
+    period: 'IN DEV · 2026 스마일게이트 IndieGo 출품', genre: 'ROGUELIKE · DICE PEDIGREE · 1인 개발',
     pitch: '언더테일의 도덕적 선택을 주사위 족보 메커닉으로 번역한 로그라이크 (Steam 출시 예정)',
     points: [
       '1인 개발 — 기획(GDD 23섹션)·전투·연출·아키텍처 전부',
@@ -47,23 +58,12 @@ export const WORKS = [
     links: [],
   },
   {
-    name: 'MONSTEL', badge: 'IN DEVELOPMENT', badgeTone: 'amber',
-    period: 'IN DEV · Android 실기 테스트 중', genre: 'MOBILE IDLE TYCOON · GODOT · 1인 개발',
-    pitch: '괴물 손님을 같은 종족끼리 이어 객실로 보내고 프런트에서 요금을 받는 모바일 방치형 호텔 타이쿤',
-    points: [
-      '1인 개발 — Godot 4 .NET(C#) · 도트 스프라이트 · 10층 타워·직원 뽑기·업적 15종 구현',
-      '커밋 366개 · Android 실기 테스트 중 · 자작 툴(hera-agent-godot)로 튜토리얼 자동 QA',
-    ],
-    media: [{ src: monstelPlay, alt: '몬스텔 플레이 화면 — 운송·정산, 업그레이드, 직원 뽑기, 워터파크 호텔' }],
-    links: [{ label: 'GAMEPLAY VIDEO', url: 'https://youtu.be/v9x-yhMg6Eo' }],
-  },
-  {
     name: 'EOS-RED', badge: 'SHIPPED', badgeTone: 'green',
     period: 'LIVE · 2021.09 ~ 현재', genre: 'MOBILE MMORPG · LIVE SERVICE 6년차',
     pitch: '월 매출 최대 400억 라이브 모바일 MMORPG (6년차 운영 중)',
     points: [
       '클라이언트 개발 5년 — 컨텐츠·BM·빌드/패치·점검 담당',
-      '스텝업 BM 매출 기여 30% · 서버 부하 85% 감소 · MAU 35K 서비스 유지',
+      '스텝업 패키지 BM 매출 비중 30% · 서버 부하 85% 감소 · MAU 35K 서비스 유지',
     ],
     media: [{ src: eosredKeyart, alt: 'EOS RED 공식 키아트' }],
     links: [{ label: 'GOOGLE PLAY', url: 'https://play.google.com/store/apps/details?id=com.bluepotiongames.eosm&pcampaignid=web_share' }],
@@ -119,7 +119,7 @@ export const WORKS = [
 export const OSS = [
   { name: 'heraAgent', repo: 'NotNull92/heraAgent', logo: heraAgentLogo, url: 'https://github.com/NotNull92/heraAgent', desc: '터미널 CLI/TUI 코딩 에이전트 · Windows·macOS · alpha', license: 'Apache-2.0' },
   { name: 'hera-agent-unity', repo: 'NotNull92/hera-agent-unity', logo: heraUnityLogo, url: 'https://github.com/NotNull92/hera-agent-unity', desc: '라이브 Unity 에디터를 제어하는 저토큰 CLI · OpenUPM', license: 'Apache-2.0' },
-  { name: 'hera-agent-godot', repo: 'NotNull92/hera-agent-godot', logo: heraGodotLogo, url: 'https://github.com/NotNull92/hera-agent-godot', desc: 'Godot 4 에디터 제어 CLI · v1.0.0 · Asset Store', license: 'MIT' },
+  { name: 'hera-agent-godot', repo: 'NotNull92/hera-agent-godot', logo: heraGodotLogo, url: 'https://github.com/NotNull92/hera-agent-godot', desc: 'Godot 4 에디터 제어 CLI · v1.2.0 · Asset Store', license: 'MIT' },
   { name: 'hebe-agent-unity', repo: 'NotNull92/hebe-agent-unity', logo: hebeLogo, url: 'https://github.com/NotNull92/hebe-agent-unity', desc: 'Unity 실행 런타임 · warm exec 240ms', license: 'Apache-2.0' },
   { name: 'workforge-mcp', repo: 'NotNull92/workforge-mcp', logo: workforgeLogo, url: 'https://github.com/NotNull92/workforge-mcp', desc: 'ChatGPT ↔ 로컬 PC MCP 게이트웨이 · 툴 12종', license: 'MIT' },
 ];
@@ -129,7 +129,7 @@ export const CAREERS = [
     period: '2021.09 ~ 재직중', company: '블루포션게임즈', team: '레드클라이언트팀 · Unity 클라이언트 개발',
     bullets: [
       '길드 경쟁전과 전용 PVE 던전 개발·리뉴얼 — 협업 미션 5종 설계, 서버·기획과 스펙 조율',
-      'BM 시스템 3종 개발 — 스텝업 패키지(매출 기여 30%)·조건부 팝업(전환율 45%)·1+1 상품',
+      'BM 시스템 3종 개발 — 스텝업 패키지(BM 매출 비중 30%)·조건부 팝업(전환율 45%)·1+1 상품',
       '월드 랭킹 갱신 구조를 재설계해 서버 부하 85% 감소, 휴면 계정 처리 자동화로 운영 공수 90% 절감',
       '길드 추천 시스템(가입률 +30%)·보스 던전 리뉴얼(참여율 +35%)·콜로세움 개선(일일 참여율 +150%)',
       '국내 클라이언트 점검, Android/iOS 빌드 및 패치 배포, BTS 이슈 대응 담당',
@@ -145,8 +145,19 @@ export const CAREERS = [
   },
 ];
 
+// Unity 커리어 시작(뱅코 입사) 기준 경력. 하드코딩하면 반드시 낡는다.
+const CAREER_START = { year: 2020, month: 10 };
+const tenureText = () => {
+  const now = new Date();
+  const months = (now.getFullYear() - CAREER_START.year) * 12 + (now.getMonth() + 1 - CAREER_START.month);
+  const y = Math.floor(months / 12);
+  const m = months % 12;
+  if (y <= 0) return `${m}개월`;
+  return m > 0 ? `${y}년 ${m}개월` : `${y}년`;
+};
+
 export const SKILL_GROUPS = [
-  { group: '주력', items: 'C# · Unity — 모바일 클라이언트 / 라이브 서비스 (5년 10개월)' },
+  { group: '주력', items: `C# · Unity — 모바일 클라이언트 / 라이브 서비스 (${tenureText()})` },
   { group: '라이브러리', items: 'UniRx · UniTask · DOTween · Odin Inspector · UI Toolkit · Addressables · OSA' },
   { group: '툴링', items: 'Go · GDScript · Git / SVN · Jenkins CI · Gitea · RedMine' },
   { group: '도메인', items: 'BM 설계 · 서버-클라 프로토콜 협업 · Android/iOS 빌드·배포 · VR(SteamVR/Quest) · 블루투스 하드웨어 연동' },
