@@ -339,6 +339,7 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 .np-tool img { width: 52px; height: 52px; object-fit: contain; }
+.np-tool img[alt="hera-agent-godot 로고"] { border-radius: 50%; background: #10202a; }
 .np-tool strong {
   font-family: 'JetBrains Mono', monospace;
   font-size: 15.5px; font-weight: 700; color: #eafcff; letter-spacing: 0.3px;

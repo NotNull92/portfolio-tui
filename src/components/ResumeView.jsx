@@ -54,7 +54,7 @@ const SHIPPED = [
     genre: '모바일 MMORPG · 라이브 서비스',
     period: '2021.09 ~ 현재',
     role: '클라이언트 개발 (팀 7~8인) — 길드 경쟁전·전용 PVE 던전·BM 3종·빌드/패치·점검',
-    scale: '프로젝트 지표 — MAU 최대 3.5만 / DAU 1.2만 · 월 매출 최대 400억 (6년차 서비스)',
+    scale: '프로젝트 지표 — MAU 최대 3.5만 / DAU 1.2만 · 월 매출 최대 400억',
     links: [
       { label: 'GOOGLE PLAY', url: 'https://play.google.com/store/apps/details?id=com.bluepotiongames.eosm' },
     ],
@@ -133,7 +133,7 @@ const SIDE_PROJECTS = [
   {
     name: 'hera-agent-unity / hera-agent-godot',
     tag: '오픈소스',
-    desc: 'AI 에이전트용 라이브 에디터 제어 CLI 2종 (Go) — Godot v2.0.2 C# 지원 · OpenUPM / Godot Asset Store 등록',
+    desc: 'AI 에이전트용 라이브 에디터 제어 CLI 2종 (Go) — Hera Godot v2.0.2 C# 지원 · OpenUPM / Godot Asset Store 등록',
     links: [
       { label: 'UNITY', url: 'https://github.com/NotNull92/hera-agent-unity' },
       { label: 'GODOT', url: 'https://store.godotengine.org/asset/notnull92/hera-agent-godot/' },
@@ -143,7 +143,7 @@ const SIDE_PROJECTS = [
   {
     name: 'hebe-agent-unity · workforge-mcp · heraAgent',
     tag: '오픈소스',
-    desc: 'Unity 실행 런타임(warm 240ms, cold 대비 6.08배 단축) · ChatGPT용 MCP 게이트웨이(툴 12종) · 터미널 코딩 에이전트(alpha)',
+    desc: 'Unity 실행·입력 재생·QA(warm 중앙값 240ms) · ChatGPT용 MCP 게이트웨이(Windows 배포·macOS 소스 프리뷰) · 터미널 코딩 에이전트(소스 프리뷰)',
     links: [
       { label: 'HEBE', url: 'https://github.com/NotNull92/hebe-agent-unity' },
       { label: 'WORKFORGE', url: 'https://github.com/NotNull92/workforge-mcp' },
@@ -249,7 +249,7 @@ const ResumeView = ({ onClose }) => {
               <span className="resume-status">재직중</span>
             </p>
             <p className="resume-pitch">
-              라이브 MMORPG 콘텐츠·BM 개발 <strong>5년</strong>,
+              <strong>2021.09부터</strong> 라이브 MMORPG 콘텐츠·BM 개발,
               상용 출시 <strong>4종</strong>, 개발자 도구 오픈소스 <strong>5종</strong> —
               만든 것으로 증명하는 개발자입니다.
             </p>

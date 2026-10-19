@@ -18,7 +18,7 @@ import golfShop from '../assets/projects/actiongolf-shop.webp';
 import golfSensor from '../assets/projects/actiongolf-sensor.webp';
 import heraAgentLogo from '../assets/projects/hera-agent-logo.webp';
 import heraUnityLogo from '../assets/projects/hera-unity-logo.webp';
-import heraGodotLogo from '../assets/projects/hera-godot-logo.webp';
+import heraGodotLogo from '../assets/projects/hera-godot-logo.png';
 import hebeLogo from '../assets/projects/hebe-logo.webp';
 import workforgeLogo from '../assets/projects/workforge-logo.webp';
 
@@ -55,14 +55,14 @@ export const WORKS = [
       { src: nmrCorridor, alt: '복도 진행 — 문 선택' },
       { src: nmrTalk, alt: 'Talk 루트 성공' },
     ],
-    links: [],
+    links: [{ label: 'GAMEPLAY VIDEO', url: 'https://youtu.be/kqOMakdCoEc' }],
   },
   {
     name: 'EOS-RED', badge: 'SHIPPED', badgeTone: 'green',
-    period: 'LIVE · 2021.09 ~ 현재', genre: 'MOBILE MMORPG · LIVE SERVICE 6년차',
-    pitch: '월 매출 최대 400억 라이브 모바일 MMORPG (6년차 운영 중)',
+    period: 'LIVE · 2021.09 ~ 현재', genre: 'MOBILE MMORPG · LIVE SERVICE',
+    pitch: '월 매출 최대 400억 라이브 모바일 MMORPG',
     points: [
-      '클라이언트 개발 5년 — 컨텐츠·BM·빌드/패치·점검 담당',
+      '2021.09부터 클라이언트 개발 — 콘텐츠·BM·빌드/패치·점검 담당',
       '스텝업 패키지 BM 매출 비중 30% · 서버 부하 85% 감소 · MAU 35K 서비스 유지',
     ],
     media: [{ src: eosredKeyart, alt: 'EOS RED 공식 키아트' }],
@@ -117,11 +117,11 @@ export const WORKS = [
 ];
 
 export const OSS = [
-  { name: 'heraAgent', repo: 'NotNull92/heraAgent', logo: heraAgentLogo, url: 'https://github.com/NotNull92/heraAgent', desc: '터미널 CLI/TUI 코딩 에이전트 · Windows·macOS · alpha', license: 'Apache-2.0' },
-  { name: 'hera-agent-unity', repo: 'NotNull92/hera-agent-unity', logo: heraUnityLogo, url: 'https://github.com/NotNull92/hera-agent-unity', desc: '라이브 Unity 에디터를 제어하는 저토큰 CLI · OpenUPM', license: 'Apache-2.0' },
+  { name: 'heraAgent', repo: 'NotNull92/heraAgent', logo: heraAgentLogo, url: 'https://github.com/NotNull92/heraAgent', desc: '터미널 CLI/TUI 코딩 에이전트 · Windows·macOS · 소스 프리뷰', license: 'Apache-2.0' },
+  { name: 'hera-agent-unity', repo: 'NotNull92/hera-agent-unity', logo: heraUnityLogo, url: 'https://github.com/NotNull92/hera-agent-unity', desc: '라이브 Unity 에디터 제어·런타임 QA · v0.2.17 · OpenUPM', license: 'Apache-2.0' },
   { name: 'hera-agent-godot', repo: 'NotNull92/hera-agent-godot', logo: heraGodotLogo, url: 'https://github.com/NotNull92/hera-agent-godot', desc: 'Godot 4 에디터 제어 CLI · v2.0.2 · C# 지원 · Asset Store', license: 'MIT' },
-  { name: 'hebe-agent-unity', repo: 'NotNull92/hebe-agent-unity', logo: hebeLogo, url: 'https://github.com/NotNull92/hebe-agent-unity', desc: 'Unity 실행 런타임 · warm exec 240ms', license: 'Apache-2.0' },
-  { name: 'workforge-mcp', repo: 'NotNull92/workforge-mcp', logo: workforgeLogo, url: 'https://github.com/NotNull92/workforge-mcp', desc: 'ChatGPT ↔ 로컬 PC MCP 게이트웨이 · 툴 12종', license: 'MIT' },
+  { name: 'hebe-agent-unity', repo: 'NotNull92/hebe-agent-unity', logo: hebeLogo, url: 'https://github.com/NotNull92/hebe-agent-unity', desc: 'Unity C# 실행·입력 재생·QA · warm exec 중앙값 240ms', license: 'Apache-2.0' },
+  { name: 'workforge-mcp', repo: 'NotNull92/workforge-mcp', logo: workforgeLogo, url: 'https://github.com/NotNull92/workforge-mcp', desc: 'ChatGPT ↔ 로컬 PC · 툴 12종 · Windows 배포 / macOS 소스 프리뷰', license: 'MIT' },
 ];
 
 export const CAREERS = [

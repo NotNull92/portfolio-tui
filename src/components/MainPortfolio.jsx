@@ -17,7 +17,7 @@ import nmrBattleImg from '../assets/projects/nomorerolls-battle.webp';
 import nmrCorridorImg from '../assets/projects/nomorerolls-corridor.webp';
 import nmrTalkImg from '../assets/projects/nomorerolls-talk.webp';
 import heraUnityLogo from '../assets/projects/hera-unity-logo.webp';
-import heraGodotLogo from '../assets/projects/hera-godot-logo.webp';
+import heraGodotLogo from '../assets/projects/hera-godot-logo.png';
 import hebeLogo from '../assets/projects/hebe-logo.webp';
 import workforgeLogo from '../assets/projects/workforge-logo.webp';
 import mrTitleImg from '../assets/projects/mentalrobo-title.webp';

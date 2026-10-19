@@ -135,7 +135,7 @@ const NeonPortfolio = () => {
             <em className="c">stay with people</em> long after the final screen fades.
           </h1>
           <p className="np-lede">
-            월 매출 최대 400억 MMORPG의 라이브 콘텐츠·BM을 5년째 책임지는 Unity 클라이언트 개발자입니다.
+            2021년 9월부터 월 매출 최대 400억 MMORPG의 라이브 콘텐츠·BM을 담당하는 Unity 클라이언트 개발자입니다.
             본업에 집중하면서, 퇴근 후에는 혼자 게임 2종을 만들고, 그 과정에서 필요했던 AI 개발툴을 오픈소스로 배포합니다.
           </p>
           <p className="np-why">
@@ -242,7 +242,7 @@ const NeonPortfolio = () => {
           <div className="np-eyebrow"><span>OPEN SOURCE DEV TOOLS</span><i /></div>
           <h2 className="np-h2">게임을 만들다,<em> 도구까지 만들었다</em></h2>
           <p className="np-tools-lede">
-            AI 에이전트로 게임을 개발하며 부딪힌 문제를 직접 풀어 배포한 5종 — OpenUPM · Godot Asset Store 공식 등록.
+            AI 에이전트로 게임을 개발하며 부딪힌 문제를 직접 풀어 공개한 5종 — 배포 도구부터 소스 프리뷰까지.
           </p>
           <a
             className="np-deepdive"
