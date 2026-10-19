@@ -181,9 +181,15 @@ const NeonPortfolio = () => {
               <article key={w.name} className={`np-work${i % 2 === 1 ? ' np-work-rev' : ''}`}>
                 <div className="np-work-media">
                   <div className="np-work-cover">
-                    <img src={cover.src} alt={cover.alt} loading="lazy" />
-                    <div className="np-work-cover-shade" aria-hidden="true" />
-                    <span className="np-work-no" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                    {cover.type === 'video' ? (
+                      <video src={cover.src} poster={cover.poster} controls playsInline preload="none" aria-label={cover.alt} />
+                    ) : (
+                      <>
+                        <img src={cover.src} alt={cover.alt} loading="lazy" />
+                        <div className="np-work-cover-shade" aria-hidden="true" />
+                        <span className="np-work-no" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                      </>
+                    )}
                   </div>
                   {w.media.length > 1 && (
                     <div className="np-work-thumbs">

@@ -5,6 +5,7 @@ import nmrBattle from '../assets/projects/nomorerolls-battle.webp';
 import nmrCorridor from '../assets/projects/nomorerolls-corridor.webp';
 import nmrTalk from '../assets/projects/nomorerolls-talk.webp';
 import monstelPlay from '../assets/projects/monstel-play.webp';
+import monstelVideo from '../assets/projects/monstel-preview-2x.mp4';
 import eosredKeyart from '../assets/projects/eosred-keyart.webp';
 import freedrawDrawing from '../assets/projects/freedraw-drawing.webp';
 import freedrawGallery from '../assets/projects/freedraw-gallery.webp';
@@ -32,14 +33,14 @@ export const METRICS = [
 export const WORKS = [
   {
     name: 'MONSTEL', badge: 'IN DEVELOPMENT', badgeTone: 'amber',
-    period: 'IN DEV · Android 실기 테스트 중', genre: 'MOBILE IDLE TYCOON · GODOT · 1인 개발',
-    pitch: '괴물 손님을 같은 종족끼리 이어 객실로 보내고 프런트에서 요금을 받는 모바일 방치형 호텔 타이쿤',
+    period: 'IN DEV · 비공개 테스트 준비 중', genre: 'MOBILE IDLE TYCOON · GODOT · 1인 개발',
+    pitch: '괴물 손님을 같은 종족끼리 이어 접수하고, 엘리베이터로 운송·정산하며 호텔을 키우는 모바일 방치형 타이쿤',
     points: [
-      '1인 개발 — 접수→운송→정산→업그레이드→자동화로 이어지는 하이브리드 캐주얼 성장 루프 (Godot 4 .NET · C#)',
-      '층 조합으로 바뀌는 특수 호텔 6종 · 직원 뽑기·업적 카드 연출 · 자작 툴(hera-agent-godot)로 튜토리얼 자동 QA',
+      '1인 개발 — 접수→운송→정산→자동화, 특수 호텔 6종의 완성→매각→재건축 성장 루프 (Godot 4 .NET · C#)',
+      '직원 뽑기·스킬 · 편지 30통·기념품 10개 · 포토 모드·매각 시상 카드 · 자작 툴(hera-agent-godot)과 Android 실기로 QA',
     ],
-    media: [{ src: monstelPlay, alt: '몬스텔 플레이 화면 — 운송·정산, 업그레이드, 직원 뽑기, 워터파크 호텔' }],
-    links: [{ label: 'GAMEPLAY VIDEO', url: 'https://youtu.be/v9x-yhMg6Eo' }],
+    media: [{ type: 'video', src: monstelVideo, poster: monstelPlay, alt: '몬스텔 Android 플레이 영상 · 2배속' }],
+    links: [{ label: 'GAMEPLAY VIDEO · 2×', url: monstelVideo }],
   },
   {
     name: 'NoMoreRolls', badge: 'IN DEVELOPMENT', badgeTone: 'amber',

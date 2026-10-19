@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './ResumeView.css';
+import monstelVideo from '../assets/projects/monstel-preview-2x.mp4';
 
 // RESUME — 채용 담당자용 패스트패스 (한 화면 요약)
 // 원본 이력서 PDF 는 민감 정보(연락처·주소 등) 때문에 게시하지 않고,
@@ -121,8 +122,8 @@ const SIDE_PROJECTS = [
   {
     name: 'MONSTEL (몬스텔)',
     tag: '1인 개발',
-    desc: '괴물 호텔 모바일 방치형 타이쿤 (Godot 4 · C#) — 접수→운송→정산→업그레이드→자동화 성장 루프, 층 조합 특수 호텔 6종, 직원 뽑기·업적 카드. Android 실기 테스트 중',
-    links: [{ label: '플레이 영상', url: 'https://youtu.be/v9x-yhMg6Eo' }],
+    desc: '괴물 호텔 모바일 방치형 타이쿤 (Godot 4 .NET · C#) — 접수·운송·정산 자동화, 특수 호텔 6종의 완성·매각·재건축. 직원 스킬·편지 30통·기념품 10개·포토 모드 구현, Android 실기 QA 및 비공개 테스트 준비 중',
+    links: [{ label: '플레이 영상 · 2배속', url: monstelVideo }],
   },
   {
     name: 'NoMoreRolls',
