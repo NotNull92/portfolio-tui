@@ -244,14 +244,6 @@ const NeonPortfolio = () => {
           <p className="np-tools-lede">
             AI 에이전트로 게임을 개발하며 부딪힌 문제를 직접 풀어 공개한 5종 — 배포 도구부터 소스 프리뷰까지.
           </p>
-          <a
-            className="np-deepdive"
-            href="https://velog.io/@not_null_92"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ✎ 기술 딥다이브 — 설계 과정과 측정 기록은 블로그에 (velog) ↗
-          </a>
           <article className="np-work np-hera-demo" aria-labelledby="hera-demo-title">
             <a className="np-work-media np-work-cover" href="https://youtu.be/1YSc7_Q_Djc" target="_blank" rel="noopener noreferrer" aria-label="Hera v2.0.2 데모 영상 보기 — YouTube, 77초">
               <img src={heraGodotStore} alt="Hera Agent Godot — 터미널과 Godot 엔진을 연결하는 최신 스토어 썸네일" width="1600" height="900" loading="lazy" />

@@ -313,16 +313,6 @@
 }
 .np-tools .np-h2 { margin-bottom: 8px; }
 .np-tools-lede { font-size: 14.5px; color: #8fb4c8; margin-bottom: 16px; word-break: keep-all; }
-.np-deepdive {
-  display: inline-flex; align-items: center; gap: 8px;
-  margin-bottom: 40px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px; font-weight: 700; letter-spacing: 1px;
-  padding: 8px 16px;
-  border: 1px dashed rgba(0, 255, 163, 0.4); color: #00ffa3;
-  transition: background 0.2s ease;
-}
-.np-deepdive:hover { background: rgba(0, 255, 163, 0.08); border-style: solid; }
 .np-hera-demo { margin: 32px 0 40px; }
 .np-tool-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
 .np-tool {
