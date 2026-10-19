@@ -5,6 +5,7 @@ import heroBg from '../assets/hf/hero-bg.webp';
 import dividerImg from '../assets/hf/divider.webp';
 import workspaceImg from '../assets/hf/workspace.webp';
 import arcadeImg from '../assets/hf/arcade.webp';
+import heraGodotStore from '../assets/projects/hera-godot-store.webp';
 import './NeonPortfolio.css';
 
 // 리디자인 B — Neon Cinematic
@@ -251,6 +252,26 @@ const NeonPortfolio = () => {
           >
             ✎ 기술 딥다이브 — 설계 과정과 측정 기록은 블로그에 (velog) ↗
           </a>
+          <article className="np-work np-hera-demo" aria-labelledby="hera-demo-title">
+            <a className="np-work-media np-work-cover" href="https://youtu.be/1YSc7_Q_Djc" target="_blank" rel="noopener noreferrer" aria-label="Hera v2.0.2 데모 영상 보기 — YouTube, 77초">
+              <img src={heraGodotStore} alt="Hera Agent Godot — 터미널과 Godot 엔진을 연결하는 최신 스토어 썸네일" width="1600" height="900" loading="lazy" />
+            </a>
+            <div className="np-work-body">
+              <div className="np-work-meta"><span className="np-badge">v2.0.2</span><span className="np-work-period">2026.10 · 77초 데모</span></div>
+              <h3 id="hera-demo-title">HERA AGENT GODOT</h3>
+              <p className="np-work-pitch">AI 에이전트가 실제 Godot 에디터에서 게임을 만들고 검증합니다.</p>
+              <ul>
+                <li>Codex의 C# 타워 디펜스 제작·런타임 QA 과정을 담은 공개 데모</li>
+                <li>C# eval·검증·실행, 한·영 상태 패널 지원</li>
+                <li>Godot 4.7+ 권장 · 최소 4.2 · C# 기능은 4.7+ .NET 및 별도 컴파일러 헬퍼 필요</li>
+              </ul>
+              <div className="np-work-links">
+                <a href="https://youtu.be/1YSc7_Q_Djc" target="_blank" rel="noopener noreferrer">▶ 데모 보기 · 77초 ↗</a>
+                <a href="https://store.godotengine.org/asset/notnull92/hera-agent-godot/" target="_blank" rel="noopener noreferrer">ASSET STORE ↗</a>
+                <a href="https://github.com/NotNull92/hera-agent-godot/releases/tag/v2.0.2" target="_blank" rel="noopener noreferrer">v2.0.2 RELEASE ↗</a>
+              </div>
+            </div>
+          </article>
           <div className="np-tool-grid">
             {OSS.map((t) => {
               const g = ghStats[t.repo];

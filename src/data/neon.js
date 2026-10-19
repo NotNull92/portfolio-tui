@@ -119,7 +119,7 @@ export const WORKS = [
 export const OSS = [
   { name: 'heraAgent', repo: 'NotNull92/heraAgent', logo: heraAgentLogo, url: 'https://github.com/NotNull92/heraAgent', desc: '터미널 CLI/TUI 코딩 에이전트 · Windows·macOS · alpha', license: 'Apache-2.0' },
   { name: 'hera-agent-unity', repo: 'NotNull92/hera-agent-unity', logo: heraUnityLogo, url: 'https://github.com/NotNull92/hera-agent-unity', desc: '라이브 Unity 에디터를 제어하는 저토큰 CLI · OpenUPM', license: 'Apache-2.0' },
-  { name: 'hera-agent-godot', repo: 'NotNull92/hera-agent-godot', logo: heraGodotLogo, url: 'https://github.com/NotNull92/hera-agent-godot', desc: 'Godot 4 에디터 제어 CLI · v1.2.0 · Asset Store', license: 'MIT' },
+  { name: 'hera-agent-godot', repo: 'NotNull92/hera-agent-godot', logo: heraGodotLogo, url: 'https://github.com/NotNull92/hera-agent-godot', desc: 'Godot 4 에디터 제어 CLI · v2.0.2 · C# 지원 · Asset Store', license: 'MIT' },
   { name: 'hebe-agent-unity', repo: 'NotNull92/hebe-agent-unity', logo: hebeLogo, url: 'https://github.com/NotNull92/hebe-agent-unity', desc: 'Unity 실행 런타임 · warm exec 240ms', license: 'Apache-2.0' },
   { name: 'workforge-mcp', repo: 'NotNull92/workforge-mcp', logo: workforgeLogo, url: 'https://github.com/NotNull92/workforge-mcp', desc: 'ChatGPT ↔ 로컬 PC MCP 게이트웨이 · 툴 12종', license: 'MIT' },
 ];

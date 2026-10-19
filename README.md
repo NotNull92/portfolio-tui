@@ -14,3 +14,7 @@ The boot/authentication sequence is a presentation gimmick, not a security bound
 - `npm run build`: build the production bundle
 - `npm run lint`: run ESLint
 - `npm run preview`: preview the production build
+
+## Media credits
+
+The Hera Agent Godot store thumbnail is reused from [the Hera repository](https://github.com/NotNull92/hera-agent-godot/blob/main/docs/releases/2026-10-19-store-thumbnail.md). Its Godot icon is reproduced from the official icon through image generation: Godot Engine contributors, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The composition connects the terminal to the engine and does not imply endorsement.

@@ -762,19 +762,19 @@ AI agent → hera-agent-unity → Unity Editor
       name: 'HERA-AGENT-GODOT',
       tldr: {
         what: 'Godot 4용 라이브 에디터 제어 CLI — Unity판의 형제 프로젝트 (포팅 아닌 재설계)',
-        role: '단독 개발 (Go + GDScript, MIT 오픈소스)',
-        result: 'v1.0.0 안정 계약(SemVer) · Godot Asset Store 등록 · Homebrew/Scoop/npm 배포',
+        role: '단독 개발 (Go + GDScript + C#, MIT 오픈소스)',
+        result: 'v2.0.2 C# 지원 · 안정 계약(SemVer) · Godot Asset Store 등록 · Homebrew/Scoop/npm 배포',
       },
-      description: 'AI 에이전트가 라이브 Godot 에디터를 제어하는 저토큰 CLI (4.2~4.7 검증 · v1.0.0 안정 계약 · Godot Asset Store 등록)',
+      description: 'AI 에이전트가 라이브 Godot 에디터를 제어하는 저토큰 CLI (4.2~4.7 검증 · v2.0.2 C# 지원 · 안정 계약 · Godot Asset Store 등록)',
       fullDescription: `"AI 코딩 에이전트에게 라이브 Godot 에디터의 눈·손·증거를 제공하는 저토큰 CLI"입니다. hera-agent-unity의 형제 프로젝트로, 같은 저토큰·셸 네이티브 철학을 Godot 전용으로 새로 설계했습니다(포팅이 아님).
 
 [프로젝트 개요]
 • 개발 기간: 2026.06 ~ 진행 중
-• 최신 릴리스: v1.0.0 (2026.07.21) — 안정 CLI 계약 + SemVer 채택
+• 최신 릴리스: v2.0.2 (2026.10.16) — C# 지원 + 한·영 상태 패널
 • 유형: 개발자 도구 (Go CLI + Godot 애드온)
 • 라이선스: MIT (오픈소스)
 • 플랫폼: Windows / macOS / Linux
-• 대상: Godot 4.7+ 표준 빌드 권장 (최소 4.2 — 4.2~4.6 동작 확인)
+• 대상: Godot 4.7+ 권장 (최소 4.2); C# 기능은 4.7+ .NET 및 별도 컴파일러 헬퍼 필요
 • 설치: Scoop (Windows) · Homebrew (macOS/Linux) · npm
 • 배포: GitHub Releases · Godot Asset Store · Homebrew tap
 • 사용 기술: Go 1.25+, GDScript, EditorPlugin, HTTP RPC
@@ -797,7 +797,12 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
 • QA 워크플로우: game qa discover, 실행 가능한 체크 기반 QA 판정
 • batch / smoke / screenshot / diagnostics 등 다양한 명령 지원
 
-[v1.0.0 주요 변경]
+[v2 주요 변경]
+• C# eval·검증·실행 지원 — eval 기본 언어 C#, GDScript는 --lang gdscript 명시
+• EN/KO 상태·설정 패널, 에디터 테마·DPI 대응
+• Codex의 C# 타워 디펜스 제작·QA 데모 공개 (77초)
+
+[기존 안정 계약 및 QA]
 • 안정 계약 + SemVer: 명령·출력 필드·스트림·종료 코드에 메이저 호환성 보장과
   문서화된 deprecation 정책 적용 (docs/CONTRACT.md)
 • Godot 네이티브 UI 테마 QA: Theme 리소스 항목을 조회·수정하고
@@ -825,12 +830,12 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
       media: [
         { src: heraGodotLogo, alt: 'hera-agent-godot 로고', kind: 'logo' },
       ],
-      tech: ['Go', 'GDScript', 'Godot 4.2~4.7', 'EditorPlugin', 'CLI', 'MIT'],
+      tech: ['Go', 'C#', 'GDScript', 'Godot 4.2+', 'EditorPlugin', 'CLI', 'MIT'],
       features: [
         'AI 에이전트용 라이브 Godot 에디터 제어 CLI',
-        'v1.0.0 안정 CLI 계약 + SemVer/deprecation 정책',
+        'v2.0.2 C# 지원 · 안정 CLI 계약 + SemVer/deprecation 정책',
         'Godot 네이티브 UI 테마 QA + 스크린샷 diff',
-        '노드 트리 읽기/쓰기 · GDScript eval · 씬 실행',
+        '노드 트리 읽기/쓰기 · C# / GDScript eval · 씬 실행',
         '저토큰: 전체 QA 세션 ≈1,170 토큰 (툴 스키마 0)',
         'Godot Asset Store + Homebrew tap 배포',
       ],
@@ -838,7 +843,7 @@ Go CLI ──HTTP /rpc──▶ Godot 에디터 애드온(@tool EditorPlugin, GD
         { label: 'GITHUB', url: 'https://github.com/NotNull92/hera-agent-godot' },
         { label: 'RELEASES', url: 'https://github.com/NotNull92/hera-agent-godot/releases' },
         { label: 'ASSET STORE', url: 'https://store.godotengine.org/asset/notnull92/hera-agent-godot/' },
-        { label: 'YOUTUBE', url: 'https://www.youtube.com/@emberstudioo' },
+        { label: 'DEMO · 77초', url: 'https://youtu.be/1YSc7_Q_Djc' },
       ],
     },
     {
