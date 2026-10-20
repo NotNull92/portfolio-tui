@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import ResumeView from './ResumeView';
 import { METRICS, WORKS, OSS, CAREERS, SKILL_GROUPS, MARQUEE, HERA_UNITY } from '../data/neon';
-import heraUnityLogo from '../assets/projects/hera-unity-logo.webp';
 import heroBg from '../assets/hf/hero-bg.webp';
 import dividerImg from '../assets/hf/divider.webp';
 import workspaceImg from '../assets/hf/workspace.webp';
 import arcadeImg from '../assets/hf/arcade.webp';
 import heraGodotStore from '../assets/projects/hera-godot-store.webp';
+import heraUnityStore from '../assets/projects/hera-unity-store.webp';
 import './NeonPortfolio.css';
 
 // 리디자인 B — Neon Cinematic
@@ -273,7 +273,7 @@ const NeonPortfolio = () => {
           </article>
           <article className="np-work np-hera-demo np-hera-unity" aria-labelledby="hera-unity-title">
             <a className="np-work-media np-work-cover" href={HERA_UNITY.guide} target="_blank" rel="noopener noreferrer" aria-label="Hera Unity Status 열기 — 새 탭">
-              <img src={heraUnityLogo} alt="hera-agent-unity 로고" loading="lazy" />
+              <img src={heraUnityStore} alt="Hera Agent Unity — 터미널과 Unity 엔진을 연결하는 스토어 썸네일" width="1600" height="900" loading="lazy" />
             </a>
             <div className="np-work-body">
               <div className="np-work-meta"><span className="np-badge">{HERA_UNITY.version}</span><span className="np-work-period">2026.05 ~ · Unity 6.6+</span></div>

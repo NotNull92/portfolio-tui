@@ -19,6 +19,8 @@ The boot/authentication sequence is a presentation gimmick, not a security bound
 
 The Hera Agent Godot store thumbnail is reused from [the Hera repository](https://github.com/NotNull92/hera-agent-godot/blob/main/docs/releases/2026-10-19-store-thumbnail.md). Its Godot icon is reproduced from the official icon through image generation: Godot Engine contributors, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The composition connects the terminal to the engine and does not imply endorsement.
 
+The Hera Agent Unity store thumbnail is reused from [the Hera repository](https://github.com/NotNull92/hera-agent-unity/blob/main/docs/STORE_ASSETS.md). Its Unity mark is reproduced through image generation; Unity and the Unity logo are trademarks of Unity Technologies. The composition connects the terminal to the engine and does not imply endorsement.
+
 ## MONSTEL media
 
 The project card and resume use `src/assets/projects/monstel-preview-2x.mp4`, copied from the MONSTEL repository’s `preview/monstel-preview-2x.mp4` (2026-10-08 Android capture, already encoded at 2× speed). Playback is user-initiated with native controls; the October 19 project description includes features added after this recording.
