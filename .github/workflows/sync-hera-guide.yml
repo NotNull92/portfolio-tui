@@ -1,0 +1,46 @@
+name: Sync Hera guide
+on:
+  schedule:
+    - cron: '0 0 * * *' # 09:00 KST
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'hera-agent-unity 태그 (비우면 최신 릴리스, 바뀐 경우만)'
+        required: false
+permissions:
+  contents: write
+  pull-requests: write
+concurrency: { group: sync-hera-guide, cancel-in-progress: false }
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24 }
+      - id: sync
+        run: |
+          if [ -n "$TAG" ]; then
+            node scripts/sync-hera-guide.mjs "$TAG"
+          else
+            node scripts/sync-hera-guide.mjs
+          fi
+        env:
+          TAG: ${{ inputs.tag }}
+          GITHUB_TOKEN: ${{ github.token }}
+      - if: steps.sync.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7.0.11
+        with:
+          branch: sync/hera-guide
+          delete-branch: true
+          add-paths: public/hera-guide/**
+          commit-message: 'chore(hera-guide): 공략집 동기화 → ${{ steps.sync.outputs.ref }}'
+          title: 'chore(hera-guide): 공략집 동기화 → ${{ steps.sync.outputs.ref }}'
+          body: |
+            hera-agent-unity `${{ steps.sync.outputs.ref }}`의 `docs/guide/index.html`을 `public/hera-guide/`로 가져왔습니다.
+
+            - 원본: https://github.com/NotNull92/hera-agent-unity/blob/${{ steps.sync.outputs.ref }}/docs/guide/index.html
+            - 릴리스: https://github.com/NotNull92/hera-agent-unity/releases/tag/${{ steps.sync.outputs.ref }}
+            - 기록: `public/hera-guide/source.json`
+
+            ⚠ 공략집의 인라인 스크립트는 포트폴리오와 같은 도메인에서 실행됩니다. merge 전에 diff를 읽어 주세요. 자동 merge하지 않습니다.
