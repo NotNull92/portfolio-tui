@@ -696,10 +696,10 @@ const QuestsTab = () => {
         role: '단독 설계·개발 (Go + C#, Apache-2.0 오픈소스)',
         result: `${HERA_UNITY.version} · Unity 6.6+ · 도구 34종/action 133개 · npm·GitHub Releases·OpenUPM 배포`,
       },
-      description: 'AI 에이전트가 라이브 Unity 에디터를 제어하는 저토큰 CLI (Unity 6.6+ 검증 · MCP 없이 CLI 단일 진입점 · 공략집 공개)',
+      description: 'AI 에이전트가 라이브 Unity 에디터를 제어하는 저토큰 CLI (Unity 6.6+ 검증 · MCP 없이 CLI 단일 진입점 · Hera Unity Status 공개)',
       fullDescription: `"AI 코딩 에이전트가 실행 중인 Unity 에디터를 직접 제어하는 저토큰 CLI"입니다. Codex, Claude, Cursor, Copilot 등의 에이전트가 Python 서버나 MCP 설정 없이 셸 명령만으로 라이브 Unity 에디터를 조사하고, 바꾸고, 검증할 수 있게 합니다.
 
-▶ 공략집: ${HERA_UNITY.guide}
+▶ Hera Unity Status: ${HERA_UNITY.guide}
 
 [프로젝트 개요]
 • 개발 기간: 2026.05 ~ 진행 중
@@ -763,10 +763,10 @@ AI agent → Go CLI ──localhost HTTP──▶ Unity Connector (메인 스레
         '승인 서명 + 작업 기록으로 위험 작업 중복 실행 방지',
         'C# 실행 · 콘솔 읽기 · Play Mode · EventSystem UI 입력 QA',
         '저토큰: exec 기본 응답 7,178 B → 약 70 B',
-        'npm · GitHub Releases · OpenUPM 배포 + 공개 공략집',
+        'npm · GitHub Releases · OpenUPM 배포 + Hera Unity Status 공개',
       ],
       links: [
-        { label: 'GUIDE', url: HERA_UNITY.guide },
+        { label: 'HERA UNITY STATUS', url: HERA_UNITY.guide },
         { label: 'GITHUB', url: 'https://github.com/NotNull92/hera-agent-unity' },
         { label: 'RELEASES', url: 'https://github.com/NotNull92/hera-agent-unity/releases' },
         { label: 'YOUTUBE', url: 'https://www.youtube.com/@emberstudioo' },

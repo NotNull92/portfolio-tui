@@ -272,7 +272,7 @@ const NeonPortfolio = () => {
             </div>
           </article>
           <article className="np-work np-hera-demo np-hera-unity" aria-labelledby="hera-unity-title">
-            <a className="np-work-media np-work-cover" href={HERA_UNITY.guide} target="_blank" rel="noopener noreferrer" aria-label="Hera 공략집 열기 — 새 탭">
+            <a className="np-work-media np-work-cover" href={HERA_UNITY.guide} target="_blank" rel="noopener noreferrer" aria-label="Hera Unity Status 열기 — 새 탭">
               <img src={heraUnityLogo} alt="hera-agent-unity 로고" loading="lazy" />
             </a>
             <div className="np-work-body">
@@ -285,7 +285,7 @@ const NeonPortfolio = () => {
                 <li>도구 34종 · action 133개 · npm / GitHub Releases / OpenUPM 배포</li>
               </ul>
               <div className="np-work-links">
-                <a href={HERA_UNITY.guide} target="_blank" rel="noopener noreferrer">GUIDE · 공략집 ↗</a>
+                <a href={HERA_UNITY.guide} target="_blank" rel="noopener noreferrer">HERA UNITY STATUS ↗</a>
                 <a href="https://github.com/NotNull92/hera-agent-unity" target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
                 <a href={`https://github.com/NotNull92/hera-agent-unity/releases/tag/${HERA_UNITY.version}`} target="_blank" rel="noopener noreferrer">{HERA_UNITY.version} RELEASE ↗</a>
               </div>
