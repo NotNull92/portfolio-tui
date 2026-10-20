@@ -23,7 +23,7 @@ import heraGodotLogo from '../assets/projects/hera-godot-logo.png';
 import hebeLogo from '../assets/projects/hebe-logo.webp';
 import workforgeLogo from '../assets/projects/workforge-logo.webp';
 
-export const HERA_UNITY = { version: 'v0.3.14', connector: '0.2.10', released: '2026.10.20', guide: '/hera-guide/' };
+export const HERA_UNITY = { version: 'v0.3.15', connector: '0.2.10', released: '2026.10.20', guide: '/hera-guide/' };
 
 export const METRICS = [
   { num: 4, suffix: '종', label: '상용 게임 출시', sub: '모바일 3 · PC VR 1 (Steam·Play)' },
