@@ -316,6 +316,7 @@
 .np-tools .np-h2 { margin-bottom: 8px; }
 .np-tools-lede { font-size: 14.5px; color: #8fb4c8; margin-bottom: 16px; word-break: keep-all; }
 .np-hera-demo { margin: 32px 0 40px; }
+.np-hera-unity .np-work-cover img { object-fit: contain; background: #02040a; }
 .np-tool-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
 .np-tool {
   display: flex; flex-direction: column; gap: 12px;

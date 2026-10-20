@@ -1,3 +1,4 @@
+import { HERA_UNITY } from '../data/neon';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './ResumeView.css';
@@ -134,9 +135,10 @@ const SIDE_PROJECTS = [
   {
     name: 'hera-agent-unity / hera-agent-godot',
     tag: '오픈소스',
-    desc: 'AI 에이전트용 라이브 에디터 제어 CLI 2종 (Go) — Hera Godot v2.0.2 C# 지원 · OpenUPM / Godot Asset Store 등록',
+    desc: `AI 에이전트용 라이브 에디터 제어 CLI 2종 (Go) — Hera Unity ${HERA_UNITY.version} (Unity 6.6+) · Hera Godot v2.0.2 C# 지원 · OpenUPM / Godot Asset Store 등록`,
     links: [
       { label: 'UNITY', url: 'https://github.com/NotNull92/hera-agent-unity' },
+      { label: 'UNITY 공략집', url: HERA_UNITY.guide },
       { label: 'GODOT', url: 'https://store.godotengine.org/asset/notnull92/hera-agent-godot/' },
       { label: 'GODOT DEMO · 77초', url: 'https://youtu.be/1YSc7_Q_Djc' },
     ],

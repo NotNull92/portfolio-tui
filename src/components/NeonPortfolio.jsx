@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import ResumeView from './ResumeView';
-import { METRICS, WORKS, OSS, CAREERS, SKILL_GROUPS, MARQUEE } from '../data/neon';
+import { METRICS, WORKS, OSS, CAREERS, SKILL_GROUPS, MARQUEE, HERA_UNITY } from '../data/neon';
+import heraUnityLogo from '../assets/projects/hera-unity-logo.webp';
 import heroBg from '../assets/hf/hero-bg.webp';
 import dividerImg from '../assets/hf/divider.webp';
 import workspaceImg from '../assets/hf/workspace.webp';
@@ -267,6 +268,26 @@ const NeonPortfolio = () => {
                 <a href="https://youtu.be/1YSc7_Q_Djc" target="_blank" rel="noopener noreferrer">▶ 데모 보기 · 77초 ↗</a>
                 <a href="https://store.godotengine.org/asset/notnull92/hera-agent-godot/" target="_blank" rel="noopener noreferrer">ASSET STORE ↗</a>
                 <a href="https://github.com/NotNull92/hera-agent-godot/releases/tag/v2.0.2" target="_blank" rel="noopener noreferrer">v2.0.2 RELEASE ↗</a>
+              </div>
+            </div>
+          </article>
+          <article className="np-work np-hera-demo np-hera-unity" aria-labelledby="hera-unity-title">
+            <a className="np-work-media np-work-cover" href={HERA_UNITY.guide} target="_blank" rel="noopener noreferrer" aria-label="Hera 공략집 열기 — 새 탭">
+              <img src={heraUnityLogo} alt="hera-agent-unity 로고" loading="lazy" />
+            </a>
+            <div className="np-work-body">
+              <div className="np-work-meta"><span className="np-badge">{HERA_UNITY.version}</span><span className="np-work-period">2026.05 ~ · Unity 6.6+</span></div>
+              <h3 id="hera-unity-title">HERA AGENT UNITY</h3>
+              <p className="np-work-pitch">AI 에이전트가 실행 중인 Unity 에디터를 셸 명령으로 보고, 고치고, 검증합니다.</p>
+              <ul>
+                <li>CLI 하나로 동작 — MCP 어댑터는 v0.3.0에서 제거, 실패 응답이 재시도 가능 여부를 직접 알려 줍니다</li>
+                <li>위험 작업은 인수에 묶인 승인 서명과 작업 기록으로 중복 실행을 막습니다</li>
+                <li>도구 34종 · action 133개 · npm / GitHub Releases / OpenUPM 배포</li>
+              </ul>
+              <div className="np-work-links">
+                <a href={HERA_UNITY.guide} target="_blank" rel="noopener noreferrer">GUIDE · 공략집 ↗</a>
+                <a href="https://github.com/NotNull92/hera-agent-unity" target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
+                <a href={`https://github.com/NotNull92/hera-agent-unity/releases/tag/${HERA_UNITY.version}`} target="_blank" rel="noopener noreferrer">{HERA_UNITY.version} RELEASE ↗</a>
               </div>
             </div>
           </article>

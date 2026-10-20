@@ -23,6 +23,8 @@ import heraGodotLogo from '../assets/projects/hera-godot-logo.png';
 import hebeLogo from '../assets/projects/hebe-logo.webp';
 import workforgeLogo from '../assets/projects/workforge-logo.webp';
 
+export const HERA_UNITY = { version: 'v0.3.12', connector: '0.2.9', released: '2026.10.20', guide: '/hera-guide/' };
+
 export const METRICS = [
   { num: 4, suffix: '종', label: '상용 게임 출시', sub: '모바일 3 · PC VR 1 (Steam·Play)' },
   { num: 30, suffix: '%', label: 'BM 매출 비중', sub: '스텝업 패키지 설계·개발' },
@@ -119,7 +121,7 @@ export const WORKS = [
 
 export const OSS = [
   { name: 'heraAgent', repo: 'NotNull92/heraAgent', logo: heraAgentLogo, url: 'https://github.com/NotNull92/heraAgent', desc: '터미널 CLI/TUI 코딩 에이전트 · Windows·macOS · 소스 프리뷰', license: 'Apache-2.0' },
-  { name: 'hera-agent-unity', repo: 'NotNull92/hera-agent-unity', logo: heraUnityLogo, url: 'https://github.com/NotNull92/hera-agent-unity', desc: '라이브 Unity 에디터 제어·런타임 QA · v0.2.17 · OpenUPM', license: 'Apache-2.0' },
+  { name: 'hera-agent-unity', repo: 'NotNull92/hera-agent-unity', logo: heraUnityLogo, url: 'https://github.com/NotNull92/hera-agent-unity', desc: `라이브 Unity 에디터 제어·런타임 QA · ${HERA_UNITY.version} · Unity 6.6+ · npm·OpenUPM`, license: 'Apache-2.0' },
   { name: 'hera-agent-godot', repo: 'NotNull92/hera-agent-godot', logo: heraGodotLogo, url: 'https://github.com/NotNull92/hera-agent-godot', desc: 'Godot 4 에디터 제어 CLI · v2.0.2 · C# 지원 · Asset Store', license: 'MIT' },
   { name: 'hebe-agent-unity', repo: 'NotNull92/hebe-agent-unity', logo: hebeLogo, url: 'https://github.com/NotNull92/hebe-agent-unity', desc: 'Unity C# 실행·입력 재생·QA · warm exec 중앙값 240ms', license: 'Apache-2.0' },
   { name: 'workforge-mcp', repo: 'NotNull92/workforge-mcp', logo: workforgeLogo, url: 'https://github.com/NotNull92/workforge-mcp', desc: 'ChatGPT ↔ 로컬 PC · 툴 12종 · Windows 배포 / macOS 소스 프리뷰', license: 'MIT' },

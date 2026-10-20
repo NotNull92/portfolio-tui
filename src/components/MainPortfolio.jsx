@@ -1,3 +1,4 @@
+import { HERA_UNITY } from '../data/neon';
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Target, Clock, Briefcase, Mail, BookOpen } from 'lucide-react';
@@ -693,66 +694,79 @@ const QuestsTab = () => {
       tldr: {
         what: 'AI 에이전트가 라이브 Unity 에디터를 직접 제어하는 저토큰 CLI',
         role: '단독 설계·개발 (Go + C#, Apache-2.0 오픈소스)',
-        result: 'OpenUPM 패키지 등록 · 상주 스키마 0토큰 — MCP 서버 대비 토큰 소모 수십분의 1',
+        result: `${HERA_UNITY.version} · Unity 6.6+ · 도구 34종/action 133개 · npm·GitHub Releases·OpenUPM 배포`,
       },
-      description: 'AI 코딩 에이전트가 라이브 Unity 에디터를 제어하는 저토큰(Low-token) CLI',
-      fullDescription: `"AI 코딩 에이전트가 실행 중인 Unity 에디터를 직접 제어하는 저토큰 CLI"입니다. Codex, Claude, Cursor, Copilot, AntiGravity 등의 에이전트가 Python 서버 없이, 셸 명령만으로 라이브 Unity 에디터를 조사하고 변경할 수 있게 합니다.
+      description: 'AI 에이전트가 라이브 Unity 에디터를 제어하는 저토큰 CLI (Unity 6.6+ 검증 · MCP 없이 CLI 단일 진입점 · 공략집 공개)',
+      fullDescription: `"AI 코딩 에이전트가 실행 중인 Unity 에디터를 직접 제어하는 저토큰 CLI"입니다. Codex, Claude, Cursor, Copilot 등의 에이전트가 Python 서버나 MCP 설정 없이 셸 명령만으로 라이브 Unity 에디터를 조사하고, 바꾸고, 검증할 수 있게 합니다.
+
+▶ 공략집: ${HERA_UNITY.guide}
 
 [프로젝트 개요]
-• 개발 기간: 2026.05 ~ 진행 중 (지속 릴리스 — 최신 버전은 GitHub Releases 참고)
+• 개발 기간: 2026.05 ~ 진행 중
+• 최신 릴리스: CLI ${HERA_UNITY.version} (${HERA_UNITY.released}) · Connector ${HERA_UNITY.connector}
 • 유형: 개발자 도구 (Go CLI + Unity UPM 패키지)
 • 라이선스: Apache-2.0 (오픈소스)
 • 플랫폼: Windows / macOS / Linux
-• 대상: Unity 2022.3+ (6000.x 검증)
-• 사용 기술: Go 1.25+, C#, Unity Editor API, PowerShell
+• 대상: Unity 6.6 (6000.6) 이상 — 릴리스 검사 대표 6000.6.6f1
+• 설치: npm (npm install -g hera-agent-unity) · Unity 패키지는 git URL #connector-${HERA_UNITY.connector} 고정
+• 배포: GitHub Releases (5개 플랫폼 바이너리) · npm · OpenUPM
+• 사용 기술: Go, C#, Unity Editor API
 
-[핵심 개념]
-에이전트는 오래된 학습 데이터로 추측하지 않고, 실제 에디터에 직접 물어봅니다.
-AI agent → hera-agent-unity → Unity Editor
+[제품 아이덴티티]
+• 게임 감각이 내장된 조작 (game_feel 67주제, ui_slop 48종)
+• AI 실수 방지 장치 (승인 서명·작업 기록·재시도 선언)
+• 검증 강도 다이얼 (Ultra Hera)
+• 토큰 경제 설계
+
+[동작 방식]
+AI agent → Go CLI ──localhost HTTP──▶ Unity Connector (메인 스레드 직렬 실행) + 파일 heartbeat
+• CLI(Go): 실행 중인 에디터를 찾고 명령당 1개의 compact JSON 요청 전송
+• Connector(C#): 에디터 안에서 요청을 메인 스레드에 순서대로 실행
 
 [대표 기능]
-• status: 실행 중인 Unity 프로젝트/버전/포트/상태 조회
-• exec: 로드된 프로젝트 안에서 C# 코드 실행
-• console: 실제 Unity 콘솔 에러 읽기
-• editor play --wait: Play Mode 진입 및 대기
-• GameObject 생성/편집을 Unity API로 안전하게 수행
-• Input QA: Unity EventSystem을 통한 uGUI 클릭/서브밋/스크롤/드래그 검증
-• 빌드한 UI를 실제 Unity UI 오브젝트로 생성 후 결과 캡처
+• status / exec / console: 상태 조회, 로드된 프로젝트 안에서 C# 실행, 실제 콘솔 읽기
+• editor play --wait, input: Play Mode 진입과 EventSystem 기반 UI 입력 QA
+• list --profiles / --profile: 작업별 도구 묶음만 골라 읽기
+• test --format junit|nunit, --shard-index / --shard-count: 테스트 결과 출력과 나눠 돌리기
+• game_feel / ui_slop: 손맛 레시피와 UI 냄새 검사
 
-[저토큰 최적화]
-• list --compact ≈93 토큰, find_gameobjects --ids ≈49~55 토큰 수준으로 벤치마크
-• Unity 2022.3 / 2023.2 / 6000.x 다중 버전 검증
-• 기본 CLI 경로는 MCP 설정·Python 서버 없이 셸 명령만으로 동작
-• v0.1.0+ 부터 실험적 stdio MCP 어댑터 제공 (기본 비활성, 선택 사용)
+[v0.3 주요 변경]
+• MCP 어댑터 제거 — CLI 단일 진입점. 실패 응답이 재시도 가능 여부(retryable, state)를 직접 선언
+• 위험 작업 승인 서명(인수에 묶임) + 작업 기록(operation ledger)으로 중복 실행 방지, 결과를 모르면 다시 보내지 않음
+• Windows 기본 대화상자에 막히면 blocked_by_dialog로 진단
+• exec 메타데이터 기록장, 컴파일 캐시, restricted 모드
+• Windows Unity Hub 보조 설치 경로 인식, 리로드 중 port 0 방어 (외부 기여 반영)
 
-[주요 설계]
-• 멀티 에디터 정책 락: 첫 대상 에디터를 결정적으로 선택한 뒤,
-  도메인 리로드나 에디터 재시작으로 포트가 바뀌어도 정규화된 프로젝트 경로로 고정 유지
-• 에이전트 컨텍스트 바운딩: 출력량을 제한해 토큰 폭주 방지
-• 셀렉터 미지정 시의 우선순위를 회귀 테스트로 고정
+[안정 계약 및 QA]
+• Connector 릴리스마다 대표 에디터(6000.6.6f1)의 빈 프로젝트에 Connector를 설치해 컴파일·릴리스 게이트 테스트·콘솔 오류 0건 확인
+• Package Manager가 6000.6 미만 에디터에서 설치를 거부 (나중의 컴파일 실패를 막음)
+
+[저토큰(측정 기반)]
+• exec 기본 응답 축소: Transform 반환 7,178 B → 약 70 B
+• compact 에이전트 규칙 2,315 B
+• scene hierarchy·오류 응답 축소, Game Feel UI 레시피는 에디터 세션당 1회
 
 [성과]
 • GitHub Stars·Forks는 카드에 실시간 표시 (OpenUPM 패키지 등록)
 
 [협업 도구]
 • 버전 관리: Git (GitHub)
-• 릴리스: GitHub Releases (지속 업데이트)`,
+• 배포: GitHub Releases + npm + OpenUPM`,
       status: 'RELEASED',
       category: ['TOOL'],
       tags: ['OPEN SOURCE'],
-      media: [
-        { src: heraUnityLogo, alt: 'hera-agent-unity 로고', kind: 'logo' },
-      ],
-      tech: ['Go', 'C#', 'Unity Editor', 'UPM', 'CLI', 'Apache-2.0'],
+      media: [{ src: heraUnityLogo, alt: 'hera-agent-unity 로고', kind: 'logo' }],
+      tech: ['Go', 'C#', 'Unity 6.6+', 'UPM', 'CLI', 'npm', 'Apache-2.0'],
       features: [
-        'AI 에이전트용 라이브 Unity 에디터 제어 CLI',
-        'Python 서버 없이 셸 명령만으로 동작 (MCP 선택 지원)',
-        'C# 실행 · 콘솔 읽기 · Play Mode · UI 생성',
-        'EventSystem 기반 UI 입력 QA (Input QA)',
-        '저토큰 최적화 (list --compact ≈93 토큰)',
-        '멀티 에디터 정책 락 + 도메인 리로드 안전성',
+        'AI 에이전트용 라이브 Unity 에디터 제어 CLI (MCP 없이 CLI 단일 진입점)',
+        `${HERA_UNITY.version} · Unity 6.6+ · 도구 34종 / action 133개`,
+        '승인 서명 + 작업 기록으로 위험 작업 중복 실행 방지',
+        'C# 실행 · 콘솔 읽기 · Play Mode · EventSystem UI 입력 QA',
+        '저토큰: exec 기본 응답 7,178 B → 약 70 B',
+        'npm · GitHub Releases · OpenUPM 배포 + 공개 공략집',
       ],
       links: [
+        { label: 'GUIDE', url: HERA_UNITY.guide },
         { label: 'GITHUB', url: 'https://github.com/NotNull92/hera-agent-unity' },
         { label: 'RELEASES', url: 'https://github.com/NotNull92/hera-agent-unity/releases' },
         { label: 'YOUTUBE', url: 'https://www.youtube.com/@emberstudioo' },
