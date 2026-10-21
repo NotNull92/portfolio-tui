@@ -23,8 +23,8 @@ test('sync validates input and downloads before writing, and preserves unchanged
       ['--import', pathToFileURL(join(root, 'mock.mjs')).href, join(root, 'scripts/sync.mjs'), ...args],
       { encoding: 'utf8', env: { ...process.env, CASE: scenario, GITHUB_OUTPUT: join(root, 'output') } });
     assert.equal(run(['1cdca32']).status, 0);
-    const index = join(root, 'public/hera-guide/index.html');
-    const source = join(root, 'public/hera-guide/source.json');
+    const index = join(root, 'public/hera-unity-status/index.html');
+    const source = join(root, 'public/hera-unity-status/source.json');
     const before = await readFile(source, 'utf8');
     const modified = (await stat(source)).mtimeMs;
     for (const [args, scenario] of [[['../x'], ''], [['main'], ''], [['v0.3.11'], '404'], [['v0.3.12'], 'invalid']]) {

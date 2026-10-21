@@ -2,7 +2,7 @@ import { appendFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 
 const repo = 'NotNull92/hera-agent-unity';
-const directory = new URL('../public/hera-guide/', import.meta.url);
+const directory = new URL('../public/hera-unity-status/', import.meta.url);
 const validRef = /^(?:v\d+\.\d+\.\d+|[0-9a-f]{7,40})$/;
 
 try {

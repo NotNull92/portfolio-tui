@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/hera-guide", "destination": "/hera-unity-status/", "permanent": true },
+    { "source": "/hera-guide/:path*", "destination": "/hera-unity-status/:path*", "permanent": true }
+  ]
+}
