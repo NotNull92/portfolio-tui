@@ -66,8 +66,8 @@ const SHIPPED = [
     platform: 'PC VR · SteamVR',
     genre: 'VR 3D 드로잉 툴',
     period: '2021.03 출시',
-    role: 'Oculus Rift → Quest 포팅 · TCP 소켓 모바일 관전 연동 · 갤러리 룸/녹화 기능',
-    scale: 'Steam 정식 출시 · 전북콘텐츠진흥원 국가지원사업 평가 86점',
+    role: 'Oculus Rift → Quest 포팅 · TCP 소켓 모바일 관전 연동 · 갤러리 룸/녹화 기능 · 획 벡터 JSON 저장·불러오기',
+    scale: 'Steam 정식 출시 · 전북콘텐츠진흥원 국가지원사업 평가 86점 · NC soft와 광주 비엔날레 전시 출품 계약',
     links: [
       { label: 'STEAM', url: 'https://store.steampowered.com/app/1539810/FreeDraw/' },
     ],
@@ -86,7 +86,7 @@ const SHIPPED = [
     platform: 'Android + Arduino',
     genre: '자이로 센서 하드웨어 연동 골프',
     period: '2021.04 출시',
-    role: '메인 개발자 인수인계 후 담당 (2인 팀) — 블루투스 센서 통신 리팩토링·UI 리뉴얼·상점 BM 추가',
+    role: '메인 개발자 인수인계 후 담당 (2인 팀) — 블루투스 센서 통신 리팩토링·오일러 각 실시간 계산으로 골프채 각도 인식·UI 리뉴얼·상점 BM 추가',
     scale: '실물 센서 ↔ 게임 클라이언트 실시간 연동',
     links: [
       { label: '플레이 영상', url: 'https://drive.google.com/file/d/1m1fkNzGY1tKGw5mvhPq-CL2nKHApZ5TD/view' },
@@ -100,8 +100,10 @@ const CAREERS = [
     company: '블루포션게임즈',
     team: '레드클라이언트팀 · Unity 클라이언트 개발',
     bullets: [
-      '길드 경쟁전과 전용 PVE 던전 개발·리뉴얼 — 협업 미션 5종 설계, 서버·기획과 스펙 조율',
+      '길드 경쟁전과 전용 PVE 던전 개발·리뉴얼 — 협업 미션 5종 설계, 처치 위치·Monster Index를 패킷에 싣는 프로토콜을 서버·기획과 조율',
       'BM 시스템 3종 개발 — 스텝업 패키지(BM 매출 비중 30%)·조건부 팝업(전환율 45%)·1+1 상품',
+      '스텝업 상품 테이블에 그룹/다음 스텝 인덱스를 두어 첫 구매 2배·인게임 재화 결제·구매 순서 잠금을 구조 변경 없이 확장',
+      '재화 표기 오차를 float → decimal 전환으로 해결, 펫 레벨 성장 BM·VIP 이펙트 개발 및 유지보수',
       '월드 랭킹 갱신 구조를 재설계해 서버 부하 85% 감소, 휴면 계정 처리 자동화로 운영 공수 90% 절감',
       '길드 추천 시스템(가입률 +30%)·보스 던전 리뉴얼(참여율 +35%)·콜로세움 개선(일일 참여율 +150%)',
       '국내 클라이언트 점검, Android/iOS 빌드 및 패치 배포, BTS 이슈 대응 담당',
@@ -123,13 +125,13 @@ const SIDE_PROJECTS = [
   {
     name: 'MONSTEL (몬스텔)',
     tag: '1인 개발',
-    desc: '괴물 호텔 모바일 방치형 타이쿤 (Godot 4 .NET · C#) — 접수·운송·정산 자동화, 특수 호텔 6종의 완성·매각·재건축. 직원 스킬·편지 30통·기념품 10개·포토 모드 구현, Android 실기 QA 및 비공개 테스트 준비 중',
+    desc: '괴물 호텔 모바일 방치형 타이쿤 (Godot 4 .NET · C#) — 접수·운송·정산 자동화, 특수 호텔 6종의 완성·매각·재건축. 직원 스킬·편지 30통·기념품 10개·포토 모드 구현. 로직/연출 4계층 분리, 로직 검증 단언 약 480개, 오프라인 수익 예측·경제 시뮬레이션 테스트, hera-agent-godot로 튜토리얼 자동 QA. Android 실기 QA 및 비공개 테스트 준비 중',
     links: [{ label: '플레이 영상 · 2배속', url: monstelVideo }],
   },
   {
     name: 'NoMoreRolls',
     tag: '1인 개발',
-    desc: '주사위 족보 로그라이크 — 언더테일식 Fight/Talk 이중 루트. 2026 스마일게이트 IndieGo 출품, Steam 출시 예정',
+    desc: '주사위 족보 로그라이크 — 언더테일식 Fight/Talk 이중 루트. 영혼 기믹 10종 Strategy/Factory/Composite 설계, 계층형 상태 머신(전투 서브 상태 11개), ScriptableObject 에디터 툴 8종. 2026 스마일게이트 IndieGo 출품, Steam 출시 예정',
     links: [{ label: '플레이 영상', url: 'https://youtu.be/kqOMakdCoEc' }],
   },
   {
@@ -166,11 +168,13 @@ const SKILLS = [
   { group: '라이브러리', items: 'UniRx · UniTask · DOTween · Odin Inspector · UI Toolkit · Addressables · OSA' },
   { group: '툴링', items: 'Go · GDScript · Git / SVN · Jenkins CI · Gitea · RedMine' },
   { group: '도메인', items: 'BM 설계 · 서버-클라 프로토콜 협업 · Android/iOS 빌드·배포 · VR(SteamVR/Quest) · 블루투스 하드웨어 연동' },
+  { group: 'AI 워크플로', items: 'Claude Code · Codex 멀티 에이전트 분업 · AGENTS.md 규칙 단일 원천(CI 불일치 검사) · 자기 코드 자기 승인 금지 · 경고=에러 빌드 하네스' },
 ];
 
 const ETC = [
   '학력 — 안산공과대학 컴퓨터정보과 졸업',
   '수상 — 게임프로그래밍개발자 양성 과정 최우수상 (2020)',
+  '강연 — 서울IT아카데미 현업자 특강 "유니티로 먹고사는 진짜 현실" (2025.11)',
   '자격 — 네트워크관리사 2급 (국가공인)',
   '어학 — 영어 일상회화 (호주 4년 거주)',
 ];
