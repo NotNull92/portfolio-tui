@@ -4,8 +4,13 @@ on:
     - cron: '0 0 * * *' # 09:00 KST
   workflow_dispatch:
     inputs:
+      guide:
+        description: '동기화할 공략집'
+        type: choice
+        options: [all, unity, godot]
+        default: all
       tag:
-        description: 'hera-agent-unity 태그 (비우면 최신 릴리스, 바뀐 경우만)'
+        description: '태그 (guide를 하나 고른 경우만 쓰임, 비우면 최신 릴리스, 바뀐 경우만)'
         required: false
 permissions:
   contents: write
@@ -14,33 +19,43 @@ concurrency: { group: sync-hera-guide, cancel-in-progress: false }
 jobs:
   sync:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { guide: unity, repo: hera-agent-unity, dir: hera-unity-status }
+          - { guide: godot, repo: hera-agent-godot, dir: hera-godot-status }
     steps:
       - uses: actions/checkout@v4
+        if: inputs.guide == '' || inputs.guide == 'all' || inputs.guide == matrix.guide
       - uses: actions/setup-node@v4
+        if: inputs.guide == '' || inputs.guide == 'all' || inputs.guide == matrix.guide
         with: { node-version: 24 }
       - id: sync
+        if: inputs.guide == '' || inputs.guide == 'all' || inputs.guide == matrix.guide
         run: |
           if [ -n "$TAG" ]; then
-            node scripts/sync-hera-guide.mjs "$TAG"
+            node scripts/sync-hera-guide.mjs "$GUIDE" "$TAG"
           else
-            node scripts/sync-hera-guide.mjs
+            node scripts/sync-hera-guide.mjs "$GUIDE"
           fi
         env:
-          TAG: ${{ inputs.tag }}
+          GUIDE: ${{ matrix.guide }}
+          TAG: ${{ inputs.guide == matrix.guide && inputs.tag || '' }}
           GITHUB_TOKEN: ${{ github.token }}
       - if: steps.sync.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7.0.11
         with:
-          branch: sync/hera-guide
+          branch: sync/${{ matrix.dir }}
           delete-branch: true
-          add-paths: public/hera-unity-status/**
-          commit-message: 'chore(hera-guide): 공략집 동기화 → ${{ steps.sync.outputs.ref }}'
-          title: 'chore(hera-guide): 공략집 동기화 → ${{ steps.sync.outputs.ref }}'
+          add-paths: public/${{ matrix.dir }}/**
+          commit-message: 'chore(hera-guide): ${{ matrix.guide }} 공략집 동기화 → ${{ steps.sync.outputs.ref }}'
+          title: 'chore(hera-guide): ${{ matrix.guide }} 공략집 동기화 → ${{ steps.sync.outputs.ref }}'
           body: |
-            hera-agent-unity `${{ steps.sync.outputs.ref }}`의 `docs/guide/index.html`을 `public/hera-unity-status/`로 가져왔습니다.
+            ${{ matrix.repo }} `${{ steps.sync.outputs.ref }}`의 `docs/guide/index.html`을 `public/${{ matrix.dir }}/`로 가져왔습니다.
 
-            - 원본: https://github.com/NotNull92/hera-agent-unity/blob/${{ steps.sync.outputs.ref }}/docs/guide/index.html
-            - 릴리스: https://github.com/NotNull92/hera-agent-unity/releases/tag/${{ steps.sync.outputs.ref }}
-            - 기록: `public/hera-unity-status/source.json`
+            - 원본: https://github.com/NotNull92/${{ matrix.repo }}/blob/${{ steps.sync.outputs.ref }}/docs/guide/index.html
+            - 릴리스: https://github.com/NotNull92/${{ matrix.repo }}/releases/tag/${{ steps.sync.outputs.ref }}
+            - 기록: `public/${{ matrix.dir }}/source.json`
 
             ⚠ 공략집의 인라인 스크립트는 포트폴리오와 같은 도메인에서 실행됩니다. merge 전에 diff를 읽어 주세요. 자동 merge하지 않습니다.

@@ -40,6 +40,19 @@ test('sync validates input and downloads before writing, and preserves unchanged
     assert.match(await readFile(join(root, 'output'), 'utf8'), /ref=v0.3.12\nchanged=false/);
     assert.equal(run(['v0.3.12']).stdout.trim(), 'updated v0.3.12');
     assert.equal(JSON.parse(await readFile(source, 'utf8')).ref, 'v0.3.12');
+    assert.equal(run(['unity'], '404').status, 1);
+
+    const godot = join(root, 'public/hera-godot-status');
+    const missing = run(['godot'], '404');
+    assert.equal(missing.status, 0);
+    assert.equal(missing.stdout.trim(), 'missing v0.3.12');
+    await assert.rejects(stat(godot));
+    assert.match(await readFile(join(root, 'output'), 'utf8'), /ref=v0.3.12\nchanged=false\n$/);
+    assert.equal(run(['godot', 'v2.0.3'], '404').status, 1);
+    await assert.rejects(stat(godot));
+    assert.equal(run(['godot']).stdout.trim(), 'updated v0.3.12');
+    assert.equal(await readFile(join(godot, 'index.html'), 'utf8'), html);
+    assert.equal(JSON.parse(await readFile(join(godot, 'source.json'), 'utf8')).repo, 'NotNull92/hera-agent-godot');
   } finally {
     await rm(root, { recursive: true, force: true });
   }
