@@ -10,6 +10,11 @@ description: >-
 
 # NOTES 서가에 글 추가하기
 
+> **주의 (2026-10-23):** NOTES 탭과 로더(`src/data/notes.js`, `NoteBook.jsx`, `MainPortfolio.jsx`)는
+> 쓰이지 않아 삭제됐다. 지금 메인(`NeonPortfolio`)에는 글이 표시되지 않는다.
+> 글 파일은 `src/content/notes/`에 계속 쌓을 수 있지만, 사용자에게 이 사실을 먼저 알린다.
+> 아래 검증·참고 절의 파일 경로는 git 기록에만 남아 있다.
+
 사용자가 글을 주면 **파일 하나를 새로 만드는 것**이 전부다.
 `src/data/notes.js` 는 로더일 뿐이므로 절대 건드리지 않는다.
 

@@ -24,7 +24,7 @@ import hebeLogo from '../assets/projects/hebe-logo.webp';
 import workforgeLogo from '../assets/projects/workforge-logo.webp';
 
 // 할 일: public/hera-godot-status/가 첫 godot 동기화 PR로 생기면 HERA_GODOT = { guide: '/hera-godot-status/' }를 두고
-// Godot 카드(NeonPortfolio np-hera-demo)·이력서 사이드 링크·MainPortfolio·sitemap에 HERA_UNITY.guide처럼 연결한다.
+// Godot 카드(NeonPortfolio np-hera-demo)·이력서 사이드 링크·sitemap에 HERA_UNITY.guide처럼 연결한다.
 export const HERA_UNITY = { version: 'v0.3.20', connector: '0.2.10', released: '2026.10.21', guide: '/hera-unity-status/' };
 
 export const METRICS = [
