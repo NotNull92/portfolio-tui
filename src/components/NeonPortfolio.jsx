@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import ResumeView from './ResumeView';
-import { METRICS, WORKS, OSS, CAREERS, SKILL_GROUPS, MARQUEE, HERA_UNITY } from '../data/neon';
+import { METRICS, WORKS, OSS, CAREERS, SKILL_GROUPS, MARQUEE, HERA_UNITY, HERA_GODOT } from '../data/neon';
 import heroBg from '../assets/hf/hero-bg.webp';
 import dividerImg from '../assets/hf/divider.webp';
 import workspaceImg from '../assets/hf/workspace.webp';
@@ -256,18 +256,19 @@ const NeonPortfolio = () => {
               <img src={heraGodotStore} alt="Hera Agent Godot — 터미널과 Godot 엔진을 연결하는 최신 스토어 썸네일" width="1600" height="900" loading="lazy" />
             </a>
             <div className="np-work-body">
-              <div className="np-work-meta"><span className="np-badge">v2.0.2</span><span className="np-work-period">2026.10 · 77초 데모</span></div>
+              <div className="np-work-meta"><span className="np-badge">{HERA_GODOT.version}</span><span className="np-work-period">2026.10 · 데모는 v2.0.2</span></div>
               <h3 id="hera-demo-title">HERA AGENT GODOT</h3>
               <p className="np-work-pitch">AI 에이전트가 실제 Godot 에디터에서 게임을 만들고 검증합니다.</p>
               <ul>
                 <li>Codex의 C# 타워 디펜스 제작·런타임 QA 과정을 담은 공개 데모</li>
-                <li>C# eval·검증·실행, 한·영 상태 패널 지원</li>
+                <li>C# eval·검증·실행 · 노드 생성과 속성 설정을 한 번에 · 조건 대기·읽기 필터로 QA 응답 간소화</li>
                 <li>Godot 4.7+ 권장 · 최소 4.2 · C# 기능은 4.7+ .NET 및 별도 컴파일러 헬퍼 필요</li>
               </ul>
               <div className="np-work-links">
                 <a href="https://youtu.be/1YSc7_Q_Djc" target="_blank" rel="noopener noreferrer">▶ 데모 보기 · 77초 ↗</a>
+                <a href={HERA_GODOT.guide} target="_blank" rel="noopener noreferrer">HERA GODOT STATUS ↗</a>
                 <a href="https://store.godotengine.org/asset/notnull92/hera-agent-godot/" target="_blank" rel="noopener noreferrer">ASSET STORE ↗</a>
-                <a href="https://github.com/NotNull92/hera-agent-godot/releases/tag/v2.0.2" target="_blank" rel="noopener noreferrer">v2.0.2 RELEASE ↗</a>
+                <a href={`https://github.com/NotNull92/hera-agent-godot/releases/tag/${HERA_GODOT.version}`} target="_blank" rel="noopener noreferrer">{HERA_GODOT.version} RELEASE ↗</a>
               </div>
             </div>
           </article>
@@ -280,8 +281,8 @@ const NeonPortfolio = () => {
               <h3 id="hera-unity-title">HERA AGENT UNITY</h3>
               <p className="np-work-pitch">AI 에이전트가 실행 중인 Unity 에디터를 셸 명령으로 보고, 고치고, 검증합니다.</p>
               <ul>
-                <li>CLI 하나로 동작 — MCP 어댑터는 v0.3.0에서 제거, 실패 응답이 재시도 가능 여부를 직접 알려 줍니다</li>
-                <li>위험 작업은 인수에 묶인 승인 서명과 작업 기록으로 중복 실행을 막습니다</li>
+                <li>Connector {HERA_UNITY.connector} · Unity 6.6+ 지원 · Unity 2022.3은 선택형 Developer Mode로 제공</li>
+                <li>Input System 입력 결과를 플레이어 상태로 검증하고, 위험 작업은 승인 서명과 작업 기록으로 중복 실행을 막습니다</li>
                 <li>도구 34종 · action 133개 · npm / GitHub Releases / OpenUPM 배포</li>
               </ul>
               <div className="np-work-links">

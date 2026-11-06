@@ -23,7 +23,7 @@ const BOOT_MESSAGES = [
   { text: '> INITIALIZING MAIN SYSTEM...', delay: 150 },
   { text: '> LOADING UNITY RUNTIME... FIELD DATA SINCE 2020.10', delay: 150 },
   { text: '> MOUNTING LIVE-SERVICE RECORDS... OK', delay: 120 },
-  { text: '> SYNCING SIDE PROJECTS... 4 AI DEV TOOLS ONLINE', delay: 130 },
+  { text: '> SYNCING SIDE PROJECTS... 5 AI DEV TOOLS ONLINE', delay: 130 },
   { text: '> CALIBRATING DICE... NOMOREROLLS PROTOTYPE COMPLETE', delay: 100 },
   { text: '', delay: 150 },
   { text: '> ALL SYSTEMS NOMINAL. WELCOME, VISITOR.', delay: 100 },

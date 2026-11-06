@@ -23,4 +23,13 @@ The Hera Agent Unity store thumbnail is reused from [the Hera repository](https:
 
 ## MONSTEL media
 
-The project card and resume use `src/assets/projects/monstel-preview-2x.mp4`, copied from the MONSTEL repository’s `preview/monstel-preview-2x.mp4` (2026-10-08 Android capture, already encoded at 2× speed). Playback is user-initiated with native controls; the October 19 project description includes features added after this recording.
+The project card and resume use `src/assets/projects/monstel-preview-ko.mp4`, copied from the MONSTEL repository’s `docs/assets/videos/preview/monstel-preview-ko.mp4`: 2026-11-03 Android capture (Galaxy Z Flip7), Korean store preview, 1080×1920 / 60 fps / 54.7 seconds at normal speed. Playback is user-initiated with native controls. The poster is the 2026-11-06 English feature graphic, `assets/branding/feature_en.png`, copied as `src/assets/projects/monstel-feature-en.png`. Both assets and the public development summary were confirmed with the MONSTEL maintainer on 2026-11-06; the video predates the latest effects polish.
+
+## Content verification — 2026-11-06
+
+- [Hera Unity v0.3.25](https://github.com/NotNull92/hera-agent-unity/releases/tag/v0.3.25): Connector 0.3.0, Unity 6.6+ support, opt-in 2022.3 Developer Mode. The local guide is pinned in `public/hera-unity-status/source.json`.
+- [Hera Godot v2.1.0](https://github.com/NotNull92/hera-agent-godot/releases/tag/v2.1.0): configured node creation, waiting assertions and narrower reads. The local guide is pinned in `public/hera-godot-status/source.json`; the embedded YouTube demo still shows v2.0.2.
+- [WorkForge v0.3.0](https://github.com/NotNull92/workforge-mcp/releases/tag/v0.3.0) and [README](https://github.com/NotNull92/workforge-mcp/blob/35facfff3d12dac68f5abe5255ceee1de99bae18/README.md): 25 default MCP tools and a dashboard in four languages; Windows release / macOS source preview.
+- [Hebe v0.0.5](https://github.com/NotNull92/hebe-agent-unity/releases/tag/v0.0.5): the 240 ms warm execution median remains an internal fixed-workload result, not a general latency guarantee.
+- [heraAgent README](https://github.com/NotNull92/heraAgent/blob/e32082e932087f4ce6989b53309f123ae4c32af3/README.md): Development / Design modes and public web research; source preview with no published release.
+- NoMoreRolls had no newer remote development since the existing portfolio description. Commercial game and career figures were not changed by this GitHub refresh.

@@ -1,8 +1,8 @@
-import { HERA_UNITY } from '../data/neon';
+import { HERA_UNITY, HERA_GODOT } from '../data/neon';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './ResumeView.css';
-import monstelVideo from '../assets/projects/monstel-preview-2x.mp4';
+import monstelVideo from '../assets/projects/monstel-preview-ko.mp4';
 
 // RESUME — 채용 담당자용 패스트패스 (한 화면 요약)
 // 원본 이력서 PDF 는 민감 정보(연락처·주소 등) 때문에 게시하지 않고,
@@ -125,8 +125,8 @@ const SIDE_PROJECTS = [
   {
     name: 'MONSTEL (몬스텔)',
     tag: '1인 개발',
-    desc: '괴물 호텔 모바일 방치형 타이쿤 (Godot 4 .NET · C#) — 접수·운송·정산 자동화, 특수 호텔 6종의 완성·매각·재건축. 직원 스킬·편지 30통·기념품 10개·포토 모드 구현. 로직/연출 4계층 분리, 로직 검증 단언 약 480개, 오프라인 수익 예측·경제 시뮬레이션 테스트, hera-agent-godot로 튜토리얼 자동 QA. Android 실기 QA 및 비공개 테스트 준비 중',
-    links: [{ label: '플레이 영상 · 2배속', url: monstelVideo }],
+    desc: '괴물 호텔 모바일 방치형 타이쿤 (Godot 4.7.2 .NET · C#) — 접수·운송·정산 자동화, 특수 호텔 브랜드 8종·20층·스카이·랜드마크·호텔 매각과 지도 확장. 직원 뽑기·계절 손님, 한국어·영어 및 결제·광고·클라우드 세이브 구현. Balance / Sim / View / Main 4계층 분리, 경제 시뮬레이션·튜토리얼 자동 QA·Android 실기 검증. 출시 전 폴리싱 및 비공개 테스트 준비 중',
+    links: [{ label: '게임 프리뷰 · 55초', url: monstelVideo }],
   },
   {
     name: 'NoMoreRolls',
@@ -137,18 +137,19 @@ const SIDE_PROJECTS = [
   {
     name: 'hera-agent-unity / hera-agent-godot',
     tag: '오픈소스',
-    desc: `AI 에이전트용 라이브 에디터 제어 CLI 2종 (Go) — Hera Unity ${HERA_UNITY.version} (Unity 6.6+) · Hera Godot v2.0.2 C# 지원 · OpenUPM / Godot Asset Store 등록`,
+    desc: `AI 에이전트용 라이브 에디터 제어 CLI 2종 (Go) — Hera Unity ${HERA_UNITY.version} / Connector ${HERA_UNITY.connector} (Unity 6.6+ 지원·2022.3 선택형 Developer Mode) · Hera Godot ${HERA_GODOT.version} (C#·조건 대기·읽기 필터) · OpenUPM / Godot Asset Store 등록`,
     links: [
       { label: 'UNITY', url: 'https://github.com/NotNull92/hera-agent-unity' },
       { label: 'HERA UNITY STATUS', url: HERA_UNITY.guide },
       { label: 'GODOT', url: 'https://store.godotengine.org/asset/notnull92/hera-agent-godot/' },
+      { label: 'HERA GODOT STATUS', url: HERA_GODOT.guide },
       { label: 'GODOT DEMO · 77초', url: 'https://youtu.be/1YSc7_Q_Djc' },
     ],
   },
   {
     name: 'hebe-agent-unity · workforge-mcp · heraAgent',
     tag: '오픈소스',
-    desc: 'Unity 실행·입력 재생·QA(warm 중앙값 240ms) · ChatGPT용 MCP 게이트웨이(Windows 배포·macOS 소스 프리뷰) · 터미널 코딩 에이전트(소스 프리뷰)',
+    desc: 'Hebe v0.0.5: Unity 실행·입력·QA(내부 고정 워크로드 warm 중앙값 240ms) · WorkForge v0.3.0: ChatGPT용 MCP 게이트웨이(기본 툴 25종·4개 언어 대시보드, Windows 배포·macOS 소스 프리뷰) · heraAgent: 개발·설계 모드와 웹 리서치를 갖춘 터미널 코딩 에이전트(소스 프리뷰)',
     links: [
       { label: 'HEBE', url: 'https://github.com/NotNull92/hebe-agent-unity' },
       { label: 'WORKFORGE', url: 'https://github.com/NotNull92/workforge-mcp' },

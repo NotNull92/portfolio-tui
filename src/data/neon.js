@@ -4,8 +4,8 @@ import nmrTitle from '../assets/projects/nomorerolls-title.webp';
 import nmrBattle from '../assets/projects/nomorerolls-battle.webp';
 import nmrCorridor from '../assets/projects/nomorerolls-corridor.webp';
 import nmrTalk from '../assets/projects/nomorerolls-talk.webp';
-import monstelPlay from '../assets/projects/monstel-play.webp';
-import monstelVideo from '../assets/projects/monstel-preview-2x.mp4';
+import monstelFeature from '../assets/projects/monstel-feature-en.png';
+import monstelVideo from '../assets/projects/monstel-preview-ko.mp4';
 import eosredKeyart from '../assets/projects/eosred-keyart.webp';
 import freedrawDrawing from '../assets/projects/freedraw-drawing.webp';
 import freedrawGallery from '../assets/projects/freedraw-gallery.webp';
@@ -23,9 +23,8 @@ import heraGodotLogo from '../assets/projects/hera-godot-logo.png';
 import hebeLogo from '../assets/projects/hebe-logo.webp';
 import workforgeLogo from '../assets/projects/workforge-logo.webp';
 
-// 할 일: public/hera-godot-status/가 첫 godot 동기화 PR로 생기면 HERA_GODOT = { guide: '/hera-godot-status/' }를 두고
-// Godot 카드(NeonPortfolio np-hera-demo)·이력서 사이드 링크·sitemap에 HERA_UNITY.guide처럼 연결한다.
-export const HERA_UNITY = { version: 'v0.3.23', connector: '0.2.13', released: '2026.10.23', guide: '/hera-unity-status/' };
+export const HERA_UNITY = { version: 'v0.3.25', connector: '0.3.0', released: '2026.10.29', guide: '/hera-unity-status/' };
+export const HERA_GODOT = { version: 'v2.1.0', guide: '/hera-godot-status/' };
 
 export const METRICS = [
   { num: 4, suffix: '종', label: '상용 게임 출시', sub: '모바일 3 · PC VR 1 (Steam·Play)' },
@@ -37,15 +36,15 @@ export const METRICS = [
 export const WORKS = [
   {
     name: 'MONSTEL', badge: 'IN DEVELOPMENT', badgeTone: 'amber',
-    period: 'IN DEV · 비공개 테스트 준비 중', genre: 'MOBILE IDLE TYCOON · GODOT · 1인 개발',
+    period: 'IN DEV · 출시 전 폴리싱 · 비공개 테스트 준비', genre: 'MOBILE IDLE TYCOON · GODOT · 1인 개발',
     pitch: '괴물 손님을 같은 종족끼리 이어 접수하고, 엘리베이터로 운송·정산하며 호텔을 키우는 모바일 방치형 타이쿤',
     points: [
-      '1인 개발 — 접수→운송→정산→자동화, 특수 호텔 6종의 완성→매각→재건축 성장 루프 (Godot 4 .NET · C#)',
-      '직원 뽑기·스킬 · 편지 30통·기념품 10개 · 포토 모드·매각 시상 카드 · 자작 툴(hera-agent-godot)과 Android 실기로 QA',
-      '로직/연출 4계층 분리 · 로직 검증 단언 약 480개 · 오프라인 수익 예측과 경제 시뮬레이션 테스트 · 에이전트가 튜토리얼을 끝까지 플레이하는 자동 QA',
+      '1인 개발 — 접수→운송→정산→자동화, 특수 호텔 브랜드 8종·20층·스카이·랜드마크·호텔 매각과 지도 확장 (Godot 4.7.2 .NET · C#)',
+      '층 건설·업그레이드·직원 뽑기·계절 손님 · 한국어·영어 지원 · 결제·광고·클라우드 세이브 구현',
+      'Balance / Sim / View / Main 4계층 분리 · 경제 시뮬레이션·튜토리얼 자동 QA · 자작 툴(hera-agent-godot)과 Android 실기 검증',
     ],
-    media: [{ type: 'video', src: monstelVideo, poster: monstelPlay, alt: '몬스텔 Android 플레이 영상 · 2배속' }],
-    links: [{ label: 'GAMEPLAY VIDEO · 2×', url: monstelVideo }],
+    media: [{ type: 'video', src: monstelVideo, poster: monstelFeature, alt: '몬스텔 Android 스토어 프리뷰 · 2026.11.03 · 55초 · 정상 속도' }],
+    links: [{ label: 'GAME PREVIEW · 55초', url: monstelVideo }],
   },
   {
     name: 'NoMoreRolls', badge: 'IN DEVELOPMENT', badgeTone: 'amber',
@@ -127,11 +126,11 @@ export const WORKS = [
 ];
 
 export const OSS = [
-  { name: 'heraAgent', repo: 'NotNull92/heraAgent', logo: heraAgentLogo, url: 'https://github.com/NotNull92/heraAgent', desc: '터미널 CLI/TUI 코딩 에이전트 · Windows·macOS · 소스 프리뷰', license: 'Apache-2.0' },
+  { name: 'heraAgent', repo: 'NotNull92/heraAgent', logo: heraAgentLogo, url: 'https://github.com/NotNull92/heraAgent', desc: '터미널 코딩 에이전트 · 개발·설계 모드 / 웹 리서치 · Windows·macOS · 소스 프리뷰', license: 'Apache-2.0' },
   { name: 'hera-agent-unity', repo: 'NotNull92/hera-agent-unity', logo: heraUnityLogo, url: 'https://github.com/NotNull92/hera-agent-unity', desc: `라이브 Unity 에디터 제어·런타임 QA · ${HERA_UNITY.version} · Unity 6.6+ · npm·OpenUPM`, license: 'Apache-2.0' },
-  { name: 'hera-agent-godot', repo: 'NotNull92/hera-agent-godot', logo: heraGodotLogo, url: 'https://github.com/NotNull92/hera-agent-godot', desc: 'Godot 4 에디터 제어 CLI · v2.0.2 · C# 지원 · Asset Store', license: 'MIT' },
-  { name: 'hebe-agent-unity', repo: 'NotNull92/hebe-agent-unity', logo: hebeLogo, url: 'https://github.com/NotNull92/hebe-agent-unity', desc: 'Unity C# 실행·입력 재생·QA · warm exec 중앙값 240ms', license: 'Apache-2.0' },
-  { name: 'workforge-mcp', repo: 'NotNull92/workforge-mcp', logo: workforgeLogo, url: 'https://github.com/NotNull92/workforge-mcp', desc: 'ChatGPT ↔ 로컬 PC · 툴 12종 · Windows 배포 / macOS 소스 프리뷰', license: 'MIT' },
+  { name: 'hera-agent-godot', repo: 'NotNull92/hera-agent-godot', logo: heraGodotLogo, url: 'https://github.com/NotNull92/hera-agent-godot', desc: `Godot 4 에디터 제어 CLI · ${HERA_GODOT.version} · C#·조건 대기·읽기 필터`, license: 'MIT' },
+  { name: 'hebe-agent-unity', repo: 'NotNull92/hebe-agent-unity', logo: hebeLogo, url: 'https://github.com/NotNull92/hebe-agent-unity', desc: 'v0.0.5 · Unity C# 실행·입력·QA · 내부 고정 워크로드 warm exec 중앙값 240ms', license: 'Apache-2.0' },
+  { name: 'workforge-mcp', repo: 'NotNull92/workforge-mcp', logo: workforgeLogo, url: 'https://github.com/NotNull92/workforge-mcp', desc: 'v0.3.0 · ChatGPT ↔ 로컬 PC · 기본 툴 25종·4개 언어 대시보드 · Windows 배포 / macOS 소스 프리뷰', license: 'MIT' },
 ];
 
 export const CAREERS = [
